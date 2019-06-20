@@ -1,0 +1,97 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{4FC656D8-8E39-42D1-81F6-C3DC87CADB2B}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Dao</RootNamespace>
+    <AssemblyName>Dao</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="bonusDao.cs" />
+    <Compile Include="config_file_first_kindDao.cs" />
+    <Compile Include="config_file_second_kindDao.cs" />
+    <Compile Include="config_file_third_kindDao.cs" />
+    <Compile Include="config_majorDao.cs" />
+    <Compile Include="config_major_kindDao.cs" />
+    <Compile Include="config_major_professionalDao.cs" />
+    <Compile Include="config_primary_keyDao.cs" />
+    <Compile Include="config_public_charDao.cs" />
+    <Compile Include="config_question_first_kindDao.cs" />
+    <Compile Include="config_question_second_kindDao.cs" />
+    <Compile Include="DaoBase.cs" />
+    <Compile Include="engage_answerDao.cs" />
+    <Compile Include="engage_answer_detailsDao.cs" />
+    <Compile Include="engage_examDao.cs" />
+    <Compile Include="engage_exam_detailsDao.cs" />
+    <Compile Include="engage_interviewDao.cs" />
+    <Compile Include="engage_major_releaseDao.cs" />
+    <Compile Include="engage_resumeDao.cs" />
+    <Compile Include="engage_subjectsDao.cs" />
+    <Compile Include="human_fileDao.cs" />
+    <Compile Include="human_file_digDao.cs" />
+    <Compile Include="major_changeDao.cs" />
+    <Compile Include="PermissionDao.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RightsObjectDao.cs" />
+    <Compile Include="RoleIDao.cs" />
+    <Compile Include="salary_grantDao.cs" />
+    <Compile Include="salary_grant_detailsDao.cs" />
+    <Compile Include="salary_projectDao.cs" />
+    <Compile Include="salary_standardDao.cs" />
+    <Compile Include="salary_standard_detailsDao.cs" />
+    <Compile Include="trainingDao.cs" />
+    <Compile Include="UserDao.cs" />
+    <Compile Include="UsersAndRoleDao.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\IDao\IDao.csproj">
+      <Project>{fcf29533-4cd3-4ac0-8343-0229b92e4f03}</Project>
+      <Name>IDao</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Models\Models.csproj">
+      <Project>{b7875a28-eba6-48ad-bcce-fe189834b0b1}</Project>
+      <Name>Models</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
