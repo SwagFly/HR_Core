@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="HR_DBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="HR_DBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="bonus">
           <Key>
             <PropertyRef Name="bon_id" />
@@ -510,6 +510,7 @@
           <Property Name="rid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="rname" Type="varchar" MaxLength="50" />
           <Property Name="ravailable" Type="char" MaxLength="2" />
+          <Property Name="title" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="salary_grant">
           <Key>
@@ -549,10 +550,10 @@
         </EntityType>
         <EntityType Name="salary_project">
           <Key>
-            <PropertyRef Name="project_id" />
+            <PropertyRef Name="item_id" />
           </Key>
-          <Property Name="project_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="project_name" Type="nvarchar" MaxLength="50" />
+          <Property Name="item_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="item_name" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="salary_standard">
           <Key>
@@ -684,7 +685,8 @@
     FROM [dbo].[vw_usersAndRole] AS [vw_usersAndRole]</DefiningQuery>
           </EntitySet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="HR_DBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -1193,6 +1195,7 @@
           <Property Name="rid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="rname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="ravailable" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Name="title" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="salary_grant">
           <Key>
@@ -1232,10 +1235,10 @@
         </EntityType>
         <EntityType Name="salary_project">
           <Key>
-            <PropertyRef Name="project_id" />
+            <PropertyRef Name="item_id" />
           </Key>
-          <Property Name="project_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="project_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="item_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="item_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="salary_standard">
           <Key>
@@ -1300,6 +1303,21 @@
           <Property Name="u_password" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="rid" Type="Int32" Nullable="false" />
         </EntityType>
+        <EntityType Name="vw_usersAndRole">
+          <Key>
+            <PropertyRef Name="u_id" />
+            <PropertyRef Name="u_name" />
+            <PropertyRef Name="u_true_name" />
+            <PropertyRef Name="u_password" />
+            <PropertyRef Name="rid" />
+          </Key>
+          <Property Name="u_id" Type="Int32" Nullable="false" />
+          <Property Name="u_name" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="u_true_name" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="u_password" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="rname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="rid" Type="Int32" Nullable="false" />
+        </EntityType>
         <EntityContainer Name="HR_DBEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="bonus" EntityType="Self.bonus" />
           <EntitySet Name="config_file_first_kind" EntityType="Self.config_file_first_kind" />
@@ -1333,29 +1351,14 @@
           <EntitySet Name="salary_standard_details" EntityType="Self.salary_standard_details" />
           <EntitySet Name="training" EntityType="Self.training" />
           <EntitySet Name="users" EntityType="Self.users" />
+          <EntitySet Name="vw_usersAndRole" EntityType="Self.vw_usersAndRole" />
           <FunctionImport Name="procDanHao">
-          <Parameter Name="danhao" Mode="InOut" Type="String" />
+            <Parameter Name="danhao" Mode="InOut" Type="String" />
           </FunctionImport>
           <FunctionImport Name="procSalaryGrant">
-          <Parameter Name="danhao" Mode="InOut" Type="String" />
+            <Parameter Name="danhao" Mode="InOut" Type="String" />
           </FunctionImport>
-          <EntitySet Name="vw_usersAndRole" EntityType="HR_DBModel.vw_usersAndRole" />
         </EntityContainer>
-        <EntityType Name="vw_usersAndRole">
-          <Key>
-            <PropertyRef Name="u_id" />
-            <PropertyRef Name="u_name" />
-            <PropertyRef Name="u_true_name" />
-            <PropertyRef Name="u_password" />
-            <PropertyRef Name="rid" />
-          </Key>
-          <Property Name="u_id" Type="Int32" Nullable="false" />
-          <Property Name="u_name" Type="String" Nullable="false" MaxLength="60" FixedLength="false" Unicode="false" />
-          <Property Name="u_true_name" Type="String" Nullable="false" MaxLength="60" FixedLength="false" Unicode="false" />
-          <Property Name="u_password" Type="String" Nullable="false" MaxLength="60" FixedLength="false" Unicode="false" />
-          <Property Name="rname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="rid" Type="Int32" Nullable="false" />
-        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1890,6 +1893,7 @@
                 <ScalarProperty Name="rid" ColumnName="rid" />
                 <ScalarProperty Name="rname" ColumnName="rname" />
                 <ScalarProperty Name="ravailable" ColumnName="ravailable" />
+                <ScalarProperty Name="title" ColumnName="title" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1934,8 +1938,8 @@
           <EntitySetMapping Name="salary_project">
             <EntityTypeMapping TypeName="HR_DBModel.salary_project">
               <MappingFragment StoreEntitySet="salary_project">
-                <ScalarProperty Name="project_id" ColumnName="project_id" />
-                <ScalarProperty Name="project_name" ColumnName="project_name" />
+                <ScalarProperty Name="item_id" ColumnName="item_id" />
+                <ScalarProperty Name="item_name" ColumnName="item_name" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2006,20 +2010,20 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="procDanHao" FunctionName="HR_DBModel.Store.procDanHao" />
-          <FunctionImportMapping FunctionImportName="procSalaryGrant" FunctionName="HR_DBModel.Store.procSalaryGrant" />
           <EntitySetMapping Name="vw_usersAndRole">
             <EntityTypeMapping TypeName="HR_DBModel.vw_usersAndRole">
               <MappingFragment StoreEntitySet="vw_usersAndRole">
-                <ScalarProperty Name="rid" ColumnName="rid" />
-                <ScalarProperty Name="rname" ColumnName="rname" />
-                <ScalarProperty Name="u_password" ColumnName="u_password" />
-                <ScalarProperty Name="u_true_name" ColumnName="u_true_name" />
-                <ScalarProperty Name="u_name" ColumnName="u_name" />
                 <ScalarProperty Name="u_id" ColumnName="u_id" />
+                <ScalarProperty Name="u_name" ColumnName="u_name" />
+                <ScalarProperty Name="u_true_name" ColumnName="u_true_name" />
+                <ScalarProperty Name="u_password" ColumnName="u_password" />
+                <ScalarProperty Name="rname" ColumnName="rname" />
+                <ScalarProperty Name="rid" ColumnName="rid" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="procDanHao" FunctionName="HR_DBModel.Store.procDanHao" />
+          <FunctionImportMapping FunctionImportName="procSalaryGrant" FunctionName="HR_DBModel.Store.procSalaryGrant" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

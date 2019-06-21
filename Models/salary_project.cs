@@ -14,7 +14,7 @@ namespace Models
     
     public partial class salary_project
     {
-        public int project_id { get; set; }
-        public string project_name { get; set; }
+        public int item_id { get; set; }
+        public string item_name { get; set; }
     }
 }
