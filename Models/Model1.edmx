@@ -510,6 +510,7 @@
           <Property Name="rid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="rname" Type="varchar" MaxLength="50" />
           <Property Name="ravailable" Type="char" MaxLength="2" />
+          <Property Name="title" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="salary_grant">
           <Key>
@@ -549,10 +550,10 @@
         </EntityType>
         <EntityType Name="salary_project">
           <Key>
-            <PropertyRef Name="project_id" />
+            <PropertyRef Name="item_id" />
           </Key>
-          <Property Name="project_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="project_name" Type="nvarchar" MaxLength="50" />
+          <Property Name="item_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="item_name" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="salary_standard">
           <Key>
@@ -1193,6 +1194,7 @@
           <Property Name="rid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="rname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="ravailable" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Name="title" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="salary_grant">
           <Key>
@@ -1232,10 +1234,10 @@
         </EntityType>
         <EntityType Name="salary_project">
           <Key>
-            <PropertyRef Name="project_id" />
+            <PropertyRef Name="item_id" />
           </Key>
-          <Property Name="project_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="project_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="item_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="item_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="salary_standard">
           <Key>
@@ -1887,6 +1889,7 @@
           <EntitySetMapping Name="Role">
             <EntityTypeMapping TypeName="HR_DBModel.Role">
               <MappingFragment StoreEntitySet="Role">
+                <ScalarProperty Name="title" ColumnName="title" />
                 <ScalarProperty Name="rid" ColumnName="rid" />
                 <ScalarProperty Name="rname" ColumnName="rname" />
                 <ScalarProperty Name="ravailable" ColumnName="ravailable" />
@@ -1934,8 +1937,8 @@
           <EntitySetMapping Name="salary_project">
             <EntityTypeMapping TypeName="HR_DBModel.salary_project">
               <MappingFragment StoreEntitySet="salary_project">
-                <ScalarProperty Name="project_id" ColumnName="project_id" />
-                <ScalarProperty Name="project_name" ColumnName="project_name" />
+                <ScalarProperty Name="item_name" ColumnName="item_name" />
+                <ScalarProperty Name="item_id" ColumnName="item_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
