@@ -13,6 +13,9 @@ namespace HR_Core.Controllers
 {
     public class Salary_DataController : Controller
     {
+        public void TExt() {
+
+        }
         //薪酬发放登记表
         salary_standardIBLL slbll = IocType.GetIocType<salary_standardBLL>("salary_grantBLL", "salary_grantBLL");
         //薪酬报销分类
