@@ -1,0 +1,62 @@
+﻿@{
+    ViewBag.Title = "MainIsUI";
+}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-trasitional.dtd">
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>欢迎使用Bette伯乐人力资源管理系统</title>
+        <script src="~/jquery-easyui-1.3.5/jquery.min.js"></script>
+        <script src="~/jquery-easyui-1.3.5/jquery.easyui.min.js"></script>
+        <link href="~/jquery-easyui-1.3.5/themes/bootstrap/easyui.css" rel="stylesheet" />
+        <link href="~/jquery-easyui-1.3.5/themes/icon.css" rel="stylesheet" />
+        <script src="~/jquery-easyui-1.3.5/locale/easyui-lang-zh_CN.js"></script>
+        <script type="text/javascript">
+            $(function () {
+                $("#obj").tree({
+                    url: "MainTreeShow",
+                    onClick: function (node) {
+                        var text = node.text;
+                        var url = node.url;
+                        if (url != null) {
+                            //页面级
+                            //如果页面有，就选中，否则就添加
+                            if ($("#tabs").tabs('exists', text)) {
+                                $("#tabs").tabs('select', text)
+                            } else {
+                                $('#tabs').tabs('add', {
+                                    title: text,
+                                    content: '<iframe src="/' + url + '" style="width:1100px;height:400px;"/> ',
+                                    closable: true,
+                                    tools: [{
+                                        iconCls: 'icon-mini-refresh',
+                                        handler: function () {
+                                            alert('refresh');
+                                        }
+                                    }]
+                                });
+                            }
+                        }
+                    }
+                })
+            })
+        </script>
+    </head>
+    <body class="easyui-layout">
+        <!--头部-->
+        <div data-options="region:'north'" style="height:155px;">
+            <iframe src="MainIsUITop" style="width:1355px;border:none"></iframe>
+        </div>
+        <!--左边-->
+        <div data-options="region:'west'" style="width:200px;background-color:#FFFFCC">
+            <ul id="obj"></ul>
+        </div>
+        <!--中间-->
+        <div data-options="region:'center'" style="padding:5px;background-image: url('../../images/11041R35400-19.jpg');background-repeat:no-repeat">
+            <div id="tabs" class="easyui-tabs" style="width:1150px;height:450px;margin-top:-8px;border:dotted;">
+            </div>
+        </div>
+    </body>
+</html>
+
+

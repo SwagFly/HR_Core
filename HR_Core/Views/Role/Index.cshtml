@@ -1,0 +1,156 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>角色管理</title>
+    <link rel="stylesheet"
+          href="../../css/table.css" type="text/css" />
+    <script src="~/Scripts/jquery-1.10.2.js"></script>
+    <script src="~/javascript/vue.js"></script>
+    <script type="text/javascript">
+        var currentPag = 1;
+        var pages = 0;
+        var vw;
+        $(function () {
+             vw= new Vue({
+                el: "#bodyTable",
+                data: {
+                    nums: null,
+                    vwPages: 0,
+                    vwRows: 0,
+                    vwCurrentPag: 0
+                },
+                methods: {
+                    load: function () {
+                        var t = this;
+                        $.ajax({
+                            url: "Users",
+                            type: "post",
+                            data: "currentPage=" + currentPag,
+                            success: function (msg) {
+                                var dic = eval("("+msg+")");
+                                t.nums = dic["data"];
+                                t.vwCurrentPag = dic["page"].CurrentPage;
+                                t.vwPages = dic["page"].Pages;
+                                pages = t.vwPages;
+                                t.vwRows = dic["page"].Rows;
+                            }
+                        })
+                    }
+                }
+            });
+            vw.load();
+        });
+        //首页
+        $(document).on("click", "#firstPage", function () {
+            if (currentPag == 1) {
+                alert('抱歉，当前页已是首页！');
+            } else {
+                currentPag = 1;
+                vw.load();
+            }
+        });
+        //上一页
+        $(document).on("click", "#topPage", function () {
+            if (currentPag == 1) {
+                alert('抱歉，当前页已是首页！');
+            } else {
+                currentPag --;
+                vw.load();
+            }
+        });
+        //下一页
+        $(document).on("click", "#nextPage", function () {
+            if (currentPag == pages) {
+                alert('抱歉，当前页已是尾页！');
+            } else {
+                currentPag ++;
+                vw.load();
+            }
+        });
+        //尾页
+        $(document).on("click", "#lastPage", function () {
+            if (currentPag == pages) {
+                alert('抱歉，当前页已是尾页！');
+            } else {
+                currentPag = pages;
+                vw.load();
+            }
+        });
+        //删除角色
+        $(document).on("click", "#delRole", function () {
+            var id = $(this).attr("tt");
+            location.href = "Delete/" + id;
+        });
+        //修改角色
+        $(document).on("click", "#udtRole", function () {
+            var id = $(this).attr("tt");
+            location.href = "Edit/" + id;
+        });
+    </script>
+</head>
+<body>
+    <div> 
+        <table width="100%">
+            <tr>
+                <td>
+                    <font color="black">您正在做的业务是：人力资源--权限管理--角色管理 </font>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    当前角色总数：8例
+                </td>
+            </tr>
+            <tr>
+                <td align="right">
+                    <input type="button" value="添加角色" class="BUTTON_STYLE1" onclick="location.href='Create'">
+                </td>
+            </tr>
+        </table>
+        <table width="100%" border="1" cellpadding=5 cellspacing=1
+               bordercolorlight=#848284 bordercolordark=#eeeeee
+               class="TABLE_STYLE1">
+            <tr class="TR_STYLE1">
+                <td class="TD_STYLE1">
+                    角色编号
+                </td>
+                <td class="TD_STYLE1">
+                    角色名称
+                </td>
+                <td class="TD_STYLE1">
+                    角色说明
+                </td>
+                <td class="TD_STYLE1">
+                    是否可用
+                </td>
+                <td class="TD_STYLE1">
+                    操作
+                </td>
+            </tr>
+            <tr v-for="(item,i) in nums">
+                <td>{{item.rid}}</td>
+                <td>{{item.rname}}</td>
+                <td>{{item.}}</td>
+                <td>{{item.ravailable}}</td>
+                <td>
+                    <img src="../../images/bt_edit.gif" title="编辑" style="cursor:pointer;" id="udtRole" :tt="item.rid" />
+                    <img src="../../images/bt_del.gif" title="删除" style="cursor:pointer;" id="delRole" :tt="item.rid" onclick="return confirm('确定删除此角色吗？')" />
+            </tr>
+        </table>
+        <p style="text-align:center;">
+            <a id="firstPage" style="color:black;">首页</a>
+            <a id="topPage" style="color:black;">上一页</a>
+            <font color="red">{{vwCurrentPag}}</font>
+            <a id="nextPage" style="color:black;">下一页</a>
+            <a id="lastPage" style="color:black;">尾页</a>
+        </p>
+    </div>
+</body>
+</html>

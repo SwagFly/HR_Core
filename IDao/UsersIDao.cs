@@ -23,5 +23,11 @@ namespace IDao
         用户表添加
          */
         int Insert(users us);
+        //删除用户
+        int Deletes(users us);
+        //根据条件查询
+        List<users> SelectWhere(Expression<Func<users, bool>> where);
+        //修改用户
+        int Updates(users us);
     }
 }

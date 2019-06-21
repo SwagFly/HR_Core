@@ -44,14 +44,15 @@ namespace Dao
         /// </summary>
         /// <param name="where">查询条件</param>
         /// <returns>条件查询数据集</returns>
-        public List<T> SelectWhere(Expression<Func<T,bool>> where) {
+        public List<T> SelectWhere(Expression<Func<T, bool>> where)
+        {
             return models.Set<T>().Where(where)
                 .Select(e => e)
                 .ToList();
-        //public IQueryable<T> LoadItems(Expression<Func<T, bool>> whereLambda)
-        //{
-        //    return MyBaseDbContext.Set<T>().Where(whereLambda).AsQueryable();
-        //}
+            //public IQueryable<T> LoadItems(Expression<Func<T, bool>> whereLambda)
+            //{
+            //    return MyBaseDbContext.Set<T>().Where(whereLambda).AsQueryable();
+            //}
         }
         /// <summary>
         /// EF分页
@@ -61,7 +62,8 @@ namespace Dao
         /// <param name="where">where</param>
         /// <param name="page">PageModel类</param>
         /// <returns>返回过滤后的数据集合</returns>
-        public List<T> PageData<K>(Expression<Func<T, K>> order, Expression<Func<T, bool>> where,PageModel page) {
+        public List<T> PageData<K>(Expression<Func<T, K>> order, Expression<Func<T, bool>> where, PageModel page)
+        {
             var data = models.Set<T>().OrderBy(order).Where(where);//获取符合要求的所有数据
             page.Rows = data.Count();//获取总数据条数
             page.Pages = (page.Rows - 1) / page.PageSize + 1;//获取一共多少页
@@ -75,7 +77,8 @@ namespace Dao
         /// </summary>
         /// <param name="t">实体对象</param>
         /// <returns>0：添加失败，1：添加成功</returns>
-        public int Insert(T t) {
+        public int Insert(T t)
+        {
             models.Entry<T>(t).State = System.Data.Entity.EntityState.Added;
             return models.SaveChanges();
         }
@@ -85,7 +88,8 @@ namespace Dao
         /// <param name="t">实体对象</param>
         /// <param name="keyValue">删除对象的主键值</param>
         /// <returns>0：修改失败，1：修改成功</returns>
-        public int Update(T t, object keyValue) {
+        public int Update(T t, object keyValue)
+        {
             var entity = models.Set<T>().Find(keyValue);
             if (entity != null)
             {
@@ -99,7 +103,13 @@ namespace Dao
         /// </summary>
         /// <param name="t">实体对象</param>
         /// <returns>0：删除失败，1：删除成功</returns>
-        public int Delete(T t) {
+        public int Delete(T t, object keyValue)
+        {
+            var entity = models.Set<T>().Find(keyValue);
+            if (entity != null)
+            {
+                models.Entry<T>(entity).State = System.Data.Entity.EntityState.Detached;
+            }
             models.Entry<T>(t).State = System.Data.Entity.EntityState.Deleted;
             return models.SaveChanges();
         }
@@ -108,7 +118,8 @@ namespace Dao
         /// </summary>
         /// <param name="sql">Sql语句（只做增删改，查询不可使用）</param>
         /// <returns></returns>
-        public int AUD(string sql) {
+        public int AUD(string sql)
+        {
             return models.Database.ExecuteSqlCommand(sql);
         }
         /// <summary>
@@ -116,7 +127,8 @@ namespace Dao
         /// </summary>
         /// <param name="sql"></param>
         /// <returns></returns>
-        public List<T> SelectSQL(string sql) {
+        public List<T> SelectSQL(string sql)
+        {
             return models.Database.SqlQuery<T>(sql).ToList();
         }
 

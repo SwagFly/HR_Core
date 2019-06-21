@@ -1,0 +1,123 @@
+﻿@{
+    ViewBag.Title = "Login";
+}
+<!DOCTYPE html public "-//w3c//dtd html 4.01 transitional//en" "http://www.w3.org/tr/html4/loose.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <style type=text/css>
+        body {
+            font-size: 12px;
+            color: #ffffff;
+            font-family: 宋体;
+        }
+        td {
+            font-size: 12px;
+            color: #ffffff;
+            font-family: 宋体;
+        }
+    </style>
+    <script type="text/javascript" src="~/javascript/jquery-1.7.2.js"></script>
+    <script type="text/javascript" src="~/javascript/jquery.messager.js"> </script>
+    @*<script type="text/javascript" src="~/javascript/login.js"></script>*@
+    <script type="text/javascript">
+        $(function () {
+            //点击登录
+            $(":button").click(function () {
+                var user = {
+                    u_name: $("#userName").val(),
+                    u_password: $("#userPassword").val()
+                }
+                var reg = /^\S{6,}$/;
+                if (!reg.test(user.u_name)) {
+                    alert("登录名格式不正确！长度必须大于6位且不能有空格！");
+                } else if (!reg.test(user.u_password)) {
+                    alert("登录密码格式不正确！长度必须大于6位且不能有空格！");
+                } else {
+                    $.ajax({
+                        url: "HR_DomeLogin/Show",
+                        type: "get",
+                        data: "userClass=" + JSON.stringify(user),
+                        success: function (result) {
+                            if (result == "1") {
+                                alert("登录成功！");
+                                window.location.href = '/HR_DomeMain/MainIsUI';
+                            } else {
+                                alert("登录失败！");
+                            }
+                        }
+                    })
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+    <form action="" method="post">
+        <div>
+            <table cellspacing=0 cellpadding=0 width=900 align=center border=0>
+                <tbody>
+                    <tr>
+                        <td style="height: 105px">
+                            <img src="~/images/login_11.gif" border=0>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td background=~/images/login_22.jpg height=300>
+                            <table height=300 cellpadding=0 width=900 border=0>
+                                <tbody>
+                                    <tr>
+                                        <td colspan=2 height=35></td>
+                                    </tr>
+                                    <tr>
+                                        <td width=360></td>
+                                        <td>
+                                            <table cellspacing=0 cellpadding=2 border=0>
+                                                <tbody>
+                                                    <tr>
+                                                        <td style="height: 28px" width=80>
+                                                            登 录 名：
+                                                        </td>
+                                                        <td style="height: 28px" width=150>
+                                                            <input id="userName" name="u_name" style="width: 130px" />
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="height: 28px">
+                                                            登录密码：
+                                                        </td>
+                                                        <td style="height: 28px">
+                                                            <input id="userPassword" name="u_password" style="width: 130px" type="password" />
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="height: 18px"></td>
+                                                        <td style="height: 18px"></td>
+                                                        <td style="height: 18px"></td>
+                                                    </tr>
+                                                    <tr>
+
+                                                        <td>
+                                                            <input type="button" value="登录" style="cursor: pointer;" />
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <img src="~/images/login_33.jpg" border=0>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </form>
+</body>
+</html>
+

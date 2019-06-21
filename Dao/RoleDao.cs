@@ -14,5 +14,14 @@ namespace Dao
     /// </summary>
     public class RoleDao : DaoBase<Role>, RoleIDao
     {
+        public int Deletes(Role role)
+        {
+            return Delete(role, role.rid);
+        }
+
+        public int Updates(Role ro)
+        {
+            return Update(ro, ro.rid);
+        }
     }
 }

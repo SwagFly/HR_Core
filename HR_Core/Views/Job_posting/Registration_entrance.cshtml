@@ -1,0 +1,366 @@
+﻿@{
+    ViewBag.Title = "Registration_entrance";
+}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-trasitional.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>职位发布登记 </title>
+
+    <link href="~/css/table.css" rel="stylesheet" />
+    <link href="~/css/cwcalendar.css" rel="stylesheet" />
+    <script type="text/javascript" src="~/javascript/jquery-1.7.2.js"></script>
+    <script type="text/javascript" src="~/javascript/comm/comm.js"></script>
+    <script type="text/javascript" src="~/javascript/comm/list.js"></script>
+    <script type="text/javascript" src="~/javascript/calendar-ch.js"></script>
+    <script type="text/javascript" src="~/javascript/locate.js"></script>
+    <script type="text/javascript" src="~/javascript/select.js"></script>
+    <script src="~/javascript/vue.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            tick();
+        })
+        //自动时间更改
+		function tick() {
+			var now = new Date();
+			var hours, minutes, seconds, noon;
+			var intHours, intMinutes, intSeconds;
+			intHours = now.getHours();
+			intMinutes = now.getMinutes();
+			intSeconds = now.getSeconds();
+			if (intHours < 24) {
+				hours = intHours+":";
+				noon = "A.M.";
+			} else {
+				intHours = intHours - 24;
+				hours = intHours + ":";
+				noon = "P.M.";
+			}
+			if (intMinutes < 10) {
+				minutes = "0"+intMinutes+":";
+			} else {
+				minutes = intMinutes+":";
+			}
+			if (intSeconds < 10) {
+				seconds = "0"+intSeconds+" ";
+			} else {
+				seconds = intSeconds+" ";
+			}
+			timeString = hours+minutes+seconds;
+			var now = new Date();
+		  	document.getElementById("nowTime").value=now.getFullYear()+"-"+(now.getMonth()+1)+"-"+now.getDate()+" "+timeString;
+			window.setTimeout("tick();", 1000);
+		}
+    </script> @*自动时间更改*@
+    <script type="text/javascript">
+      //非空判断
+ 	  // function mysubmit(){
+ 	  // 	document.getElementById('deadline').value = document
+	  //  		.getElementById('date_start').value;
+ 	  //  if(document.getElementById("firstKindId").value==""){
+ 	  //     alert("请选择一级机构");
+ 	  //     return ;
+ 	  //     }
+ 	  //if(document.getElementById("engageType").value==""){
+ 	  //     alert("请选择招聘类型");
+ 	  //     return ;
+ 	  //     }
+ 	  //if(document.getElementById("majorKindId").value==""){
+ 	  //     alert("请选择职位分类");
+ 	  //     return ;
+ 	  //     }
+ 	  // if(document.getElementById("majorId").value==""){
+ 	  //     alert("请选择职位名称");
+ 	  //     return ;
+ 	  //     }
+ 	  //if(document.getElementById("humanAmount").value==""){
+ 	  // alert("请填写招聘人数");
+ 	  //     return ;
+ 	  //}
+ 	  //if(document.getElementById("date_start").value==""){
+ 	  // alert("请选择截止日期");
+ 	  //     return ;
+ 	  //}
+	  //    	document.humanfileForm.submit();
+	  //}
+        $(function () {
+            //一级机构Vue
+            var kindIdVue = new Vue({//Vue类
+                el: "#firstKindId",//挂起范围
+                data: {//相当于类中成员变量
+                    listKinId: null
+                },
+                methods: {//方法
+                    firstKindIdVue: function () {//查询一级机构
+                        var my = this;
+                        $.ajax({
+                            url: "firstKindIdVue",
+                            type: "get",
+                            success: function (table) {
+                                my.listKinId = eval("(" + table + ")");
+                            }
+                        })
+                    }
+                }
+            });
+            //二级机构Vue
+            var KindIdVueSecond = new Vue({
+                el: "#secondKindId",//挂起范围
+                data: {//相当于类中成员变量
+                    listKinId: null
+                },
+                methods: {
+                    secondKindIdVue: function (fatherId) {
+                        var my = this;
+                        $.ajax({
+                            url: "secondKindIdVue",
+                            type: "get",
+                            data: "fatherId=" + fatherId,
+                            success: function (table) {
+                                var table = eval("(" + table + ")");
+                                if (table == null) {
+                                    $("#secondKindId option:gt(0)").remove();
+                                } else {
+                                    my.listKinId = table;
+                                }
+                            }
+                        })
+                    }
+                }
+            });
+            //三级机构Vue
+            var KindIdVueThird = new Vue({
+                el: "#thirdKindId",//挂起范围
+                data: {//相当于类中成员变量
+                    listKinId: null
+                },
+                methods: {
+                    thirdKindIdVue: function (fatherId) {
+                        var my = this;
+                        $.ajax({
+                            url: "thirdKindIdVue",
+                            type: "get",
+                            data: "fatherId=" + fatherId,
+                            success: function (table) {
+                                var table = eval("(" + table + ")");
+                                if (table == null) {
+                                    $("#thirdKindId option:gt(0)").remove();
+                                } else {
+                                    my.listKinId = table;
+                                }
+                            }
+                        })
+                    }
+                }
+            });
+            //招聘分类Vue
+            var majorKindId = new Vue({
+                el: "#majorKindId",//挂起范围
+                data: {//相当于类中成员变量
+                    listTable: null
+                },
+                methods: {
+                    engageVue: function () {
+                        var my = this;
+                        $.ajax({
+                            url: "engageTypeVue",
+                            type: "get",
+                            success: function (table) {
+                                var table = eval("(" + table + ")");
+                                my.listTable = table;
+                            }
+                        })
+                    }
+                }
+            });
+            //职位名称Vue
+            var majorId = new Vue({
+                el: "#majorId",//挂起范围
+                data: {//相当于类中成员变量
+                    listTable: null
+                },
+                methods: {
+                    majorVue: function (fatherId) {
+                        var my = this;
+                        $.ajax({
+                            url: "majorIdVue",
+                            type: "get",
+                            data:"fatherId="+fatherId,
+                            success: function (table) {
+                                var table = eval("(" + table + ")");
+                                if (table == null) {
+                                    $("#majorKindId option:gt(0)").remove();
+                                } else {
+                                    my.listTable = table;
+                                }
+                            }
+                        })
+                    }
+                }
+            });
+
+
+            //进入页面加载一级页面
+            kindIdVue.firstKindIdVue();
+            //进入页面加载职位分类
+            majorKindId.engageVue();
+            //选择一级机构后
+            $("#firstKindId").change(function () {
+                var fatherId = $("#firstKindId").val();
+                KindIdVueSecond.secondKindIdVue(fatherId);
+            })
+            //选择二级机构后
+            $("#secondKindId").change(function () {
+                var fatherId = $("#secondKindId").val();
+                KindIdVueThird.thirdKindIdVue(fatherId);
+            })
+            //选择职位分类后
+            $("#majorKindId").change(function () {
+                var fatherId = $("#majorKindId").val();
+                if ($("#majorKindId").val() != "0") {
+                    majorId.majorVue(fatherId);
+                }
+            })
+            //招聘人数的输入事件
+            $("#humanAmount").keydown(function () {
+                var num = $(this).val();
+                var ok = true;
+                if (isNaN(num)) {
+                    ok = false;
+                }
+                if (ok) {
+                    $(this).val(num);
+                } else {
+                    var result = num.substring(0, num.length - 1);
+                    $(this).val(result);
+                }
+            })
+        })
+    </script>
+</head>
+<body>
+    <form name="humanfileForm" method="post" action="position_change_update.html">
+        <table width="100%">
+            <tr>
+                <td>
+                    <font color="black">您正在做的业务是：人力资源--招聘管理--职位发布管理--职位发布登记 </font>
+                </td>
+            </tr>
+            <tr>
+                <td align="right">
+                    <input type="button" value="提交" class="BUTTON_STYLE1" onclick="mysubmit();">
+                    <input type="reset" value="清除" class="BUTTON_STYLE1">
+                </td>
+            </tr>
+        </table>
+        <table width="100%" border="1" cellpadding=0 cellspacing=1 bordercolorlight=#848284 bordercolordark=#eeeeee class="TABLE_STYLE1">
+            <tr>
+                <td class="TD_STYLE1" width="11%">
+                    I级机构
+                </td>
+                <td width="14%" class="TD_STYLE2">
+                    <select name="emajorRelease.firstKindId" id="firstKindId" class="SELECT_STYLE1">
+                        <option value="0">--请选择--</option>
+                        <option v-for="item in listKinId" :value="item.first_kind_id">{{item.first_kind_name}}</option>
+                    </select>
+                </td>
+                <td width="11%" class="TD_STYLE1">
+                    II级机构
+                </td>
+                <td width="14%" class="TD_STYLE2">
+                    <select name="emajorRelease.secondKindId" id="secondKindId" class="SELECT_STYLE1">
+                        <option value="0">--请选择--</option>
+                        <option v-for="item in listKinId" :value="item.first_kind_id">{{item.second_kind_name}}</option>
+                    </select>
+                </td>
+                <td width="11%" class="TD_STYLE1">
+                    III级机构
+                </td>
+                <td class="TD_STYLE2">
+                    <select name="emajorRelease.thirdKindId" id="thirdKindId" class="SELECT_STYLE1">
+                        <option value="0">--请选择--</option>
+                        <option v-for="item in listKinId" :value="item.first_kind_id">{{item.third_kind_name}}</option>
+                    </select>
+                </td>
+                <td width="11%" class="TD_STYLE1">
+                    招聘类型
+                </td>
+                <td class="TD_STYLE2" colspan="2">
+                    <select name="emajorRelease.engageType" id="engageType" class="SELECT_STYLE1">
+                        <option value="0">--请选择--</option>
+                        <option v-for="item in listTable" value="1">校园招聘</option>
+                        <option v-for="item in listTable" value="2">社会招聘</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td class="TD_STYLE1">
+                    职位分类
+                </td>
+                <td class="TD_STYLE2">
+                    <select name="emajorRelease.majorKindId" id="majorKindId" class="SELECT_STYLE1">
+                        <option value="">--请选择--</option>
+                        <option v-for="item in listTable" :value="item.major_kind_id">{{item.major_kind_name}}</option>
+                    </select>
+                </td>
+                <td class="TD_STYLE1">
+                    职位名称
+                </td>
+                <td class="TD_STYLE2">
+                    <select name="emajorRelease.majorId" id="majorId" class="SELECT_STYLE1">
+                        <option value="">--请选择--</option>
+                        <option v-for="item in listTable" :value="item.major_id">{{item.major_name}}</option>
+                    </select>
+                </td>
+                <td class="TD_STYLE1">
+                    招聘人数
+                </td>
+                <td class="TD_STYLE2">
+                    <input type="text" name="emajorRelease.humanAmount" id="humanAmount" class="INPUT_STYLE2">
+                </td>
+                <td class="TD_STYLE1">
+                    截止日期
+                </td>
+                <td class="TD_STYLE2">
+                    <input type="text" name="item.str_startTime" class="INPUT_STYLE2" id="date_start">
+                </td>
+            </tr>
+            <tr>
+                <td class="TD_STYLE1">
+                    登记人
+                </td>
+                <td class="TD_STYLE2">
+                    <input type="text" name="emajorRelease.register" value="@ViewData["admin"]" class="INPUT_STYLE2" readonly>
+                </td>
+                <td class="TD_STYLE1">
+                    登记时间
+                </td>
+                <td class="TD_STYLE2">
+                    <input type="text" name="emajorRelease.registTime" id="nowTime" readonly="readonly" class="INPUT_STYLE2">
+                </td>
+            </tr>
+            <tr>
+                <td class="TD_STYLE1">
+                    职位描述
+                </td>
+                <td class="TD_STYLE2" colspan="8">
+                    <textarea name="emajorRelease.majorDescribe" rows="4" cols="80" class="TEXTAREA_STYLE1"></textarea>
+                </td>
+            </tr>
+            <tr>
+                <td class="TD_STYLE1">
+                    招聘要求
+                </td>
+                <td class="TD_STYLE2" colspan="8">
+                    <textarea name="emajorRelease.engageRequired" rows="4" cols="80" class="TEXTAREA_STYLE1"></textarea>
+                </td>
+            </tr>
+        </table>
+    </form>
+</body>
+
+</html>
+
+
+
+
