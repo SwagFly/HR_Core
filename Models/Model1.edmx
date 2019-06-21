@@ -685,7 +685,8 @@
     FROM [dbo].[vw_usersAndRole] AS [vw_usersAndRole]</DefiningQuery>
           </EntitySet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="HR_DBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -1302,6 +1303,21 @@
           <Property Name="u_password" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="rid" Type="Int32" Nullable="false" />
         </EntityType>
+        <EntityType Name="vw_usersAndRole">
+          <Key>
+            <PropertyRef Name="u_id" />
+            <PropertyRef Name="u_name" />
+            <PropertyRef Name="u_true_name" />
+            <PropertyRef Name="u_password" />
+            <PropertyRef Name="rid" />
+          </Key>
+          <Property Name="u_id" Type="Int32" Nullable="false" />
+          <Property Name="u_name" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="u_true_name" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="u_password" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="rname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="rid" Type="Int32" Nullable="false" />
+        </EntityType>
         <EntityContainer Name="HR_DBEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="bonus" EntityType="Self.bonus" />
           <EntitySet Name="config_file_first_kind" EntityType="Self.config_file_first_kind" />
@@ -1335,29 +1351,14 @@
           <EntitySet Name="salary_standard_details" EntityType="Self.salary_standard_details" />
           <EntitySet Name="training" EntityType="Self.training" />
           <EntitySet Name="users" EntityType="Self.users" />
+          <EntitySet Name="vw_usersAndRole" EntityType="Self.vw_usersAndRole" />
           <FunctionImport Name="procDanHao">
           <Parameter Name="danhao" Mode="InOut" Type="String" />
           </FunctionImport>
           <FunctionImport Name="procSalaryGrant">
           <Parameter Name="danhao" Mode="InOut" Type="String" />
           </FunctionImport>
-          <EntitySet Name="vw_usersAndRole" EntityType="HR_DBModel.vw_usersAndRole" />
         </EntityContainer>
-        <EntityType Name="vw_usersAndRole">
-          <Key>
-            <PropertyRef Name="u_id" />
-            <PropertyRef Name="u_name" />
-            <PropertyRef Name="u_true_name" />
-            <PropertyRef Name="u_password" />
-            <PropertyRef Name="rid" />
-          </Key>
-          <Property Name="u_id" Type="Int32" Nullable="false" />
-          <Property Name="u_name" Type="String" Nullable="false" MaxLength="60" FixedLength="false" Unicode="false" />
-          <Property Name="u_true_name" Type="String" Nullable="false" MaxLength="60" FixedLength="false" Unicode="false" />
-          <Property Name="u_password" Type="String" Nullable="false" MaxLength="60" FixedLength="false" Unicode="false" />
-          <Property Name="rname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="rid" Type="Int32" Nullable="false" />
-        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1893,6 +1894,7 @@
                 <ScalarProperty Name="rid" ColumnName="rid" />
                 <ScalarProperty Name="rname" ColumnName="rname" />
                 <ScalarProperty Name="ravailable" ColumnName="ravailable" />
+                <ScalarProperty Name="title" ColumnName="title" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2009,20 +2011,20 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="procDanHao" FunctionName="HR_DBModel.Store.procDanHao" />
-          <FunctionImportMapping FunctionImportName="procSalaryGrant" FunctionName="HR_DBModel.Store.procSalaryGrant" />
           <EntitySetMapping Name="vw_usersAndRole">
             <EntityTypeMapping TypeName="HR_DBModel.vw_usersAndRole">
               <MappingFragment StoreEntitySet="vw_usersAndRole">
-                <ScalarProperty Name="rid" ColumnName="rid" />
-                <ScalarProperty Name="rname" ColumnName="rname" />
-                <ScalarProperty Name="u_password" ColumnName="u_password" />
-                <ScalarProperty Name="u_true_name" ColumnName="u_true_name" />
-                <ScalarProperty Name="u_name" ColumnName="u_name" />
                 <ScalarProperty Name="u_id" ColumnName="u_id" />
+                <ScalarProperty Name="u_name" ColumnName="u_name" />
+                <ScalarProperty Name="u_true_name" ColumnName="u_true_name" />
+                <ScalarProperty Name="u_password" ColumnName="u_password" />
+                <ScalarProperty Name="rname" ColumnName="rname" />
+                <ScalarProperty Name="rid" ColumnName="rid" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="procDanHao" FunctionName="HR_DBModel.Store.procDanHao" />
+          <FunctionImportMapping FunctionImportName="procSalaryGrant" FunctionName="HR_DBModel.Store.procSalaryGrant" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

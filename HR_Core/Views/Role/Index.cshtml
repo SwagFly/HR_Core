@@ -30,7 +30,7 @@
                     load: function () {
                         var t = this;
                         $.ajax({
-                            url: "Users",
+                            url: "Roles",
                             type: "post",
                             data: "currentPage=" + currentPag,
                             success: function (msg) {
@@ -96,7 +96,7 @@
     </script>
 </head>
 <body>
-    <div> 
+    <div id="bodyTable"> 
         <table width="100%">
             <tr>
                 <td>
@@ -114,9 +114,7 @@
                 </td>
             </tr>
         </table>
-        <table width="100%" border="1" cellpadding=5 cellspacing=1
-               bordercolorlight=#848284 bordercolordark=#eeeeee
-               class="TABLE_STYLE1">
+        <table width="100%" border="1" cellpadding=5 cellspacing=1 bordercolorlight=#848284 bordercolordark=#eeeeee class="TABLE_STYLE1">
             <tr class="TR_STYLE1">
                 <td class="TD_STYLE1">
                     角色编号
@@ -137,7 +135,7 @@
             <tr v-for="(item,i) in nums">
                 <td>{{item.rid}}</td>
                 <td>{{item.rname}}</td>
-                <td>{{item.}}</td>
+                <td>{{item.title}}</td>
                 <td>{{item.ravailable}}</td>
                 <td>
                     <img src="../../images/bt_edit.gif" title="编辑" style="cursor:pointer;" id="udtRole" :tt="item.rid" />
