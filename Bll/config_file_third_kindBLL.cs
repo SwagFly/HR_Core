@@ -26,6 +26,10 @@ namespace Bll
         {
             return dao.GetThird(third);
         }
-
+        //薪酬调用三级机构
+        public List<config_file_third_kind> third_kind()
+        {
+            return dao.third_kind();
+        }
     }
 }

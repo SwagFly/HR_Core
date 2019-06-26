@@ -12,12 +12,19 @@ namespace Dao
     /// </summary>
     public class config_file_second_kindDao:DaoBase<config_file_second_kind>, config_file_second_kindIDao
     {
+       
+
         /// <summary>
         /// 查询二级机构
         /// </summary>
         /// <returns></returns>
         public List<config_file_second_kind> SelectSecond_kind(config_file_second_kind second) {
             return SelectWhere(e=>e.second_kind_id.Equals(second.second_kind_id));
+        }
+        //薪酬调用二级机构
+        public List<config_file_second_kind> Second_kind()
+        {
+            return SelectAll();
         }
 
     }

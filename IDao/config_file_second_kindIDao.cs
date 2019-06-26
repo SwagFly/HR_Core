@@ -17,5 +17,7 @@ namespace IDao
         /// </summary>
         /// <returns></returns>
         List<config_file_second_kind> SelectSecond_kind(config_file_second_kind second);
+        //薪酬调用二级机构
+        List<config_file_second_kind> Second_kind();
     }
 }

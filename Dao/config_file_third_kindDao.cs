@@ -21,5 +21,10 @@ namespace Dao
         public List<config_file_third_kind> GetThird(config_file_third_kind third) {
             return SelectWhere(e => e.third_kind_id.Equals(third.third_kind_id));
         }
+        //薪酬调用三级机构
+        public List<config_file_third_kind> third_kind()
+        {
+            return SelectAll();
+        }
     }
 }

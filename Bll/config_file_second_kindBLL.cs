@@ -23,5 +23,10 @@ namespace Bll
         public List<config_file_second_kind> SelectSecond_kind(config_file_second_kind second) {
             return dao.SelectSecond_kind(second);
         }
+        //薪酬调用二级机构
+        public List<config_file_second_kind> Second_kind()
+        {
+            return dao.Second_kind();
+        }
     }
 }

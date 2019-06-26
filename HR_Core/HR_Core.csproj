@@ -87,12 +87,15 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.XML" />
+    <Reference Include="System.Xml.Linq">
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Abstractions" />
     <Reference Include="System.Web.Routing" />
-    <Reference Include="System.Xml" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
@@ -200,6 +203,7 @@
     <Compile Include="Controllers\HR_DomeMainController.cs" />
     <Compile Include="Controllers\Job_postingController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
+    <Compile Include="Controllers\salaryGrantController.cs" />
     <Compile Include="Controllers\Salary_DataController.cs" />
     <Compile Include="Controllers\User_controlControllerController.cs" />
     <Compile Include="Filters\ExceptionsAttribute.cs" />
@@ -1018,7 +1022,9 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Unity.config" />
+    <Content Include="Unity.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Views\HR_DomeLogin\Login.cshtml" />
     <Content Include="Views\HR_DomeMain\MainIsUI.cshtml" />
     <Content Include="Views\HR_DomeMain\MainIsUITop.cshtml" />
@@ -1034,6 +1040,23 @@
     <Content Include="Views\Salary_Data\salarystandard_check_success.cshtml" />
     <Content Include="Views\Salary_Data\salarystandard_query_list.cshtml" />
     <Content Include="Views\Salary_Data\salarystandard_query_locate.cshtml" />
+    <Content Include="Views\Salary_Data\salarystandard_register_success.cshtml" />
+    <Content Include="Views\Salary_Data\salarystandard_check.cshtml" />
+    <Content Include="Views\Salary_Data\salarystandard_query.cshtml" />
+    <Content Include="Views\Salary_Data\salarystandard_change_locate.cshtml" />
+    <Content Include="Views\Salary_Data\salarystandard_change_list.cshtml" />
+    <Content Include="Views\Salary_Data\salarystandard_change.cshtml" />
+    <Content Include="Views\Salary_Data\salarystandard_change_success.cshtml" />
+    <Content Include="Views\salaryGrant\register_commit.cshtml" />
+    <Content Include="Views\salaryGrant\register_success.cshtml" />
+    <Content Include="Views\salaryGrant\register_locate.cshtml" />
+    <Content Include="Views\salaryGrant\check_list.cshtml" />
+    <Content Include="Views\salaryGrant\check.cshtml" />
+    <Content Include="Views\salaryGrant\check_success.cshtml" />
+    <Content Include="Views\salaryGrant\query_locate.cshtml" />
+    <Content Include="Views\salaryGrant\query_list.cshtml" />
+    <Content Include="Views\salaryGrant\query.cshtml" />
+    <Content Include="Views\salaryGrant\register_list.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

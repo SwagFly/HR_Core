@@ -48,6 +48,22 @@ namespace Bll
         {
             return dao.PageData(order, where, page);
         }
+        //薪酬标准登记复核按id查询
+        public salary_standard salary_standardselectWhere(Expression<Func<salary_standard, bool>> where)
+        {
+            return dao.salary_standardselectWhere(where);
+        }
+        //薪酬标准登记复核修改
+        public int salary_standardUpdate(salary_standard sl)
+        {
+            return dao.salary_standardUpdate(sl);
+        }
+        //模糊查询分页
+        public List<salary_standard> SelectBy(string sql, out int rows, int IndexPage, int PageSize)
+        {
+            return dao.SelectBy(sql,out rows,IndexPage,PageSize);
+        }
+       
 
     }
 }

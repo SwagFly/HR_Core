@@ -18,5 +18,7 @@ namespace IBll
         /// <param name="third"></param>
         /// <returns></returns>
         List<config_file_third_kind> GetThird(config_file_third_kind third);
+        //薪酬调用三级机构
+        List<config_file_third_kind> third_kind();
     }
 }

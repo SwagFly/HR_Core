@@ -14,7 +14,7 @@
     <script src="~/javascript/vue.js"></script>
     <title>薪酬标准登记复核</title>
     <script type="text/javascript">
-            var pages = 1;//页数
+        var vPageSize; //每页显示数
             var currentPage = 1;//当前页
             var vm=null ; 
             $(function () {
@@ -36,8 +36,9 @@
                                 success: function (msg) {
                                     var data = eval("(" + msg + ")");
                                     t.vCurrentPage = data["page"].CurrentPage;//当前页
-                                    t.vPages = data["page"].Pages;//每页显示数
+                                    t.vPageSize = data["page"].PageSize;//每页显示数
                                     t.vRows = data["page"].Rows;//总行数
+                                    t.vPages = data["page"].Pages;
                                     pages = t.vPages;
                                     t.nums = data["data"];
                                 }
@@ -98,7 +99,7 @@
                     <tr>
                         <td>
                             当前等待复核的薪酬标准总数:
-                            12
+                            @ViewBag.str
                             例
                         </td>
                     </tr>
@@ -135,7 +136,6 @@
                         </td>
                         <td>
                             {{item.designer}}
-
                         </td>
                         <td>
                             {{item.regist_time}}
@@ -145,7 +145,7 @@
                             {{item.salary_sum}}
                         </td>
                         <td>
-                            <a href="salarystandard_check">复 核</a>
+                            <a v-bind:href="['salarystandard_check/'+item.ssd_id]">复 核</a>
                         </td>
                     </tr>
                 </table>
@@ -154,7 +154,7 @@
                     <font style="color: maroon;font-weight: bold;">@ViewBag.str</font>
                     例
                     &nbsp;&nbsp;&nbsp;
-                    每页显示 <font style="color: maroon;font-weight: bold;">{{vPages}}</font>
+                    每页显示 <font style="color: maroon;font-weight: bold;">{{vPageSize}}</font>
                     条
                     &nbsp;&nbsp;&nbsp;
                     当前第 <font style="color: maroon;font-weight: bold;">{{vCurrentPage}}</font>

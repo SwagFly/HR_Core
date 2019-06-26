@@ -12,14 +12,14 @@ namespace Models
     /// </summary>
     public class PageModel
     {
-        private Int32 currentPage;
-        private Int32 pageSize;
-        private Int32 pages;
-        private Int32 rows;
+        private int currentPage;
+        private int pageSize;
+        private int pages;
+        private int rows;
         /// <summary>
         /// 当前第CurrentPage页
         /// </summary>
-        public Int32 CurrentPage
+        public int CurrentPage
         {
             get
             {
@@ -34,7 +34,7 @@ namespace Models
         /// <summary>
         /// 一页PageSize条数据
         /// </summary>
-        public Int32 PageSize
+        public int PageSize
         {
             get
             {
@@ -49,7 +49,7 @@ namespace Models
         /// <summary>
         /// 总共Pages页
         /// </summary>
-        public Int32 Pages
+        public int Pages
         {
             get
             {
@@ -64,7 +64,7 @@ namespace Models
         /// <summary>
         /// 一共Rows行数据
         /// </summary>
-        public Int32 Rows
+        public int Rows
         {
             get
             {

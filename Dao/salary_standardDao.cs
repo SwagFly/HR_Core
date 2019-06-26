@@ -15,7 +15,7 @@ namespace Dao
     /// <summary>
     /// 薪酬基本信息IDao
     /// </summary>
-    public class salary_standardDao : DaoBase<salary_standard_details>, salary_standardIDao
+    public class salary_standardDao : DaoBase<salary_standard>, salary_standardIDao
     {
         HR_DBEntities hr = new HR_DBEntities();
         /// <summary>
@@ -28,7 +28,7 @@ namespace Dao
         //存储过程
         public static DataTable SelectProc(SqlParameter[] ps, string fileName)
         {
-            string str = @"Data Source=LAPTOP-ADUMNM88\YJFMSSQLSERVER;Initial Catalog=HR_DB;User ID=sa;Password=1417541933";
+            string str = @"Data Source=DESKTOP-UQF2PKO\MSSQLSERVER2012;Initial Catalog=HR_DB;Integrated Security=True";
             SqlConnection cn = new SqlConnection(str);
             string sql = "procDanHao";
             SqlDataAdapter ad = new SqlDataAdapter(sql, cn);
@@ -89,6 +89,24 @@ namespace Dao
             return dt.Skip((page.CurrentPage - 1) * page.PageSize)//where部分
                 .Take(page.PageSize).ToList();//top部分
         }
+        //薪酬标准登记复核按id查询
+        public salary_standard salary_standardselectWhere(Expression<Func<salary_standard, bool>> where)
+        {
+            return SelectWhere(where).FirstOrDefault();
+        }
+        //薪酬标准登记复核修改
+        public int salary_standardUpdate(salary_standard sl)
+        {
+            return Update(sl,sl.ssd_id);
+        }
+        //模糊查询分页
+        public List<salary_standard> SelectBy(string sql, out int rows, int IndexPage, int PageSize)
+        {
+            var dt = hr.salary_standard.SqlQuery(sql).ToList();
+            rows = dt.Count();//行数
+            return dt.Skip((IndexPage-1)* PageSize).Take(PageSize).ToList();
+        }
+       
 
     }
 }
