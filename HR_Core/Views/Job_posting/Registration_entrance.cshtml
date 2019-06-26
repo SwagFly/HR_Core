@@ -53,36 +53,79 @@
 		}
     </script> @*自动时间更改*@
     <script type="text/javascript">
-      //非空判断
- 	  // function mysubmit(){
- 	  // 	document.getElementById('deadline').value = document
-	  //  		.getElementById('date_start').value;
- 	  //  if(document.getElementById("firstKindId").value==""){
- 	  //     alert("请选择一级机构");
- 	  //     return ;
- 	  //     }
- 	  //if(document.getElementById("engageType").value==""){
- 	  //     alert("请选择招聘类型");
- 	  //     return ;
- 	  //     }
- 	  //if(document.getElementById("majorKindId").value==""){
- 	  //     alert("请选择职位分类");
- 	  //     return ;
- 	  //     }
- 	  // if(document.getElementById("majorId").value==""){
- 	  //     alert("请选择职位名称");
- 	  //     return ;
- 	  //     }
- 	  //if(document.getElementById("humanAmount").value==""){
- 	  // alert("请填写招聘人数");
- 	  //     return ;
- 	  //}
- 	  //if(document.getElementById("date_start").value==""){
- 	  // alert("请选择截止日期");
- 	  //     return ;
- 	  //}
-	  //    	document.humanfileForm.submit();
-	  //}
+        var classInsert = null;
+          //非空判断
+        function mysubmit() {
+ 	   	    //document.getElementById('deadline').value = document
+	    	//	    .getElementById('date_start').value;
+ 	        if (document.getElementById("firstKindId").value == "") {
+ 	           alert("请选择一级机构");
+ 	           return ;
+ 	           }
+ 	        if (document.getElementById("engageType").value == "") {
+ 	           alert("请选择招聘类型");
+ 	           return ;
+ 	           }
+ 	        if(document.getElementById("majorKindId").value==""){
+ 	           alert("请选择职位分类");
+ 	           return ;
+ 	           }
+ 	        if(document.getElementById("majorId").value==""){
+ 	           alert("请选择职位名称");
+ 	           return ;
+ 	           }
+ 	        if(document.getElementById("humanAmount").value==""){
+ 	            alert("请填写招聘人数");
+ 	           return ;
+ 	        }
+ 	        if(document.getElementById("date_start").value==""){
+ 	            alert("请填写截止日期");
+ 	           return ;
+ 	        }
+            //日期格式判断：2019-01-01
+ 	        var datePattern = /^(?:19|20)[0-9][0-9]-(?:(?:0[1-9])|(?:1[0-2]))-(?:(?:[0-2][1-9])|(?:[1-3][0-1]))$/;
+ 	        if (!datePattern.test(document.getElementById("date_start").value)) {
+ 	            alert("请填写正确日期");
+ 	            return;
+ 	        }
+ 	        if (isNaN(document.getElementById("humanAmount").value)) {
+ 	            alert("请填写正确招聘人数");
+ 	            return;
+ 	        }
+            ////
+ 	        //var strStartTime = document.getElementById("nowTime").value;
+ 	        //var endTime = document.getElementById("date_start").value;
+            ////
+ 	        //var startNum = parseInt(strStartTime.replace(/-/g, ''), 10);
+ 	        //var endNum = parseInt(endTime.replace(/-/g, ''), 10);
+ 	        //if (startNum > endNum) {
+ 	        //    alert("结束时间不能在开始时间之前！");
+ 	        //    return;
+ 	        //}
+            //
+ 	        classInsert = {
+ 	            first_kind_id: $("#firstKindId option:selected").val(),
+ 	            first_kind_name: $("#firstKindId option:selected").text(),
+ 	            second_kind_id: $("#secondKindId option:selected").val(),
+ 	            second_kind_name: $("#secondKindId option:selected").text(),
+ 	            third_kind_id: $("#thirdKindId option:selected").val(),
+ 	            third_kind_name: $("#thirdKindId option:selected").text(),
+ 	            major_kind_id: $("#majorKindId option:selected").val(),
+ 	            major_kind_name: $("#majorKindId option:selected").text(),
+ 	            major_id: $("#majorId option:selected").val(),
+ 	            major_name: $("#majorId option:selected").text(),
+ 	            human_amount: document.getElementById("humanAmount").value,
+ 	            engage_type: $("#engageType option:selected").text(),
+ 	            deadline: document.getElementById("date_start").value,
+ 	            register: document.getElementById("register").value,
+ 	            changer: "",
+ 	            regist_time: document.getElementById("nowTime").value,
+ 	            change_time: "",
+ 	            major_describe: document.getElementById("mianShu").value,
+ 	            engage_required: document.getElementById("yaoQiu").value
+ 	        };
+ 	    }
+        //加载事件
         $(function () {
             //一级机构Vue
             var kindIdVue = new Vue({//Vue类
@@ -198,8 +241,6 @@
                     }
                 }
             });
-
-
             //进入页面加载一级页面
             kindIdVue.firstKindIdVue();
             //进入页面加载职位分类
@@ -235,11 +276,34 @@
                     $(this).val(result);
                 }
             })
+            
+            $("#submitClass").click(function () {
+                mysubmit();
+                if (classInsert!=null) {
+                    $.ajax({
+                        url: "classInsert",
+                        type: "post",
+                        data: "insert=" + JSON.stringify(classInsert),
+                        success: function (msg) {
+                            var ok = eval("(" + msg + ")");
+                            if (ok == "1") {
+                                alert('添加成功！');
+                                $("#text")[0].reset();//清空填写框
+                            } else {
+                                alert('添加失败！');
+                            }
+                        }
+                    })
+                }
+            });
+
+
+
         })
     </script>
 </head>
 <body>
-    <form name="humanfileForm" method="post" action="position_change_update.html">
+    <form name="humanfileForm" method="post" action="position_change_update.html" id="text">
         <table width="100%">
             <tr>
                 <td>
@@ -248,7 +312,7 @@
             </tr>
             <tr>
                 <td align="right">
-                    <input type="button" value="提交" class="BUTTON_STYLE1" onclick="mysubmit();">
+                    <input type="button" value="提交" class="BUTTON_STYLE1" id="submitClass">
                     <input type="reset" value="清除" class="BUTTON_STYLE1">
                 </td>
             </tr>
@@ -330,7 +394,7 @@
                     登记人
                 </td>
                 <td class="TD_STYLE2">
-                    <input type="text" name="emajorRelease.register" value="@ViewData["admin"]" class="INPUT_STYLE2" readonly>
+                    <input type="text" name="emajorRelease.register" id="register" value="@ViewData["admin"]" class="INPUT_STYLE2" readonly>
                 </td>
                 <td class="TD_STYLE1">
                     登记时间
@@ -344,7 +408,7 @@
                     职位描述
                 </td>
                 <td class="TD_STYLE2" colspan="8">
-                    <textarea name="emajorRelease.majorDescribe" rows="4" cols="80" class="TEXTAREA_STYLE1"></textarea>
+                    <textarea id="mianShu" name="emajorRelease.majorDescribe" rows="4" cols="80" class="TEXTAREA_STYLE1"></textarea>
                 </td>
             </tr>
             <tr>
@@ -352,7 +416,7 @@
                     招聘要求
                 </td>
                 <td class="TD_STYLE2" colspan="8">
-                    <textarea name="emajorRelease.engageRequired" rows="4" cols="80" class="TEXTAREA_STYLE1"></textarea>
+                    <textarea id="yaoQiu" name="emajorRelease.engageRequired" rows="4" cols="80" class="TEXTAREA_STYLE1"></textarea>
                 </td>
             </tr>
         </table>

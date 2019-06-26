@@ -30,5 +30,10 @@ namespace IBll
         /// <param name="where"></param>
         /// <returns></returns>
         List<config_file_second_kind> SelectWhere(Expression<Func<config_file_second_kind, bool>> where);
+        /// <summary>
+        /// 查询全部的二级机构
+        /// </summary>
+        /// <returns></returns>
+        List<config_file_second_kind> SelectAllSecond();
     }
 }

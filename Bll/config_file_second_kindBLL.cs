@@ -36,6 +36,14 @@ namespace Bll
             return dao.SelectSecond_kind(second);
         }
         /// <summary>
+        /// 查询全部的二级机构
+        /// </summary>
+        /// <returns></returns>
+        public List<config_file_second_kind> SelectAllSecond()
+        {
+            return dao.SelectAllSecond();
+        }
+        /// <summary>
         /// 根据条件查询二级机构
         /// </summary>
         /// <param name="where"></param>
