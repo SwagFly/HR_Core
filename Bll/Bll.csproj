@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="bonusBLL.cs" />
+    <Compile Include="checkedsBll.cs" />
     <Compile Include="config_file_first_kindBLL.cs" />
     <Compile Include="config_file_second_kindBLL.cs" />
     <Compile Include="config_file_third_kindBLL.cs" />

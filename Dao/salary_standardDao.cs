@@ -15,7 +15,7 @@ namespace Dao
     /// <summary>
     /// 薪酬基本信息IDao
     /// </summary>
-    public class salary_standardDao : DaoBase<salary_standard_details>, salary_standardIDao
+    public class salary_standardDao : DaoBase<salary_standard>, salary_standardIDao
     {
         HR_DBEntities hr = new HR_DBEntities();
         /// <summary>

@@ -49,5 +49,9 @@ namespace Bll
             return dao.PageData(order, where, page);
         }
 
+        public List<salary_standard> SelectAll()
+        {
+            return dao.SelectAll();
+        }
     }
 }

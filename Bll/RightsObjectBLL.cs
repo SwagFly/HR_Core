@@ -26,5 +26,25 @@ namespace Bll
         public List<RightsObject> GetRoleResult(int adminRoleId, int fatherId) {
             return dao.GetRoleResult(adminRoleId,fatherId);
         }
+
+        public List<RightsObject> SelectNotZeroAndClosed()
+        {
+            return dao.SelectNotZeroAndClosed();
+        }
+
+        public List<RightsObject> SelectNotZeroAndOpen()
+        {
+            return dao.SelectNotZeroAndOpen();
+        }
+
+        public List<RightsObject> SelectRolesByrid(int rid, int fid)
+        {
+            return dao.SelectRolesByrid(rid, fid);
+        }
+
+        public List<RightsObject> SelectZeroAndClosed()
+        {
+            return dao.SelectZeroAndClosed();
+        }
     }
 }

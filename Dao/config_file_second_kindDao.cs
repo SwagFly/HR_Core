@@ -13,12 +13,21 @@ namespace Dao
     public class config_file_second_kindDao:DaoBase<config_file_second_kind>, config_file_second_kindIDao
     {
         /// <summary>
+        /// 调动模块
+        /// 查询全部二级机构
+        /// </summary>
+        /// <returns></returns>
+        public List<config_file_second_kind> SelectAllSecond_kind()
+        {
+            return SelectAll();
+        }
+
+        /// <summary>
         /// 查询二级机构
         /// </summary>
         /// <returns></returns>
         public List<config_file_second_kind> SelectSecond_kind(config_file_second_kind second) {
             return SelectWhere(e=>e.second_kind_id.Equals(second.second_kind_id));
         }
-
     }
 }

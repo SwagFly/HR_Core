@@ -199,6 +199,7 @@
     <Compile Include="Controllers\HR_DomeLoginController.cs" />
     <Compile Include="Controllers\HR_DomeMainController.cs" />
     <Compile Include="Controllers\Job_postingController.cs" />
+    <Compile Include="Controllers\register_locateController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="Controllers\Salary_DataController.cs" />
     <Compile Include="Controllers\User_controlControllerController.cs" />
@@ -218,6 +219,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="css\cwcalendar.css" />
     <Content Include="css\table.css" />
+    <Content Include="DatePicker\WdatePicker.js" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -1029,11 +1031,14 @@
     <Content Include="Views\Role\Create.cshtml" />
     <Content Include="Views\Role\Edit.cshtml" />
     <Content Include="Views\Role\Index.cshtml" />
-    <Content Include="Views\Salary_Data\Index.cshtml" />
-    <Content Include="Views\Salary_Data\salarystandard_check_list.cshtml" />
-    <Content Include="Views\Salary_Data\salarystandard_check_success.cshtml" />
-    <Content Include="Views\Salary_Data\salarystandard_query_list.cshtml" />
-    <Content Include="Views\Salary_Data\salarystandard_query_locate.cshtml" />
+    <Content Include="Views\Shared\Salary_Data\Index.cshtml" />
+    <Content Include="Views\Shared\Salary_Data\salarystandard_check_list.cshtml" />
+    <Content Include="Views\Shared\Salary_Data\salarystandard_check_success.cshtml" />
+    <Content Include="Views\Shared\Salary_Data\salarystandard_query_list.cshtml" />
+    <Content Include="Views\Shared\Salary_Data\salarystandard_query_locate.cshtml" />
+    <Content Include="Views\register_locate\Index.cshtml" />
+    <Content Include="Views\register_locate\register_list.cshtml" />
+    <Content Include="Views\register_locate\register.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -131,6 +131,5 @@ namespace Dao
         {
             return models.Database.SqlQuery<T>(sql).ToList();
         }
-
     }
 }

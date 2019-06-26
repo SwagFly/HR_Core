@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="bonusIBLL.cs" />
+    <Compile Include="checkedsIBll.cs" />
     <Compile Include="config_file_first_kindIBLL.cs" />
     <Compile Include="config_file_second_kindIBLL.cs" />
     <Compile Include="config_file_third_kindIBLL.cs" />

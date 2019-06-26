@@ -21,5 +21,10 @@ namespace Dao
         public List<config_file_third_kind> GetThird(config_file_third_kind third) {
             return SelectWhere(e => e.third_kind_id.Equals(third.third_kind_id));
         }
+
+        public List<config_file_third_kind> SelectAllThird()
+        {
+            return SelectAll();
+        }
     }
 }

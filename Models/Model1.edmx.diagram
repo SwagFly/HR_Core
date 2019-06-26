@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="7e33516aa2cc48beb7ccc83c89925ad7" Name="Diagram1" ZoomLevel="37">
+      <Diagram DiagramId="78e1dc22d7f14a108e327412fb06efd7" Name="Diagram1">
         <EntityTypeShape EntityType="HR_DBModel.bonus" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="HR_DBModel.config_file_first_kind" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="HR_DBModel.config_file_second_kind" Width="1.5" PointX="2.75" PointY="3.75" IsExpanded="true" />
@@ -38,6 +38,7 @@
         <EntityTypeShape EntityType="HR_DBModel.training" Width="1.5" PointX="16.75" PointY="7.75" IsExpanded="true" />
         <EntityTypeShape EntityType="HR_DBModel.users" Width="1.5" PointX="16.75" PointY="12.75" IsExpanded="true" />
         <EntityTypeShape EntityType="HR_DBModel.vw_usersAndRole" Width="1.5" PointX="16.75" PointY="15.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HR_DBModel.vw_checked" Width="1.5" PointX="17.375" PointY="18.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
