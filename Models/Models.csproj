@@ -162,6 +162,9 @@
     <Compile Include="users.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="vw_checked.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="vw_usersAndRole.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>

@@ -152,6 +152,7 @@
     </Reference>
     <Reference Include="EntityFramework.SqlServer">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Core">
       <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
@@ -199,9 +200,11 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Controllers\ERDomeController.cs" />
     <Compile Include="Controllers\HR_DomeLoginController.cs" />
     <Compile Include="Controllers\HR_DomeMainController.cs" />
     <Compile Include="Controllers\Job_postingController.cs" />
+    <Compile Include="Controllers\register_locateController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="Controllers\salaryGrantController.cs" />
     <Compile Include="Controllers\Salary_DataController.cs" />
@@ -222,6 +225,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="css\cwcalendar.css" />
     <Content Include="css\table.css" />
+    <Content Include="DatePicker\WdatePicker.js" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -1057,6 +1061,11 @@
     <Content Include="Views\salaryGrant\query_list.cshtml" />
     <Content Include="Views\salaryGrant\query.cshtml" />
     <Content Include="Views\salaryGrant\register_list.cshtml" />
+    <Content Include="Views\Job_posting\classUpdate.cshtml" />
+    <Content Include="Views\Job_posting\updateShow.cshtml" />
+    <Content Include="Views\Job_posting\Position.cshtml" />
+    <Content Include="Views\Job_posting\PositionOut.cshtml" />
+    <Content Include="Views\ERDome\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

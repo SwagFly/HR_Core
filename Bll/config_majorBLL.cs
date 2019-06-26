@@ -8,6 +8,8 @@ using Models;
 using Dao;
 using IDao;
 using IOC;
+using System.Linq.Expressions;
+
 namespace Bll
 {
     /// <summary>
@@ -26,6 +28,9 @@ namespace Bll
             return dao.GetMajor(major);
         }
 
-
+        public List<config_major> SelectWhere(Expression<Func<config_major, bool>> where)
+        {
+            return dao.SelectWhere(where);
+        }
     }
 }

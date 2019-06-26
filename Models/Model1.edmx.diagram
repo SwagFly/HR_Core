@@ -5,6 +5,8 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="87832f6794bf44459b7ba132f282801f" Name="Diagram1" ZoomLevel="87">
+      <Diagram DiagramId="1149a9e2086346ec8c20b1752673c33e" Name="Diagram1" ZoomLevel="10">
+      <Diagram DiagramId="78e1dc22d7f14a108e327412fb06efd7" Name="Diagram1">
         <EntityTypeShape EntityType="HR_DBModel.bonus" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="HR_DBModel.config_file_first_kind" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="HR_DBModel.config_file_second_kind" Width="1.5" PointX="2.75" PointY="3.75" IsExpanded="true" />
@@ -38,6 +40,7 @@
         <EntityTypeShape EntityType="HR_DBModel.training" Width="1.5" PointX="16.75" PointY="7.75" IsExpanded="true" />
         <EntityTypeShape EntityType="HR_DBModel.users" Width="1.5" PointX="16.75" PointY="12.75" IsExpanded="true" />
         <EntityTypeShape EntityType="HR_DBModel.vw_usersAndRole" Width="1.5" PointX="16.75" PointY="15.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HR_DBModel.vw_checked" Width="1.5" PointX="17.375" PointY="18.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

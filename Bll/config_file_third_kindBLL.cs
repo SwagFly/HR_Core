@@ -8,6 +8,8 @@ using Models;
 using Dao;
 using IDao;
 using IOC;
+using System.Linq.Expressions;
+
 namespace Bll
 {
     /// <summary>
@@ -30,6 +32,23 @@ namespace Bll
         public List<config_file_third_kind> third_kind()
         {
             return dao.third_kind();
+        }
+        /// <summary>
+        /// 查询三级机构
+        /// </summary>
+        /// <returns></returns>
+        public List<config_file_third_kind> SelectAllThird()
+        {
+            return dao.SelectAllThird();
+        }
+        /// <summary>
+        /// 根据条件查询三级机构
+        /// </summary>
+        /// <param name="where"></param>
+        /// <returns></returns>
+        public List<config_file_third_kind> SelectWhere(Expression<Func<config_file_third_kind, bool>> where)
+        {
+            return dao.SelectWhere(where);
         }
     }
 }

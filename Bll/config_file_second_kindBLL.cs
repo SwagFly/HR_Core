@@ -8,6 +8,8 @@ using Models;
 using Dao;
 using IDao;
 using IOC;
+using System.Linq.Expressions;
+
 namespace Bll
 {
     /// <summary>
@@ -16,6 +18,16 @@ namespace Bll
     public class config_file_second_kindBLL: config_file_second_kindIBLL
     {
         private static config_file_second_kindIDao dao = IocType.GetIocType<config_file_second_kindDao>("config_file_second_kindDao", "config_file_second_kindDao");
+        /// <summary>
+        ///调动模块
+        /// 查询全部二级机构
+        /// </summary>
+        /// <returns></returns>
+        public List<config_file_second_kind> SelectAllSecond_kind()
+        {
+            return dao.SelectAllSecond_kind();
+        }
+
         /// <summary>
         /// 查询二级机构
         /// </summary>
@@ -27,6 +39,23 @@ namespace Bll
         public List<config_file_second_kind> Second_kind()
         {
             return dao.Second_kind();
+        }
+        /// <summary>
+        /// 查询全部的二级机构
+        /// </summary>
+        /// <returns></returns>
+        public List<config_file_second_kind> SelectAllSecond()
+        {
+            return dao.SelectAllSecond();
+        }
+        /// <summary>
+        /// 根据条件查询二级机构
+        /// </summary>
+        /// <param name="where"></param>
+        /// <returns></returns>
+        public List<config_file_second_kind> SelectWhere(Expression<Func<config_file_second_kind, bool>> where)
+        {
+            return dao.SelectWhere(where);
         }
     }
 }

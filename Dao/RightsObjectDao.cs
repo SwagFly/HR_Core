@@ -27,6 +27,32 @@ namespace Dao
             return SelectSQL(sql);
         }
 
+        public List<RightsObject> SelectNotZeroAndClosed()
+        {
+            string sql = string.Format(@"select * from [dbo].[RightsObject] where [fid]!=0 and [state]='open'");
+            return SelectSQL(sql);
+        }
 
+        public List<RightsObject> SelectNotZeroAndOpen()
+        {
+            string sql = string.Format(@"select * from [dbo].[RightsObject] where [fid]!=0 and [state]='closed'");
+            return SelectSQL(sql);
+        }
+        public List<RightsObject> SelectRolesByrid(int rid,int fid)
+        {
+            string sql = string.Format(@"select id,[text],[state],case
+	            when p.roid is null then 0
+	            else 1
+	            end as checked
+            from dbo.RightsObject ro
+            left join(select roid from dbo.Permission where rid={0}) p on p.roid=ro.id where fid={1}", rid, fid);
+            return SelectSQL(sql);
+        }
+
+        public List<RightsObject> SelectZeroAndClosed()
+        {
+            string sql = string.Format(@"select * from [dbo].[RightsObject] where [fid]=0 and [state]='closed'");
+            return SelectSQL(sql);
+        }
     }
 }

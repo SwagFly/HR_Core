@@ -65,5 +65,9 @@ namespace Bll
         }
        
 
+        public List<salary_standard> SelectAll()
+        {
+            return dao.SelectAll();
+        }
     }
 }

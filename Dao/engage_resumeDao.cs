@@ -13,5 +13,13 @@ namespace Dao
     /// </summary>
     public class engage_resumeDao : DaoBase<engage_resume>, engage_resumeIDao
     {
+        /// <summary>
+        /// 添加
+        /// </summary>
+        /// <param name="resume"></param>
+        /// <returns></returns>
+        public int InsertResume(engage_resume resume) {
+            return Insert(resume);
+        }
     }
 }

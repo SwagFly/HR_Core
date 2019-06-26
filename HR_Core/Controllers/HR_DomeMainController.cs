@@ -39,12 +39,10 @@ namespace HR_Core.Controllers
         public ActionResult MainTreeShow() {
             users admin = Session["userClass"] as users;//获取登录者信息
             int adminRole = admin.rid;//获取登录者权限
-
             int treeId = 0;
             if (Request["id"] != null) {
                 treeId = Convert.ToInt32(Request["id"]);
             }
-
             List<RightsObject> rigList = rigBll.GetRoleResult(adminRole,treeId);
             return Content(JsonConvert.SerializeObject(rigList));
         }

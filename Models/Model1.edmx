@@ -619,6 +619,18 @@
           <Property Name="rid" Type="int" Nullable="false" />
         </EntityType>
         <!--生成过程中发现错误:
+警告 6002: 表/视图“HR_DB.dbo.vw_checked”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+        <EntityType Name="vw_checked">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="checked" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="text" Type="varchar" MaxLength="50" />
+          <Property Name="state" Type="varchar" MaxLength="50" />
+          <Property Name="checked" Type="int" Nullable="false" />
+        </EntityType>
+        <!--生成过程中发现错误:
 警告 6002: 表/视图“HR_DB.dbo.vw_usersAndRole”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
         <EntityType Name="vw_usersAndRole">
           <Key>
@@ -674,6 +686,14 @@
           <EntitySet Name="salary_standard_details" EntityType="Self.salary_standard_details" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="training" EntityType="Self.training" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="users" EntityType="Self.users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="vw_checked" EntityType="Self.vw_checked" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vw_checked].[id] AS [id], 
+    [vw_checked].[text] AS [text], 
+    [vw_checked].[state] AS [state], 
+    [vw_checked].[checked] AS [checked]
+    FROM [dbo].[vw_checked] AS [vw_checked]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="vw_usersAndRole" EntityType="Self.vw_usersAndRole" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [vw_usersAndRole].[u_id] AS [u_id], 
@@ -685,8 +705,7 @@
     FROM [dbo].[vw_usersAndRole] AS [vw_usersAndRole]</DefiningQuery>
           </EntitySet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="HR_DBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -1358,7 +1377,18 @@
           <FunctionImport Name="procSalaryGrant">
             <Parameter Name="danhao" Mode="InOut" Type="String" />
           </FunctionImport>
+          <EntitySet Name="vw_checked" EntityType="HR_DBModel.vw_checked" />
         </EntityContainer>
+        <EntityType Name="vw_checked">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="checked" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="text" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="state" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="checked" Type="Int32" Nullable="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2024,6 +2054,16 @@
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="procDanHao" FunctionName="HR_DBModel.Store.procDanHao" />
           <FunctionImportMapping FunctionImportName="procSalaryGrant" FunctionName="HR_DBModel.Store.procSalaryGrant" />
+          <EntitySetMapping Name="vw_checked">
+            <EntityTypeMapping TypeName="HR_DBModel.vw_checked">
+              <MappingFragment StoreEntitySet="vw_checked">
+                <ScalarProperty Name="checked" ColumnName="checked" />
+                <ScalarProperty Name="state" ColumnName="state" />
+                <ScalarProperty Name="text" ColumnName="text" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
