@@ -39,5 +39,13 @@ namespace Dao
         public List<config_file_second_kind> SelectAllSecond() {
             return SelectAll();
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public List<config_file_second_kind> Second_kind()
+        {
+            return SelectAll();
+        }
     }
 }

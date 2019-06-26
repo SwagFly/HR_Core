@@ -1,0 +1,467 @@
+﻿@model Models.major_change
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" href="../../css/table.css" type="text/css">
+    <script type="text/javascript" src="../../javascript/jquery-1.7.2.js"></script>
+    <script type="text/javascript">
+        //新一级机构
+        $(function () {
+            $.ajax({
+                url: "/register_locate/SelectFirst",
+                type: "get",
+                success: function (msg) {
+                    var data = eval("(" + msg + ")");
+                    for (var i = 0; i < data.length; i++) {
+                        var $tr = $("<option  bk='" + data[i]["first_kind_id"] + "'  value='" + data[i]["first_kind_name"] + "'>" + data[i]["first_kind_name"] + '</option>')
+                        $("#secondKindId").append($tr);
+                    }
+                }
+            });
+        });
+        //第一个下拉列表隐藏值
+        $(function () {
+            $(document).on("change", "#secondKindId", function () {
+                //隐藏vlaue
+                $("#ycid").val($(this).val());
+                $("#ycid3").val("");
+                $("#ycid2").val("");
+            });
+        });
+        //第二个下拉列表隐藏值
+        $(function () {
+            $(document).on("change", "#secondKindId2", function () {
+                //隐藏vlaue
+                $("#ycid2").val($(this).val());
+                $("#ycid3").val("");
+            });
+        })
+        //第三个下拉列表隐藏值
+        $(function () {
+            $(document).on("change", "#thirdKindId3", function () {
+                //隐藏vlaue
+                $("#ycid3").val($(this).val());
+            });
+        })
+        //当第一个下拉列表选择值得时候 第二个下拉列表就能选东西了
+        $(function () {
+            $(document).on("change", "#secondKindId", function () {
+                $("#first_id").val($(this).find("option:selected").attr("bk"));
+                if ($("#ycid").val() == "-----请选择-----") {
+                    $("#secondKindId2").find("option").remove();
+                    $("#thirdKindId3").find("option").remove();
+                    $("#secondKindId2").prepend("<option bk2='0'>-----请选择-----</option>");
+                    $("#thirdKindId3").prepend("<option bk3='0''>-----请选择-----</option>");
+                } else {
+                    $("#secondKindId2").find("option").remove();
+                    $("#thirdKindId3").find("option").remove();
+                    $("#secondKindId2").prepend("<option bk2='0''>-----请选择-----</option>");
+                    $("#thirdKindId3").prepend("<option bk3='0''>-----请选择-----</option>");
+                    $.ajax({
+                        url: "/register_locate/SelectSecondByWhere",
+                        data: "firstname=" + $("#ycid").val(),
+                        type: "get",
+                        success: function (msg) {
+                            var data = eval("(" + msg + ")");
+                            for (var i = 0; i < data.length; i++) {
+                                var $tr = $("<option bk2='" + data[i]["second_kind_id"] + "'  value='" + data[i]["second_kind_name"] + "'>" + data[i]["second_kind_name"] + '</option>')
+                                $("#secondKindId2").append($tr);
+                            }
+                        }
+                    });
+                }
+            });
+        })
+        //当第二个下拉列表选择值得时候 第三个下拉列表就能选东西了
+        $(function () {
+            $(document).on("change", "#secondKindId2", function () {
+                $("#second_id").val($(this).find("option:selected").attr("bk2"));
+                //隐藏vlaue
+                if ($("#ycid2").val() == "-----请选择-----") {
+                    $("#thirdKindId3").find("option").remove();
+                    $("#thirdKindId3").prepend("<option bk3='0'>-----请选择-----</option>");
+                } else {
+                    $("#thirdKindId3").find("option").remove();
+                    $("#thirdKindId3").prepend("<option bk3='0'>-----请选择-----</option>");
+                    $.ajax({
+                        url: "/register_locate/SelectThirdByWhere",
+                        data: "secondname=" + $("#ycid2").val(),
+                        type: "get",
+                        success: function (msg) {
+                            var data = eval("(" + msg + ")");
+                            for (var i = 0; i < data.length; i++) {
+                                var $tr = $("<option bk3='" + data[i]["third_kind_id"] + "'  value='" + data[i]["third_kind_name"] + "'>" + data[i]["third_kind_name"] + '</option>')
+                                $("#thirdKindId3").append($tr);
+                            }
+                        }
+                    });
+                }
+            });
+        })
+        //三级机构的下拉选中给文本框赋值
+        $(function () {
+            $(document).on("change", "#thirdKindId3", function () {
+                $("#third_id").val($(this).find("option:selected").attr("bk3"));
+                //隐藏vlaue
+            });
+        })
+        //自动生成新职位分类
+        $(function () {
+            $.ajax({
+                url: "/register_locate/SelectConfig_major_kind",
+                type: "get",
+                success: function (msg) {
+                    var data = eval("(" + msg + ")");
+                    for (var i = 0; i < data.length; i++) {
+                        var $tr = $("<option zw='" + data[i]["major_kind_id"] + "'  value='" + data[i]["major_kind_name"] + "'>" + data[i]["major_kind_name"] + '</option>')
+                        $("#zhiwei").append($tr);
+                    }
+                }
+            });
+        });
+        //隐藏新职位的vlaue
+        $(function () {
+            $(document).on("change", "#zhiwei", function () {
+                //藏vlaue
+                $("#ycid4").val($(this).val());
+                $("#ycid5").val("");
+            });
+        });
+        //新职位名称发生改变就给隐藏赋值
+        $(function () {
+            $(document).on("change", "#zhiweiname", function () {
+                //藏vlaue
+                $("#ycid5").val($(this).val());
+                $("#newzhiwei2").val($(this).find("option:selected").attr("zw2"));
+            });
+        });
+        //根据职位分类查询职位名称
+        $(function () {
+            $(document).on("change", "#zhiwei", function () {
+                $("#newzhiwei").val($(this).find("option:selected").attr("zw"));
+                if ($("#ycid4").val() == "-----请选择-----") {
+                    $("#zhiweiname").find("option").remove();
+                    $("#zhiweiname").prepend("<option zw2='0'>-----请选择-----</option>");
+                } else {
+                    $("#zhiweiname").find("option").remove();
+
+                    $("#zhiweiname").prepend("<option zw2='0''>-----请选择-----</option>");
+                    $.ajax({
+                        url: "/register_locate/Selectconfig_majorBymajor_kind_name",
+                        data: "MajorKindName=" + $("#ycid4").val(),
+                        type: "get",
+                        success: function (msg) {
+                            var data = eval("(" + msg + ")");
+                            for (var i = 0; i < data.length; i++) {
+                                var $tr = $("<option zw2='" + data[i]["major_id"] + "'  value='" + data[i]["major_name"] + "'>" + data[i]["major_name"] + '</option>')
+                                $("#zhiweiname").append($tr);
+                            }
+                        }
+                    });
+                }
+            });
+        })
+        //新酬薪标准自动生成
+        $(function () {
+            $.ajax({
+                url: "/register_locate/SelectSalary_standard",
+                type: "get",
+                success: function (msg) {
+                    var data = eval("(" + msg + ")");
+                    for (var i = 0; i < data.length; i++) {
+                        var $tr = $("<option sum='" + data[i]["salary_sum"] + "'  zx='" + data[i]["standard_id"] + "'  value='" + data[i]["standard_name"] + "'>" + data[i]["standard_name"] + '</option>')
+                        $("#money").append($tr);
+                    }
+                }
+            });
+        });
+        //当你新酬薪发生改变的时候
+        $(document).on("change", "#money", function () {
+            //$("#ycid6").val($(this).val());newSalarySum
+            $("#moneyid").val($(this).find("option:selected").attr("zx"));
+            //sum是<option>标签中自定义的属性，是为了获取后台传过来的值
+            var bianhao = $(this).find("option:selected").attr("sum");
+            //向input输入框中赋值
+            $("#newSalarySum").val(bianhao+".00");
+        });
+    </script>
+</head>
+<body>
+    @using (Html.BeginForm("register", "register_locate",FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        <table width="100%">
+            <tr>
+                <td>
+                    <font color="#0000CC">您正在做的业务是:人力资源--调动管理--调动登记</font>
+                </td>
+            </tr>
+
+            <tr>
+                <td align="right">
+                    <input type="button" value="提交" class="BUTTON_STYLE1" onclick="mySubmit()">
+                    <input type="button" class="BUTTON_STYLE1"
+                           onclick="javascript:window.history.back();" value="返回">
+                </td>
+            </tr>
+        </table>
+        <table width="100%" border="1" cellpadding=0 cellspacing=1
+               bordercolorlight=#848284 bordercolordark=#eeeeee
+               class="TABLE_STYLE1">
+            <tr height="21">
+                <td class="TD_STYLE1" width="8%">
+                    档案编号
+                </td>
+                <td class="TD_STYLE2" width="10%">
+                    @Html.EditorFor(model => model.human_id, new { htmlAttributes = new { @class = "INPUT_STYLE2", @readonly = "readonly" } })
+                    <input type="hidden" name="mch_id" value="@Model.mch_id">
+                </td>
+                <td class="TD_STYLE1" width="8%">
+                    姓名
+                </td>
+                <td class="TD_STYLE2" width="10%">
+                    @Html.EditorFor(model => model.human_name, new { htmlAttributes = new { @class = "INPUT_STYLE2", @readonly = "readonly" } })
+                </td>
+                <td class="TD_STYLE1" width="8%"></td>
+                <td class="TD_STYLE2" width="10%"></td>
+                <td class="TD_STYLE1" width="8%"></td>
+                <td class="TD_STYLE2" width="10%"></td>
+            </tr>
+            <tr>
+                <td class="TD_STYLE1" width="8%">
+                    原一级机构
+                </td>
+                <td class="TD_STYLE2">
+                    @Html.EditorFor(model => model.first_kind_name, new { htmlAttributes = new { @class = "INPUT_STYLE2", @readonly = "readonly" } })
+                    <input type="hidden" name="first_kind_id" value="@Model.first_kind_id">
+                </td>
+                <td class="TD_STYLE1" width="8%">
+                    原二级机构
+                </td>
+                <td class="TD_STYLE2" width="10%">
+                    @Html.EditorFor(model => model.second_kind_name, new { htmlAttributes = new { @class = "INPUT_STYLE2", @readonly = "readonly" } })
+                    <input type="hidden" name="second_kind_id" value="@Model.second_kind_id">
+                </td>
+                <td class="TD_STYLE1" width="8%">
+                    原三级机构
+                </td>
+                <td class="TD_STYLE2" width="10%">
+                    @Html.EditorFor(model => model.third_kind_name, new { htmlAttributes = new { @class = "INPUT_STYLE2", @readonly = "readonly", @id = "sanji" } })
+                    <input type="hidden" name="third_kind_id" value="@Model.third_kind_id">
+                </td>
+                <td class="TD_STYLE1" width="8%"></td>
+                <td class="TD_STYLE2" width="10%"></td>
+            </tr>
+            <tr>
+                <td class="TD_STYLE1">
+                    原职位分类
+                </td>
+                <td class="TD_STYLE2">
+                    @Html.EditorFor(model => model.major_kind_name, new { htmlAttributes = new { @class = "INPUT_STYLE2", @readonly = "readonly" } })
+                    <input type="hidden" name="major_kind_id" value="@Model.major_kind_id">
+                </td>
+                <td class="TD_STYLE1" width="12%">
+                    原职位名称
+                </td>
+                <td class="TD_STYLE2">
+                    @Html.EditorFor(model => model.major_name, new { htmlAttributes = new { @class = "INPUT_STYLE2", @readonly = "readonly", @id = "zhiwei_1" } })
+                    <input type="hidden" name="major_id" value="@Model.major_id">
+                </td>
+                <td class="TD_STYLE1">
+                    原薪酬标准
+                </td>
+                <td class="TD_STYLE2">
+                    @Html.EditorFor(model => model.salary_standard_name, new { htmlAttributes = new { @class = "INPUT_STYLE2", @readonly = "readonly" } })
+                    <input type="hidden" name="salary_standard_id" value="@Model.salary_standard_id">
+                </td>
+                <td class="TD_STYLE1">
+                    原薪酬总额
+                </td>
+                <td class="TD_STYLE2">
+                    @Html.EditorFor(model => model.salary_sum, new { htmlAttributes = new { @class = "INPUT_STYLE2", @readonly = "readonly" } })
+                </td>
+            </tr>
+            <tr>
+                <td class="TD_STYLE1">
+                    新一级机构名称
+                </td>
+                <td class="TD_STYLE2">
+                    <script type="text/javascript">
+						function mySubmit(){
+						    if (document.getElementById("secondKindId").value == '0') {
+							alert("请选择新一级结构！");
+								return ;
+						}
+						    if (document.getElementById("zhiwei").value == '0') {
+							alert("请选择新职位分类！");
+								return ;
+						}
+						    if (document.getElementById("zhiweiname").value == '0') {
+							alert("请选择新职位名称！");
+								return ;
+						}
+						if(document.getElementById("money").value=='0'){
+							alert("请选择新薪酬标准！");
+								return ;
+						}
+						if (document.getElementById("zhiweiname").value == document.getElementById("zhiwei_1").value) {
+						    alert("新职位名称不能和原职位名称一样")
+						    return;
+						}
+						if (document.getElementById("thirdKindId3").value == document.getElementById("sanji").value) {
+						    alert("新三机机构不能和原三机构一样")
+						    return;
+						}
+						document.forms[0].submit();
+						}
+                    </script>
+                    <select style="width:160px" name="new_first_kind_name" id="secondKindId" size="1" class="SELECT_STYLE2">
+                        <option bk="0" value="0">-----请选择-----</option>
+                    </select>
+                    <input type="hidden" name="new_first_kind_id" id="first_id">
+                </td>
+                <td class="TD_STYLE1" width="12%">
+                    新二级机构名称
+                </td>
+                <td class="TD_STYLE2">
+                    <select style="width:160px" name="new_second_kind_name" id="secondKindId2" size="1" class="SELECT_STYLE2">
+                        <option value="0">-----请选择-----</option>
+                    </select>
+                    <input type="hidden" name="new_second_kind_id" id="second_id">
+                </td>
+                <td class="TD_STYLE1" width="12%">
+                    新三级机构名称
+                </td>
+                <td class="TD_STYLE2">
+                    <select style="width:160px" name="new_third_kind_name" id="thirdKindId3" size="1" class="SELECT_STYLE2">
+                        <option value="0">-----请选择-----</option>
+
+                    </select>
+                    <input type="hidden" name="new_third_kind_id" id="third_id">
+                </td>
+                <td class="TD_STYLE1" width="8%"></td>
+                <td class="TD_STYLE2" width="10%"></td>
+            </tr>
+            <tr>
+                <td class="TD_STYLE1">
+                    新职位分类
+                </td>
+                <td class="TD_STYLE2">
+                    <select style="width:160px" name="new_major_kind_name" id="zhiwei" size="1" class="SELECT_STYLE2">
+                        <option zw="0" value="0">-----请选择-----</option>
+                    </select>
+                    <input type="hidden" name="new_major_kind_id" id="newzhiwei">
+                </td>
+                <td class="TD_STYLE1" width="12%">
+                    新职位名称
+                </td>
+                <td class="TD_STYLE2">
+                    <select name="new_major_name" id="zhiweiname" class="INPUT_STYLE2">
+                        <option value="0">-----请选择-----</option>
+                    </select>
+                    <input type="hidden" name="new_major_id" id="newzhiwei2">
+                </td>
+                <td class="TD_STYLE1">
+                    新薪酬标准
+                </td>
+                <td class="TD_STYLE2">
+                    <select style="width:160px" name="new_salary_standard_name" id="money" size="1" class="SELECT_STYLE2">
+                        <option zx="0" value="0">-----请选择-----</option>
+                    </select>
+                    <input type="hidden" name="new_salary_standard_id" id="moneyid">
+                </td>
+                <td class="TD_STYLE1">
+                    新薪酬总额
+                </td>
+                <td class="TD_STYLE2">
+                    <input type="text" name="new_salary_sum" id="newSalarySum" readonly="readonly"
+                           value="0.00" class="INPUT_STYLE2">
+                </td>
+            </tr>
+            <tr>
+                <td class="TD_STYLE1">
+                    登记人
+                </td>
+                <td class="TD_STYLE2">
+                    <input type="text" name="register" id="register_1" readonly="readonly"
+                           value="@Session["uname"]" class="INPUT_STYLE2">
+                </td>
+                <td class="TD_STYLE1">
+                    登记时间
+                </td>
+                <td class="TD_STYLE2">
+                    <input type="text" name="regist_time" readonly="readonly"
+                           id="Tdate" class="INPUT_STYLE2" value="@Model.regist_time">
+                    <SCRIPT type="text/javascript">
+					function time(){
+ 					var tdate=document.getElementById("Tdate");
+ 					var d=new Date();
+ 					var y=d.getFullYear();
+ 					var moth=d.getMonth()+1;
+ 					var date=d.getDate();
+ 					var h=d.getHours();
+ 					var m=d.getMinutes();
+ 					var s=d.getSeconds();
+					var hh=20-1-h;
+					var mm=60-1-m;
+					var ss=60-s;
+					if(hh>0){
+							mm=mm+60*hh;
+					}
+ 					if(moth<10){
+ 							moth="0"+moth;
+ 					}
+ 					if(date<10){
+ 							date="0"+date;
+ 					}
+ 					if(h<10){
+ 							h="0"+h;
+ 					}
+ 					if(m<10){
+ 							m="0"+m;
+ 					}
+ 					if(s<10){
+ 							s="0"+s;
+ 					}
+ 					if(mm<10){
+ 							mm="0"+mm;
+ 					}
+ 					if(ss<10){
+ 							ss="0"+ss;
+ 					}
+ 					tdate.value = h + ":" + m + ":" + s;
+ 				}
+				window.onload=time;
+ 				var out=window.setInterval(time, 1000);
+                    </SCRIPT>
+                </td>
+                <td class="TD_STYLE1"></td>
+                <td class="TD_STYLE2"></td>
+                <td class="TD_STYLE1"></td>
+                <td class="TD_STYLE2"></td>
+            </tr>
+            <tr>
+                <td class="TD_STYLE1">
+                    调动原因
+                </td>
+                <td colspan="7" class="TD_STYLE2">
+                    <textarea name="change_reason" rows="6" class="TEXTAREA_STYLE1"></textarea>
+                </td>
+            </tr>
+        </table>
+    }
+    <div>
+        <input id="ycid" type="hidden" value="" />
+        <input id="ycid2" type="hidden" value="" />
+        <input id="ycid3" type="hidden" value="" />
+        <input id="ycid4" type="hidden" value="" />
+        <input id="ycid5" type="hidden" value="" />
+        <input id="ycid6" type="hidden" value="" />
+    </div>
+</body>
+</html>

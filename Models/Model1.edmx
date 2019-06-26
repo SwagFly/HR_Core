@@ -1372,10 +1372,10 @@
           <EntitySet Name="users" EntityType="Self.users" />
           <EntitySet Name="vw_usersAndRole" EntityType="Self.vw_usersAndRole" />
           <FunctionImport Name="procDanHao">
-            <Parameter Name="danhao" Mode="InOut" Type="String" />
+          <Parameter Name="danhao" Mode="InOut" Type="String" />
           </FunctionImport>
           <FunctionImport Name="procSalaryGrant">
-            <Parameter Name="danhao" Mode="InOut" Type="String" />
+          <Parameter Name="danhao" Mode="InOut" Type="String" />
           </FunctionImport>
           <EntitySet Name="vw_checked" EntityType="HR_DBModel.vw_checked" />
         </EntityContainer>

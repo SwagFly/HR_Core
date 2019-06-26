@@ -1,0 +1,200 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" href="../../css/table.css" type="text/css">
+    <link rel="stylesheet" type="text/css" media="all"
+          href="../../javascript/calendar/calendar-win2k-cold-1.css">
+    <script type="text/javascript" src="../../javascript/calendar/cal.js"></script>
+    <script type="text/javascript" src="../../javascript/comm/comm.js"></script>
+    <script type="text/javascript" src="../../javascript/comm/list.js"></script>
+    <script type="text/javascript" src="../../javascript/jquery-1.7.2.js"></script>
+    <script type="text/javascript" src="../../javascript/calendar-ch.js"></script>
+    <script type="text/javascript" src="../../javascript/comm/time.js"></script>
+    <link rel="stylesheet" href="../../css/cwcalendar.css" type="text/css">
+    <script src="~/DatePicker/WdatePicker.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            //加载一级机构
+            $.ajax({
+                url: "/register_locate/SelectFirst",
+                type: "get",
+                success: function (msg) {
+                    var data = eval("(" + msg + ")");
+                    for (var i = 0; i < data.length; i++) {
+                        var $tr = $("<option id='first' value='" + data[i]["first_kind_name"] + "'>" + data[i]["first_kind_name"] + '</option>')
+                        $("#secondKindId").append($tr);
+                    }
+                }
+            });
+        });
+        //第一个下拉列表藏值
+        $(function () {
+            $(document).on("change", "#secondKindId", function () {
+                //隐藏vlaue
+                $("#ycid").val($(this).val());
+                $("#ycid3").val("");
+                $("#ycid2").val("");
+            });
+        });
+        //第二个下拉列表藏值
+        $(function () {
+            $(document).on("change", "#secondKindId2", function () {
+                //藏vlaue
+                $("#ycid2").val($(this).val());
+                $("#ycid3").val("");
+            });
+        });
+        //第三个下拉列表藏值
+        $(function () {
+            $(document).on("change", "#thirdKindId3", function () {
+                //藏vlaue
+                $("#ycid3").val($(this).val());
+            });
+        });
+        //根据二级机构查三级机构
+        $(function () {
+            $(document).on("change", "#secondKindId2", function () {
+                //藏vlaue
+                if ($("#ycid2").val() == "-----请选择-----") {
+                    $("#thirdKindId3").find("option").remove();
+                    $("#thirdKindId3").prepend("<option value='0'>-----请选择-----</option>");
+                } else {
+                    $("#thirdKindId3").find("option").remove();
+                    $("#thirdKindId3").prepend("<option value='0'>-----请选择-----</option>");
+                    $.ajax({
+                        url: "/register_locate/SelectThirdByWhere",
+                        data: "secondname=" + $("#ycid2").val(),
+                        type: "get",
+                        success: function (msg) {
+                            var data = eval("(" + msg + ")");
+                            for (var i = 0; i < data.length; i++) {
+                                var $tr = $("<option  value='" + data[i]["third_kind_name"] + "'>" + data[i]["third_kind_name"] + '</option>')
+                                $("#thirdKindId3").append($tr);
+                            }
+                        }
+                    });
+                }
+            });
+        });
+        //当第一个下拉列表选择值得时候 第二个下拉列表就能选东西了
+        //根据一级查二级
+        $(function () {
+            $(document).on("change", "#secondKindId", function () {
+                if ($("#ycid").val() == "-----请选择-----") {
+                    $("#secondKindId2").find("option").remove();
+                    $("#thirdKindId3").find("option").remove();
+                    $("#secondKindId2").prepend("<option value='0'>-----请选择-----</option>");
+                    $("#thirdKindId3").prepend("<option value='0'>-----请选择-----</option>");
+                } else {
+                    $("#secondKindId2").find("option").remove();
+                    $("#thirdKindId3").find("option").remove();
+                    $("#secondKindId2").prepend("<option value='0'>-----请选择-----</option>");
+                    $("#thirdKindId3").prepend("<option value='0'>-----请选择-----</option>");
+                    $.ajax({
+                        url: "/register_locate/SelectSecondByWhere",
+                        data: "firstname=" + $("#ycid").val(),
+                        type: "get",
+                        success: function (msg) {
+                            var data = eval("(" + msg + ")");
+                            for (var i = 0; i < data.length; i++) {
+                                var $tr = $("<option   value='" + data[i]["second_kind_name"] + "'>" + data[i]["second_kind_name"] + '</option>')
+                                $("#secondKindId2").append($tr);
+                            }
+                        }
+                    });
+                }
+            });
+        });
+        //时间格式
+        $(".INPUT_STYLE2").click(function () {
+            WdatePicker();
+        });
+        //点击查询
+        $(function () {
+            $(document).on("click", "#bbj", function () {
+                var jwsj = $("#date_start").val();
+                var jwsj2 = $("#date_end").val();
+                $.ajax({
+                    url: "/register_locate/SelectWheres",
+                    data: "first=" + $("#ycid").val() + "&second=" + $("#ycid2").val() + "&third=" + $("#ycid3").val() + "&registtime=" + jwsj + "&checktime=" + jwsj2,
+                    type: "get",
+                    success: function (msg) {
+                        if (msg == "ok") {
+                            location.href = "/register_locate/register_list";
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+    <table width="100%">
+        <tr>
+            <td>
+                <font color="black">您正在做的业务是：人力资源--调动管理--调动登记查询 </font>
+            </td>
+        </tr>
+        <tr>
+            <td align="right">
+                <input type="submit" value="查询"
+                       class="BUTTON_STYLE1" id="bbj">
+            </td>
+        </tr>
+    </table>
+    <input id="ycid" type="hidden" value="" />
+    <input id="ycid2" type="hidden" value="" />
+    <input id="ycid3" type="hidden" value="" />
+    <table width="101%" border="1" cellpadding=0 cellspacing=1
+           bordercolorlight=#848284 bordercolordark=#eeeeee
+           class="TABLE_STYLE1">
+        <tr class="TR_STYLE1">
+            <td width="13%" class="TD_STYLE1">
+                请选择员工所在I级机构
+            </td>
+            <td width="29%" class="TD_STYLE2">
+
+                <select style="width:160px" name="configThird.secondKindId" id="secondKindId" size="1" class="SELECT_STYLE2">
+                    <option value="0">-----请选择-----</option>
+            </td>
+            <td width="13%" class="TD_STYLE1">
+                请选择员工所在II级机构
+            </td>
+            <td width="45%" class="TD_STYLE2">
+
+                <select style="width:160px" name="configThird.secondKindId" id="secondKindId2" size="1" class="SELECT_STYLE2">
+                    <option value="0">-----请选择-----</option>
+
+                </select>
+            </td>
+            <td width="0%"></td>
+        </tr>
+        <tr class="TR_STYLE1">
+            <td width="13%" class="TD_STYLE1">
+                请选择员工所在III级机构
+            </td>
+            <td width="29%" class="TD_STYLE2">
+                <select style="width:160px" name="configThird.thirdKindId" id="thirdKindId3" size="1" class="SELECT_STYLE2">
+                    <option value="0">-----请选择-----</option>
+
+                </select>
+            </td>
+            <td height="18" class="TD_STYLE1">
+                请输入建档时间
+            </td>
+            <td width="45%" class="TD_STYLE2">
+                <input name="utilbean.startDate" onclick="WdatePicker()" type="text" class="INPUT_STYLE2" id="date_start" style="width:24% " value="" size="30">
+                至<input type="text" name="utilbean.endDate" onclick="WdatePicker()" value="" style="width:24% " class="INPUT_STYLE2" id="date_end">
+                （YYYY-MM-DD）
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

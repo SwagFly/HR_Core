@@ -81,7 +81,7 @@ namespace HR_Core.Controllers
         /// <param name="registtime">登记时间</param>
         /// <param name="checktime">复核时间</param>
         /// <returns></returns>
-        string sql = "select * from major_change where 1=1 and [check_status]>0";
+        string sql = "select * from major_change where 1=1 and [check_status]<1";
         public ActionResult SelectWheres(string first,string second,string third,string registtime,string checktime)
         {
             if (third != "" && third != "0")

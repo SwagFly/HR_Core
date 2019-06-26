@@ -1,0 +1,180 @@
+
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>salarystandard_query_list</title>
+    <link rel="stylesheet" href="~/css/table.css" type="text/css" />
+    <script type="text/javascript" src="~/javascript/jquery-1.7.2.js"></script>
+
+    <script type="text/javascript">
+
+    var size = 2;//自己设置每页要显示数
+    var Pageindex = 1;//显示第一页
+    var pages = 0;//总行数
+    $(function () {
+        Fill();
+    })
+    function changeDateFormat(val) {
+        if (val != null) {
+            var date = new Date(parseInt(val.replace("/Date(", "").replace(")/", ""), 10));
+            //月份为0-11所以+1，月份小于10补个0
+            var month = date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1;
+            var currentDate = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
+            var hour = date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
+            var minute = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
+            var second = date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();
+            var dd = date.getFullYear() + "-" + month + "-" + currentDate + " " + hour + ":" + minute + ":" + second;
+            return dd;
+        }
+    }//出现时间/Date/1203213443/错误 用此方法即可转换回来
+    function Fill() {
+        $.ajax({
+            url: "salarystandard_change_listFenYe",
+            data: "size=" + size + "&index=" + Pageindex,
+            type: "post",
+            success: function (data) {
+                var zhi = data["list"];
+                Pageindex = data["index"];
+                pages = data["pages"];
+                $("#zong").html(data["rows"]);//显示总条数
+                $("#zong2").html("符合条件的薪酬标准总数:"+ data["rows"]);
+                $("#mei").html(size);//每页显示数
+                $("#dang").html(Pageindex);//当前页
+                $("#gong").html(pages);
+                $(".index").html(Pageindex);
+                $(".pages").html(pages);
+                $("#tb tr:gt(0)").remove();
+                for (var i = 0; i < zhi.length; i++) {
+                    var $tr = $('<tr class="TD_STYLE2"></tr>');
+                    var $td0 = $('<td>'+zhi[i]["standard_id"]+'</td>');
+                    var $td1 = $('<td>' + zhi[i]["standard_name"] + '</td>');
+                    var $td2 = $('<td>' + zhi[i]["designer"] + '</td>');
+                    var $td3 = $('<td>' + changeDateFormat(zhi[i]["regist_time"]) + '</td>');
+                    var $td4 = $('<td>&nbsp;' + zhi[i]["salary_sum"] + '</td>');
+                    var $td5 = $('<td><a href="salarystandard_change/'+zhi[i]["ssd_id"]+'">'+'变更</a></td>');
+                    $tr.append($td0, $td1, $td2, $td3, $td4,$td5);
+                    $("#tb").append($tr);
+                }
+            }
+        })
+    }
+    function up() {
+        if (Pageindex > 1) {
+            Pageindex--;
+        }
+        Fill();
+    }
+    function down() {
+        if (Pageindex < pages) {
+            Pageindex++;
+        }
+        Fill();
+    }
+    function go() {
+        var num = $("#currPage").val();
+        if (num > 0 && num <= pages) {
+            Pageindex = num;
+            Fill();
+        } else {
+            alert("请输入正确页码！");
+        }
+    }
+    function shou() {
+        Pageindex = 1;
+        Fill();
+    }
+    function wei() {
+
+        Pageindex = pages;
+        Fill();
+    }
+    </script>
+
+    <style type="text/css">
+        .style3 {
+            color: #0000CC;
+        }
+    </style>
+</head>
+<body>
+    <table width="100%">
+        <tr>
+            <td>
+                <font color="black">您正在做的业务是:人力资源管理--薪酬标准管理--薪酬标准登记查询</font>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                &nbsp;
+            </td>
+        </tr>
+        <tr>
+
+            <td id="zong2"></td>
+        </tr>
+    </table>
+
+    <table width="100%" border="1" cellpadding=0 cellspacing=1
+           bordercolorlight=#848284 bordercolordark=#eeeeee
+           class="TABLE_STYLE1" id="tb">
+        <tr>
+            <td width="15%" class="TD_STYLE1">
+                <span>薪酬标准编号</span>
+            </td>
+            <td width="20%" class="TD_STYLE1">
+                <span>薪酬标准名称</span>
+            </td>
+            <td width="15%" class="TD_STYLE1">
+                <span>制定人</span>
+            </td>
+            <td width="30%" class="TD_STYLE1">
+                <span>登记时间</span>
+            </td>
+            <td class="TD_STYLE1" width="15%">
+                薪酬总额
+            </td>
+            <td class="TD_STYLE1" width="4%">
+                变更
+            </td>
+        </tr>
+
+
+
+    </table>
+    <div align="center" style="font-size: 18px;color: gray" id="zx">
+        &nbsp;&nbsp;总数：
+        <font id="zong" style="color: maroon;font-weight: bold;">@ViewBag.str</font>
+        例
+        每页显示 <font id="mei" style="color: maroon;font-weight: bold;">10</font>
+        条
+        &nbsp;&nbsp;&nbsp;
+        当前第 <font id="dang" style="color: maroon;font-weight: bold;">1</font>
+        页
+        &nbsp;&nbsp;&nbsp;共
+        <font id="gong" style="color: maroon;font-weight: bold;">2</font>
+        页
+        <a style="color: navy;font-weight: bold" href="javascript:shou()">首页</a>
+        <a style="color: navy;font-weight: bold"
+           href="javascript:up()">上一页</a>
+
+        <a style="color: navy;font-weight: bold"
+           href="javascript:down(2)">下一页</a>
+
+        <a style="color: navy;font-weight: bold"
+           href="javascript:wei()">末页</a>
+        &nbsp;&nbsp;&nbsp;跳到第
+        <input id=currPage type=text value="1" class=input1 size=1>
+        页&nbsp;&nbsp;
+        <input type="image" onclick="go()" src="~/images/go.bmp" width=18 height=18 border=0>
+        <input type="hidden" name="page.startPage" id="startpage" value="1">
+    </div>
+
+
+
+</body>
+</html>
