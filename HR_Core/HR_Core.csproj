@@ -149,6 +149,7 @@
     </Reference>
     <Reference Include="EntityFramework.SqlServer">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Core">
       <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
@@ -196,6 +197,7 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Controllers\ERDomeController.cs" />
     <Compile Include="Controllers\HR_DomeLoginController.cs" />
     <Compile Include="Controllers\HR_DomeMainController.cs" />
     <Compile Include="Controllers\Job_postingController.cs" />
@@ -1034,6 +1036,11 @@
     <Content Include="Views\Salary_Data\salarystandard_check_success.cshtml" />
     <Content Include="Views\Salary_Data\salarystandard_query_list.cshtml" />
     <Content Include="Views\Salary_Data\salarystandard_query_locate.cshtml" />
+    <Content Include="Views\Job_posting\classUpdate.cshtml" />
+    <Content Include="Views\Job_posting\updateShow.cshtml" />
+    <Content Include="Views\Job_posting\Position.cshtml" />
+    <Content Include="Views\Job_posting\PositionOut.cshtml" />
+    <Content Include="Views\ERDome\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

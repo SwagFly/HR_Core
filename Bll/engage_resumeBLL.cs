@@ -16,5 +16,14 @@ namespace Bll
     public class engage_resumeBLL: engage_resumeIBLL
     {
         private static engage_resumeIDao dao = IocType.GetIocType<engage_resumeDao>("engage_resumeDao", "engage_resumeDao");
+        /// <summary>
+        /// 添加
+        /// </summary>
+        /// <param name="resume"></param>
+        /// <returns></returns>
+        public int InsertResume(engage_resume resume)
+        {
+            return dao.InsertResume(resume);
+        }
     }
 }

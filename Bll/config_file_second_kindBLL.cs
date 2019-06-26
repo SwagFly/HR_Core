@@ -23,5 +23,13 @@ namespace Bll
         public List<config_file_second_kind> SelectSecond_kind(config_file_second_kind second) {
             return dao.SelectSecond_kind(second);
         }
+        /// <summary>
+        /// 查询全部的二级机构
+        /// </summary>
+        /// <returns></returns>
+        public List<config_file_second_kind> SelectAllSecond()
+        {
+            return dao.SelectAllSecond();
+        }
     }
 }
