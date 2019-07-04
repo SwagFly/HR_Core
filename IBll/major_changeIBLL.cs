@@ -30,5 +30,18 @@ namespace IBll
         /// <param name="PageSize">总页数</param>
         /// <returns></returns>
         List<major_change> SelectFenYeBySelect(string sql, out int rows, int IndexPage, int PageSize);
+        /// <summary>
+        /// 调动模块
+        /// </summary>
+        /// <param name="change"></param>
+        /// <returns></returns>
+        int Updates(major_change change);
+        /// <summary>
+        /// 调动模块
+        /// 调动登记添加
+        /// </summary>
+        /// <param name="change"></param>
+        /// <returns></returns>
+        int Insert(major_change change);
     }
 }

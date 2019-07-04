@@ -1082,6 +1082,13 @@
     <Content Include="Views\Salary_Data\salarystandard_check_success.cshtml" />
     <Content Include="Views\Salary_Data\salarystandard_query_list.cshtml" />
     <Content Include="Views\Salary_Data\salarystandard_query_locate.cshtml" />
+    <Content Include="Views\register_locate\register_success.cshtml" />
+    <Content Include="Views\register_locate\check_list.cshtml" />
+    <Content Include="Views\register_locate\check.cshtml" />
+    <Content Include="Views\register_locate\check_success.cshtml" />
+    <Content Include="Views\register_locate\locate.cshtml" />
+    <Content Include="Views\register_locate\list.cshtml" />
+    <Content Include="Views\register_locate\detail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -59,8 +59,8 @@ namespace Models
         public virtual DbSet<salary_standard_details> salary_standard_details { get; set; }
         public virtual DbSet<training> training { get; set; }
         public virtual DbSet<users> users { get; set; }
-        public virtual DbSet<vw_usersAndRole> vw_usersAndRole { get; set; }
         public virtual DbSet<vw_checked> vw_checked { get; set; }
+        public virtual DbSet<vw_usersAndRole> vw_usersAndRole { get; set; }
     
         public virtual int procDanHao(ObjectParameter danhao)
         {
