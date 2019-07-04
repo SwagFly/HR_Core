@@ -25,5 +25,13 @@ namespace IDao
         /// <param name="where">职位名称</param>
         /// <returns></returns>
         List<config_major> SelectWhere(Expression<Func<config_major, bool>> where);
+        //新增
+        int config_majorInsert(config_major ma);
+        //删除
+        int config_majorDel(config_major ma, object keyValue);
+        //修改
+        int config_majorUpdate(config_major ma, object keyValue);
+        //查询所有
+        List<config_major> config_majorSelect();
     }
 }

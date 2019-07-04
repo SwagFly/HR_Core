@@ -13,6 +13,26 @@ namespace Dao
     /// </summary>
     public class config_majorDao:DaoBase<config_major>,config_majorIDao
     {
+        public int config_majorDel(config_major ma, object keyValue)
+        {
+            return Delete(ma,keyValue);
+        }
+
+        public int config_majorInsert(config_major ma)
+        {
+            return Insert(ma);
+        }
+
+        public List<config_major> config_majorSelect()
+        {
+            return SelectAll();
+        }
+
+        public int config_majorUpdate(config_major ma, object keyValue)
+        {
+            return Update(ma,keyValue);
+        }
+
         /// <summary>
         /// 查询所有职位名称
         /// </summary>

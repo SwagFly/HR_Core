@@ -1,192 +1,191 @@
 ﻿@model List<Models.salary_project>
-@{
-    Layout = null;
-    ViewBag.Title = "salarystandard_check_list";
-}
+    @{
+        Layout = null;
+        ViewBag.Title = "salarystandard_check_list";
+    }
 
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <link href="~/css/table.css" rel="stylesheet" />
-    <script src="~/Scripts/jquery-1.10.2.js"></script>
-    <script src="~/javascript/comm/comm.js"></script>
-    <script src="~/Scripts/vue.js"></script>
-    <title>н���׼�Ǽ�</title>
-    <!--���Ÿ�ֵ-->
-    <script type="text/javascript">
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <meta name="viewport" content="width=device-width" />
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link href="~/css/table.css" rel="stylesheet" />
+        <script src="~/Scripts/jquery-1.10.2.js"></script>
+        <script src="~/javascript/comm/comm.js"></script>
+        <script src="~/Scripts/vue.js"></script>
+        <title>薪酬标准登记</title>
+        <!--单号赋值-->
+        <script type="text/javascript">
         $(function () {
             $(document).on("click", "#MoenyId", function () {
                 $(this).val("@ViewData["dt"]");
             });
-            //�����ۼ�
+            //金额的累加
             $(document).on("blur", "#salary1", function () {
                 var valueArr = $('input[name$=".salary"]');
                 var sumValue = 0;
                 if (valueArr.size() > 0 || valueArr != null) {
                     for (var i = 0; i < valueArr.size() ; i++) {
-                        //alert(valueArr[i].value);      
+                        //alert(valueArr[i].value);
                         if (isNaN(valueArr[i].value) || valueArr[i].value == null || valueArr[i].value == "") {
                             sumValue += 0;
                         } else {
-                            //alert(valueArr[i].value); 
-                            sumValue += parseFloat(valueArr[i].value);//ǿ��ת��Ϊ����            
+                            //alert(valueArr[i].value);
+                            sumValue += parseFloat(valueArr[i].value);//强制转换为数字
                         }
                     }
                 }
                 $("#sumSalary").val(sumValue);
             })
         });
-    </script>
+        </script>
 
-</head>
-<body>
-    <div>
-        <form method="post" action="Create">
-            <table width="100%">
-                <tr>
-                    <td>
-                        <font color="black">
-                            ����������ҵ���ǣ�������Դ--н���׼����--н���׼�Ǽ�
-                        </font>
-                    </td>
-                </tr>
-                <tr>
-                    <td align="right">
-                        <input type="submit" value="�� ��" @*onclick="check()"*@ class="BUTTON_STYLE1">
-                        <input type="reset" value="�� ��" class="BUTTON_STYLE1">
-                    </td>
-                </tr>
-            </table>
-            <table id="stable" width="100%" border="1" cellpadding=0 cellspacing=1
-                   bordercolorlight=#848284 bordercolordark=#eeeeee
-                   class="TABLE_STYLE1">
-                <tr>
-                    <td width="74" class="TD_STYLE1">
-                        н���׼���
-                    </td>
-                    <td width="168" class="TD_STYLE2">
-                        <input type="text" name="standard_Id"  readonly="readonly" class="INPUT_STYLE2" id="MoenyId">
-                    </td>
-                    <td width="83" class="TD_STYLE1">
-                        н���׼����
-                    </td>
-                    <td width="171" class="TD_STYLE2">
-                        <input type="text" name="standard_name" id="standardName" class="INPUT_STYLE2">
-                    </td>
-                    <td width="170" class="TD_STYLE1">
-                        н���ܶ�
-                    </td>
-                    <td width="138" class="TD_STYLE2">
-                        <input type="text" name="salary_sum" id="sumSalary" value="0.0" readonly class="INPUT_STYLE2" />
-                    </td>
-                    <td width="103" class="TD_STYLE1">
-                        &nbsp;
-                    </td>
-                    <td width="95" height="26" class="TD_STYLE2">
-                        &nbsp;
-                    </td>
-                </tr>
-                <tr>
-                    <td class="TD_STYLE1">
-                        �ƶ���
-                    </td>
-                    <td class="TD_STYLE2">
-                        <input type="text" id="designer" name="designer" class="INPUT_STYLE2">
-                    </td>
-                    <td class="TD_STYLE1">
-                        �Ǽ���
-                    </td>
-                    <td class="TD_STYLE2">
-                        <input type="text" name="register" value="@ViewData["user"]" readonly="readonly" class="INPUT_STYLE2">
-                    </td>
-                    <td class="TD_STYLE1">
-                        �Ǽ�ʱ��
-                    </td>
-                    <td class="TD_STYLE2">
-                        <input type="text" id="Tdate" name="regist_time" readonly="readonly" class="INPUT_STYLE2">
-                    </td>
-                    <td class="TD_STYLE1">
-                        &nbsp;
-                    </td>
-                    <td class="TD_STYLE2">
-                        &nbsp;
-                    </td>
-                </tr>
-                <tr>
-                    <td class="TD_STYLE1">
-                        ��ע
-                    </td>
-                    <td colspan="7" class="TD_STYLE2">
-                        <textarea name="remark" rows="4" class="TEXTAREA_STYLE1"></textarea>
-                    </td>
-                </tr>
-                <tr class="TD_STYLE1">
-                    <td align="center">
-                        ���
-                    </td>
-                    <td colspan="3">
-                        н����Ŀ����
-                    </td>
-                    <td>
-                        ���
-                    </td>
-                    <td colspan="3">
-                        &nbsp;
-                    </td>
-                </tr>
-                <tbody>
-                    @{
-                        int i = 1;
-                        foreach (var item in Model)
-                        {
-                            <tr class="TD_STYLE2">
-                                <td align="center">
-                                    @item.item_id
-                                    <input type="hidden" name="sd[@{ @(i - 1)}].item_id" value="@item.item_id">
-                                </td>
-                                <td colspan="3">
-                                    @item.item_name
-                                    <input type="hidden" id="details1" name="sd[@{ @(i - 1)}].item_name" value="@item.item_name">
-                                </td>
-                                <td>
-                                    <input type="text" id="salary1" value="0.00" name="sd[@{ @(i - 1)}].salary" class="INPUT_STYLE2">
-                                </td>
-                                <td colspan="3">
-                                    &nbsp;
-                                </td>
-                            </tr>
-                                                i++;
-                                            }
-                                        }
-                </tbody>
-            </table>
-            <p>
-                &nbsp;
-            </p>
-        </form>
-        <script type="text/javascript">
-
-
+    </head>
+    <body>
+        <div>
+            <form method="post" action="Create">
+                <table width="100%">
+                    <tr>
+                        <td>
+                            <font color="black">
+                                您正在做的业务是：人力资源--薪酬标准管理--薪酬标准登记
+                            </font>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="right">
+                            <input type="submit" value="提 交" @*onclick="check()"*@ class="BUTTON_STYLE1">
+                            <input type="reset" value="返 回" class="BUTTON_STYLE1">
+                        </td>
+                    </tr>
+                </table>
+                <table id="stable" width="100%" border="1" cellpadding=0 cellspacing=1
+                       bordercolorlight=#848284 bordercolordark=#eeeeee
+                       class="TABLE_STYLE1">
+                    <tr>
+                        <td width="74" class="TD_STYLE1">
+                            薪酬标准编号
+                        </td>
+                        <td width="168" class="TD_STYLE2">
+                            <input type="text" name="standard_Id" readonly="readonly" class="INPUT_STYLE2" id="MoenyId">
+                        </td>
+                        <td width="83" class="TD_STYLE1">
+                            薪酬标准名称
+                        </td>
+                        <td width="171" class="TD_STYLE2">
+                            <input type="text" name="standard_name" id="standardName" class="INPUT_STYLE2">
+                        </td>
+                        <td width="170" class="TD_STYLE1">
+                            薪酬总额
+                        </td>
+                        <td width="138" class="TD_STYLE2">
+                            <input type="text" name="salary_sum" id="sumSalary" value="0.0" readonly class="INPUT_STYLE2" />
+                        </td>
+                        <td width="103" class="TD_STYLE1">
+                            &nbsp;
+                        </td>
+                        <td width="95" height="26" class="TD_STYLE2">
+                            &nbsp;
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="TD_STYLE1">
+                            制定人
+                        </td>
+                        <td class="TD_STYLE2">
+                            <input type="text" id="designer" name="designer" class="INPUT_STYLE2">
+                        </td>
+                        <td class="TD_STYLE1">
+                            登记人
+                        </td>
+                        <td class="TD_STYLE2">
+                            <input type="text" name="register" value="@ViewData["user"]" readonly="readonly" class="INPUT_STYLE2">
+                        </td>
+                        <td class="TD_STYLE1">
+                            登记时间
+                        </td>
+                        <td class="TD_STYLE2">
+                            <input type="text" id="Tdate" name="regist_time" readonly="readonly" class="INPUT_STYLE2">
+                        </td>
+                        <td class="TD_STYLE1">
+                            &nbsp;
+                        </td>
+                        <td class="TD_STYLE2">
+                            &nbsp;
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="TD_STYLE1">
+                            备注
+                        </td>
+                        <td colspan="7" class="TD_STYLE2">
+                            <textarea name="remark" rows="4" class="TEXTAREA_STYLE1"></textarea>
+                        </td>
+                    </tr>
+                    <tr class="TD_STYLE1">
+                        <td align="center">
+                            序号
+                        </td>
+                        <td colspan="3">
+                            薪酬项目名称
+                        </td>
+                        <td>
+                            金额
+                        </td>
+                        <td colspan="3">
+                            &nbsp;
+                        </td>
+                    </tr>
+                    <tbody>
+                        @{
+                            int i = 1;
+                            foreach (var item in Model)
+                            {
+                                <tr class="TD_STYLE2">
+                                    <td align="center">
+                                        @item.item_id
+                                        <input type="hidden" name="sd[@{ @(i - 1)}].item_id" value="@item.item_id">
+                                    </td>
+                                    <td colspan="3">
+                                        @item.item_name
+                                        <input type="hidden" id="details1" name="sd[@{ @(i - 1)}].item_name" value="@item.item_name">
+                                    </td>
+                                    <td>
+                                        <input type="text" id="salary1" value="0.00" name="sd[@{ @(i - 1)}].salary" class="INPUT_STYLE2">
+                                    </td>
+                                    <td colspan="3">
+                                        &nbsp;
+                                    </td>
+                                </tr>
+        i++;
+    }
+                        }
+                    </tbody>
+                </table>
+                <p>
+                    &nbsp;
+                </p>
+            </form>
+            <script type="text/javascript">
 
 
-            //�ύ�¼�--����ʱ����
+
+
+            //提交事件--》暂时不用
 		function check(){
 				var designer=document.getElementById("designer");
 				var standardName=document.getElementById("standardName");
 				if(designer.value.length<=0){
-				alert("�ƶ��˲���Ϊ��!!!");
+				alert("制定人不可为空!!!");
 						return ;
 				}
 				if(standardName.value.length<=0){
-				alert("н���׼���Ʋ���Ϊ��!!!");
+				alert("薪酬标准名称不可为空!!!");
 					return ;
 				}
 			document.forms[0].submit();
 		}
-            //ʱ�����ʹ��
+            //时间可以使用
 		function time(){
  					var tdate=document.getElementById("Tdate");
  					var d=new Date();
@@ -229,34 +228,34 @@
  				}
  				window.onload=time;
  				var out=window.setInterval(time, 1000);
-        </script>
-    </div>
-    @*<script type="text/javascript">
-        $(function () {
-            var vm = new Vue({
-                el: "#stable",
-                data: {
-                    nums: null
-                },
-                methods: {
-                    load: function () {
-                        var t = this;
-                        $.ajax({
-                            url: "/Salary_Data/salary_project",
-                            type: "get",
-                            data: null,
-                            success: function (msg) {
-                                var data = eval("(" + msg + ")");
-                                console.info(data);
-                                t.nums = data;
+            </script>
+        </div>
+        @*<script type="text/javascript">
+                $(function () {
+                    var vm = new Vue({
+                        el: "#stable",
+                        data: {
+                            nums: null
+                        },
+                        methods: {
+                            load: function () {
+                                var t = this;
+                                $.ajax({
+                                    url: "/Salary_Data/salary_project",
+                                    type: "get",
+                                    data: null,
+                                    success: function (msg) {
+                                        var data = eval("(" + msg + ")");
+                                        console.info(data);
+                                        t.nums = data;
+                                    }
+                                });
                             }
-                        });
-                    }
-                }
-            })
-            vm.load();//����
-         
-        });
-    </script>*@
-</body>
+                        }
+                    })
+                    vm.load();//加载
+
+                });
+            </script>*@
+    </body>
 </html>

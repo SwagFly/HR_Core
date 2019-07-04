@@ -37,5 +37,13 @@ namespace IBll
         /// </summary>
         /// <returns></returns>
         List<config_file_second_kind> SelectAllSecond();
+        //二级机构新增
+        int config_file_second_kindInsert(config_file_second_kind second);
+        //二级机构删除
+        int config_file_second_kindDel(config_file_second_kind second, object keyValue);
+        //二级机构按id查询
+        List<config_file_second_kind> config_file_second_kindselectWhere(Expression<Func<config_file_second_kind, bool>> where);
+        //二级机构修改
+        int config_file_second_kindUpdate(config_file_second_kind second, object keyValue);
     }
 }

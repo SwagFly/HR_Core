@@ -1,0 +1,65 @@
+﻿@model List<salary_project>
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>salary_item</title>
+    <link rel="stylesheet"
+          href="../../css/table.css" type="text/css">
+    <script type="text/javascript"
+            src="../../javascript/comm/comm.js">
+    </script>
+
+    <script type="text/javascript" src="../../javascript/jquery-1.7.2.js"></script>
+</head>
+<body>
+    <div> 
+        <form action="../customiz/customizAction!findStandardDetails" method="post">
+            <table width="100%">
+                <tr>
+                    <td>
+                        <font color="black">
+                            您正在做的业务是：人力资源--客户化设置--薪酬管理设置--薪酬项目设置
+                        </font>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">
+                        <input type="button" value="添加" class="BUTTON_STYLE1"
+                               onclick="window.location.href='salary_item_register'">
+                    </td>
+                </tr>
+            </table>
+            <table width="100%" border="1" cellpadding=0 cellspacing=1
+                   bordercolorlight=#848284 bordercolordark=#eeeeee
+                   class="TABLE_STYLE1">
+                <tr height="20">
+                    <td width="80%" class="TD_STYLE1" align="center">
+                        薪酬项目名称
+                    </td>
+                    <td width="20%" class="TD_STYLE1" align="center">
+                        删除
+                    </td>
+                </tr>
+
+                @foreach (salary_project item in Model)
+                {
+                <tr height="20">
+                    <td class="TD_STYLE2">
+                       @item.item_name
+                    </td>
+                    <td align="center" class="TD_STYLE2">
+                        @Html.ActionLink("删除", "salary_itemDel", new {id=item.item_id }, new { onclick = "return confirm('亲，你确定要删除吗？')" })
+                    </td>
+                </tr>
+                }
+            </table>
+        </form>
+    </div>
+</body>
+</html>

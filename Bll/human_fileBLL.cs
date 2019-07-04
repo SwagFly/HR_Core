@@ -8,6 +8,8 @@ using Models;
 using Dao;
 using IDao;
 using IOC;
+using System.Linq.Expressions;
+
 namespace Bll
 {
     /// <summary>
@@ -20,6 +22,11 @@ namespace Bll
         public List<human_file> Selecthuman_file(human_file hf)
         {
             return dao.Selecthuman_file(hf);
+        }
+        //薪酬按id查询
+        public List<human_file> human_fileSelectWhere(Expression<Func<human_file, bool>> where)
+        {
+            return dao.human_fileSelectWhere(where);
         }
     }
 }

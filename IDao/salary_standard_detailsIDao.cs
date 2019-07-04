@@ -18,5 +18,7 @@ namespace IDao
         //薪酬标准登记复核详细表按id查询
         List<salary_standard_details> salary_standard_detailsselectWhere(Expression<Func<salary_standard_details, bool>> where);
         int salary_standard_detailsUpdate(salary_standard_details sd);
+        //薪酬发放查询
+        List<salary_standard_details> Selectsalary_standard_details();
     }
 }

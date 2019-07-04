@@ -13,7 +13,17 @@
 </head>
 <body>
     <div> 
-        <form method="post" action="salaryGrantAction.do?methodName=doSeatchSalaryGrant">
+        <form method="post" action="">
+            @{ 
+                int i = 0;
+                List<human_file> hu = ViewBag.hu;
+                decimal sums = 0;
+                decimal shiFa = 0;
+                for (var sum = 0; sum < hu.Count; sum++)
+                {
+                    sums += (decimal)hu[sum].salary_sum;
+                    shiFa += (decimal)hu[sum].paid_salary_sum;
+                }
             <table width="100%">
                 <tr>
                     <td style="text-align: left">
@@ -21,38 +31,47 @@
                         <br><br><br>
                     </td>
                 </tr>
-
                 <tr>
                     <td colspan="2" style="text-align: left">
-                        薪酬单编号：HS1353753198460
+                        薪酬单编号：@hu[0].salary_standard_id
                         <input type="hidden" name="salaryGrant.salaryGrantId" value="HS1353753198460">
                     </td>
                 </tr>
                 <tr>
                     <td colspan="2" style="text-align: left">
-                        机构：
-
-
-
-                        Ⅰ级结构
-
+                        @{
+                            var jg = "";
+                            if (hu[0].first_kind_name != null && hu[0].first_kind_name != "")
+                            {
+                                jg = hu[0].first_kind_name;
+                            }
+                            else if (hu[0].second_kind_name != null && hu[0].second_kind_name != "")
+                            {
+                                jg = hu[0].second_kind_name;
+                            }
+                            else if (hu[0].third_kind_name != null && hu[0].third_kind_name != "")
+                            {
+                                jg = hu[0].third_kind_name;
+                            }
+                        }
+                            机构：
+                           @jg
                     </td>
                 </tr>
                 <tr>
                     <td style="text-align: left">
-                        本机构总人数:5
-                        ，基本薪酬总数:139823.0
-                        ，实发总额:<span id="salarySum_sum">139823.0</span>
-
+                        本机构总人数:@hu.Count
+                        ，基本薪酬总数:@sums
+                        ，实发总额:<span id="salarySum_sum">@shiFa</span>
                     </td>
                     <td style="text-align: right">
-
-                        登记人:better_admin 　
-                        登记时间： 2012年11月24日
-
+                        登记人:@hu[0].register 　
+                        登记时间：@hu[0].regist_time
                     </td>
                 </tr>
             </table>
+
+
             <table width="100%" border="1" cellpadding=0 cellspacing=1
                    bordercolorlight=#848284 bordercolordark=#eeeeee
                    class="TABLE_STYLE1">
@@ -103,298 +122,66 @@
                     <td class="TD_STYLE1">
                         实发金额
                     </td>
-
                 </tr>
-
                 <input type="hidden" name="grantDetails[0].salaryGrantId" value="HS1353753198460">
                 <input type="hidden" id="salaryStandardSum1" name="grantDetails[0].salaryStandardSum" value="1332.0" />
+                @{ 
+                    List<salary_standard_details> detailss = ViewBag.sd;
+                    List<salary_grant_details> grants = ViewBag.sgd;
+                }
+                 @foreach (human_file item in ViewBag.hu)
+                {
                 <tr class="TD_STYLE2">
-
                     <td>
-                        1
+                       @item.huf_id
                     </td>
                     <td>
-                        bt201211190619440428
+                       @item.salary_standard_id
                     </td>
                     <td>
-                        &#26472;&#38451;
+                       @item.human_name
                     </td>
-
-
-
+                    @*薪酬标准详情*@
                     <td>
-                        222.0
-                    </td>
-
-                    <td>
-                        222.0
-                    </td>
-
-                    <td>
-                        222.0
-                    </td>
-
-                    <td>
-                        222.0
-                    </td>
-
-                    <td>
-                        222.0
-                    </td>
-
-                    <td>
-                        222.0
-                    </td>
-
-
-
-                    <td>
-                        0.0
+                       @detailss[i].salary
                     </td>
                     <td>
-                        0.0
+                        @detailss[i].salary
                     </td>
                     <td>
-                        0.0
+                        @detailss[i].salary
                     </td>
                     <td>
-                        1332.0
+                        @detailss[i].salary
                     </td>
-
+                    <td>
+                        @detailss[i].salary
+                    </td>
+                    <td>
+                        @detailss[i].salary
+                    </td>
+                    @*薪酬发放详情*@
+                    <td>
+                        @grants[i].bouns_sum
+                    </td>
+                    <td>
+                       @grants[i].sale_sum
+                    </td>
+                    <td>
+                        @grants[i].deduct_sum
+                    </td>
+                    <td>
+                        @grants[i].salary_paid_sum
+                    </td>
                 </tr>
-
-                <input type="hidden" name="grantDetails[1].salaryGrantId" value="HS1353753198460">
-                <input type="hidden" id="salaryStandardSum2" name="grantDetails[1].salaryStandardSum" value="666.0" />
-                <tr class="TD_STYLE2">
-
-                    <td>
-                        2
-                    </td>
-                    <td>
-                        bt201211190644520428
-                    </td>
-                    <td>
-                        &#21608;&#65311;
-                    </td>
-
-
-
-                    <td>
-                        111.0
-                    </td>
-
-                    <td>
-                        111.0
-                    </td>
-
-                    <td>
-                        111.0
-                    </td>
-
-                    <td>
-                        111.0
-                    </td>
-
-                    <td>
-                        111.0
-                    </td>
-
-                    <td>
-                        111.0
-                    </td>
-
-
-
-                    <td>
-                        0.0
-                    </td>
-                    <td>
-                        0.0
-                    </td>
-                    <td>
-                        0.0
-                    </td>
-                    <td>
-                        666.0
-                    </td>
-
-                </tr>
-
-                <input type="hidden" name="grantDetails[2].salaryGrantId" value="HS1353753198460">
-                <input type="hidden" id="salaryStandardSum3" name="grantDetails[2].salaryStandardSum" value="666.0" />
-                <tr class="TD_STYLE2">
-
-                    <td>
-                        3
-                    </td>
-                    <td>
-                        bt201211190644030990
-                    </td>
-                    <td>
-                        &#21016;&#24698;&#23041;
-                    </td>
-
-
-
-                    <td>
-                        111.0
-                    </td>
-
-                    <td>
-                        111.0
-                    </td>
-
-                    <td>
-                        111.0
-                    </td>
-
-                    <td>
-                        111.0
-                    </td>
-
-                    <td>
-                        111.0
-                    </td>
-
-                    <td>
-                        111.0
-                    </td>
-
-
-
-                    <td>
-                        0.0
-                    </td>
-                    <td>
-                        0.0
-                    </td>
-                    <td>
-                        0.0
-                    </td>
-                    <td>
-                        666.0
-                    </td>
-
-                </tr>
-
-                <input type="hidden" name="grantDetails[3].salaryGrantId" value="HS1353753198460">
-                <input type="hidden" id="salaryStandardSum4" name="grantDetails[3].salaryStandardSum" value="135827.0" />
-                <tr class="TD_STYLE2">
-
-                    <td>
-                        4
-                    </td>
-                    <td>
-                        bt201211190644250035
-                    </td>
-                    <td>
-                        &#26472;&#24130;
-                    </td>
-
-
-
-                    <td>
-                        123.0
-                    </td>
-
-                    <td>
-                        12312.0
-                    </td>
-
-                    <td>
-                        123123.0
-                    </td>
-
-                    <td>
-                        123.0
-                    </td>
-
-                    <td>
-                        123.0
-                    </td>
-
-                    <td>
-                        23.0
-                    </td>
-
-
-
-                    <td>
-                        0.0
-                    </td>
-                    <td>
-                        0.0
-                    </td>
-                    <td>
-                        0.0
-                    </td>
-                    <td>
-                        135827.0
-                    </td>
-
-                </tr>
-
-                <input type="hidden" name="grantDetails[4].salaryGrantId" value="HS1353753198460">
-                <input type="hidden" id="salaryStandardSum5" name="grantDetails[4].salaryStandardSum" value="1332.0" />
-                <tr class="TD_STYLE2">
-
-                    <td>
-                        5
-                    </td>
-                    <td>
-                        bt201211190644390870
-                    </td>
-                    <td>
-                        &#21608;&#23567;&#22362;
-                    </td>
-
-
-
-                    <td>
-                        222.0
-                    </td>
-
-                    <td>
-                        222.0
-                    </td>
-
-                    <td>
-                        222.0
-                    </td>
-
-                    <td>
-                        222.0
-                    </td>
-
-                    <td>
-                        222.0
-                    </td>
-
-                    <td>
-                        222.0
-                    </td>
-
-
-
-                    <td>
-                        0.0
-                    </td>
-                    <td>
-                        0.0
-                    </td>
-                    <td>
-                        0.0
-                    </td>
-                    <td>
-                        1332.0
-                    </td>
-
-                </tr>
+                    i++;
+                }
             </table>
             <br>
             <center>
                 <input type="button" style="width: 200;height: 50;font-size: 20px;font-weight: bold;border-bottom-style: ridge;cursor: pointer" onclick="javascript:window.history.back();" value="返 回">
             </center>
+            }
         </form>
     </div>
 </body>

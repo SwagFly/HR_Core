@@ -17,5 +17,9 @@ namespace IDao
         /// </summary>
         /// <returns></returns>
         List<config_major_kind> GetMajorKind();
+        //新增
+        int config_major_kindInsert(config_major_kind cmk);
+        //删除
+        int config_major_kindDel(config_major_kind cmk,object keyValue);
     }
 }

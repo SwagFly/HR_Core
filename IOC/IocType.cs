@@ -23,7 +23,7 @@ namespace IOC
         {
             UnityContainer ioc = new UnityContainer();//生成容器
             ExeConfigurationFileMap fileObject = new ExeConfigurationFileMap();//读取文件对象
-            fileObject.ExeConfigFilename = @"D:\Y2Dome\HR_Core\HR_Core\HR_Core\Unity.config";//Unity配置文件路径  
+            fileObject.ExeConfigFilename = @"D:\Y2_DomeHR\HR\HR_Core\Unity.config";//Unity配置文件路径D:\Y2_DomeHR\HR\HR_Core\Unity.config  
             Configuration cf = ConfigurationManager.OpenMappedExeConfiguration(fileObject, ConfigurationUserLevel.None);//通过路径生成文件
             UnityConfigurationSection cfs = (UnityConfigurationSection)cf.GetSection("unity");
             ioc.LoadConfiguration(cfs, nodeName);

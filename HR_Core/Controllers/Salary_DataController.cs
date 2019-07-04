@@ -15,10 +15,7 @@ namespace HR_Core.Controllers
 {
     public class Salary_DataController : Controller
     {
-        public void TExt() {
-
-        }
-        //薪酬发放登记表
+        //薪酬标准登记表
         salary_standardIBLL slbll = IocType.GetIocType<salary_standardBLL>("salary_grantBLL", "salary_grantBLL");
         //薪酬报销分类
         salary_projectIBLL spbll = IocType.GetIocType<salary_projectBLL>("salary_projectBLL", "salary_projectBLL");
@@ -106,8 +103,6 @@ namespace HR_Core.Controllers
             dic.Add("page",page);
             return Content(JsonConvert.SerializeObject(dic));
         }
-
-
         //薪酬标准登记复核修改按id查询
         [HttpGet]
         public ActionResult salarystandard_check(short id)
@@ -240,11 +235,9 @@ namespace HR_Core.Controllers
             List<salary_standard_details> detaList = sdbll.salary_standard_detailsselectWhere(list.standard_id);//数据集合
             return View(detaList);
         }
-        [HttpPost]
-        public ActionResult salarystandard_query(salary_standard sl)
-        {
-            return View();
-        }
+      
+
+
 
 
         //薪酬变更
@@ -357,7 +350,6 @@ namespace HR_Core.Controllers
                 return View();
             }
         }
-
         public ActionResult salarystandard_change_success()
         {
             return View();

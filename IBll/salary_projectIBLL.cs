@@ -13,5 +13,9 @@ namespace IBll
     {
         //查询
         List<salary_project> selectsalary_project();
+        //新增
+        int salary_projectInsert(salary_project sp);
+        //删除
+        int salary_projectDel(salary_project sp, object keyValue);
     }
 }
