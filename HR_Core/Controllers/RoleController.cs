@@ -91,7 +91,7 @@ namespace HR_Core.Controllers
         [HttpPost]
         public ActionResult Edit()
         {
-            Role ro = new JavaScriptSerializer().Deserialize<Role>(Request["classNew"]);
+            Role ro = new JavaScriptSerializer().Deserialize<Role>(Request["classNew"]);//取值
             string[] pid = Request["pid"].Split(',');
             int rid = classIdRole;
             using (TransactionScope ts = new TransactionScope())

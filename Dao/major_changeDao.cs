@@ -29,5 +29,14 @@ namespace Dao
             rows = select.Count();//获取总记录数
             return select.Skip((IndexPage - 1) * PageSize).Take(PageSize).ToList();
         }
+        /// <summary>
+        /// 调动模块
+        /// </summary>
+        /// <param name="change"></param>
+        /// <returns></returns>
+        public int Updates(major_change change)
+        {
+            return Update(change, change.mch_id);
+        }
     }
 }

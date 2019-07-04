@@ -18,6 +18,12 @@ namespace Bll
     public class human_fileBLL: human_fileIBLL
     {
         private static human_fileIDao dao = IocType.GetIocType<human_fileDao>("human_fileDao", "human_fileDao");
+
+        public List<human_file> SelectFenYeBySelect(string sql, out int rows, int IndexPage, int PageSize)
+        {
+            return dao.SelectFenYeBySelect(sql, out rows, IndexPage, PageSize);
+        }
+
         //薪酬调用人力资源显示
         public List<human_file> Selecthuman_file(human_file hf)
         {
@@ -27,6 +33,11 @@ namespace Bll
         public List<human_file> human_fileSelectWhere(Expression<Func<human_file, bool>> where)
         {
             return dao.human_fileSelectWhere(where);
+        }
+
+        public List<human_file> SelectWhere(Expression<Func<human_file, bool>> where)
+        {
+            return dao.SelectWhere(where);
         }
     }
 }

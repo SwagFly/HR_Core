@@ -18,6 +18,12 @@ namespace Bll
     public class major_changeBLL: major_changeIBLL
     {
         private static major_changeIDao dao = IocType.GetIocType<major_changeDao>("major_changeDao", "major_changeDao");
+
+        public int Insert(major_change change)
+        {
+            return dao.Insert(change);
+        }
+
         public List<major_change> SelectFenYeBySelect(string sql, out int rows, int IndexPage, int PageSize)
         {
             return dao.SelectFenYeBySelect(sql,out rows, IndexPage, PageSize);
@@ -26,6 +32,11 @@ namespace Bll
         public List<major_change> SelectWhere(Expression<Func<major_change, bool>> where)
         {
             return dao.SelectWhere(where);
+        }
+
+        public int Updates(major_change change)
+        {
+            return dao.Updates(change);
         }
     }
 }
