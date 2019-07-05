@@ -83,7 +83,8 @@ namespace HR_Core.Controllers
         /// <param name="checktime">复核时间</param>
         /// <returns></returns>
          //string sql = "select * from major_change where 1=1 and [check_status]<1";
-        string sql = "select * from [dbo].[human_file] where 1=1 and [check_status]<1";
+        //string sql = "select * from [dbo].[human_file] where 1=1 and [check_status]<1";
+        string sql = "select * from [dbo].[human_file] where 1=1";
         public ActionResult SelectWheres(string first,string second,string third,string registtime,string checktime)
         {
             if (third != "" && third != "0")

@@ -67,6 +67,11 @@ namespace Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("procDanHao", danhao);
         }
     
+        public virtual int procDanHaoFaFan(ObjectParameter danhaoFF)
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("procDanHaoFaFan", danhaoFF);
+        }
+    
         public virtual int procSalaryGrant(ObjectParameter danhao)
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("procSalaryGrant", danhao);

@@ -326,18 +326,48 @@ namespace HR_Core.Controllers
             return View();
         }
        
-        public ActionResult query(string id)
+        public ActionResult query(short id)
         {
-            //人力资源按id查询
-            List<human_file> hflist = hfbll.human_fileSelectWhere(e=>e.salary_standard_id==id);
-            ViewBag.hu = hflist;
-            string[] listId = new string[hflist.Count];
+            ////人力资源按id查询
+            //List<human_file> hflist = hfbll.human_fileSelectWhere(e=>e.salary_standard_id==id);
+            //ViewBag.hu = hflist;
+            //string[] listId = new string[hflist.Count];
+            //for (int i = 0; i < listId.Length; i++)
+            //{
+            //    listId[i] = hflist[i].salary_standard_id;
+            //}
+
+            ////拿人力资源订单编号查询薪酬标准详情
+            //List<salary_standard_details> sdist = new List<salary_standard_details>();
+            //foreach (string item in listId)
+            //{
+            //    sdist.Add(sdbll.salary_standard_detailsselectWhere(item).FirstOrDefault());
+            //}
+            //ViewBag.sd = sdist;
+
+            ////拿人力资源订单编号查询薪酬发放详情
+            //List<salary_grant_details> sglist = new List<salary_grant_details>();
+            //foreach (string item2 in listId)
+            //{
+            //    sglist.Add(sgdbll.salary_grant_detailsSelectWhere(e=>e.salary_grant_id==item2).FirstOrDefault());
+            //}
+            //ViewBag.sgd = sglist;
+            //return View();
+            //薪酬发放登记条件查询
+            List<salary_grant> sglist = sgbll.SelectWhere(e => e.sgr_id == id);
+            ViewBag.sg = sglist;
+            //薪酬标准编号
+            string[] listId = new string[sglist.Count];
+            //薪酬发放编号
+            string[] listid2 = new string[sglist.Count];
             for (int i = 0; i < listId.Length; i++)
             {
-                listId[i] = hflist[i].salary_standard_id;
+                listId[i] = sglist[i].salary_standard_id;
+                listid2[i] = sglist[i].salary_grant_id;
             }
 
             //拿人力资源订单编号查询薪酬标准详情
+            //根据订单编号查询薪酬标准详情
             List<salary_standard_details> sdist = new List<salary_standard_details>();
             foreach (string item in listId)
             {
@@ -345,13 +375,13 @@ namespace HR_Core.Controllers
             }
             ViewBag.sd = sdist;
 
-            //拿人力资源订单编号查询薪酬发放详情
-            List<salary_grant_details> sglist = new List<salary_grant_details>();
-            foreach (string item2 in listId)
+            //根据发放编号查询薪酬发放详情
+            List<salary_grant_details> sgdlist = new List<salary_grant_details>();
+            foreach (string item2 in listid2)
             {
-                sglist.Add(sgdbll.salary_grant_detailsSelectWhere(e=>e.salary_grant_id==item2).FirstOrDefault());
+                sgdlist.Add(sgdbll.salary_grant_detailsSelectWhere(e => e.salary_grant_id == item2).FirstOrDefault());
             }
-            ViewBag.sgd = sglist;
+            ViewBag.sgd = sgdlist;
             return View();
         }
         #endregion

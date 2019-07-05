@@ -650,6 +650,9 @@
         <Function Name="procDanHao" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="danhao" Type="varchar" Mode="InOut" />
         </Function>
+        <Function Name="procDanHaoFaFan" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="danhaoFF" Type="varchar" Mode="InOut" />
+        </Function>
         <Function Name="procSalaryGrant" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="danhao" Type="varchar" Mode="InOut" />
         </Function>
@@ -1386,6 +1389,9 @@
           <FunctionImport Name="procDanHao">
             <Parameter Name="danhao" Mode="InOut" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="procDanHaoFaFan">
+            <Parameter Name="danhaoFF" Mode="InOut" Type="String" />
+          </FunctionImport>
           <FunctionImport Name="procSalaryGrant">
             <Parameter Name="danhao" Mode="InOut" Type="String" />
           </FunctionImport>
@@ -2064,6 +2070,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="procDanHao" FunctionName="HR_DBModel.Store.procDanHao" />
+          <FunctionImportMapping FunctionImportName="procDanHaoFaFan" FunctionName="HR_DBModel.Store.procDanHaoFaFan" />
           <FunctionImportMapping FunctionImportName="procSalaryGrant" FunctionName="HR_DBModel.Store.procSalaryGrant" />
         </EntityContainerMapping>
       </Mapping>

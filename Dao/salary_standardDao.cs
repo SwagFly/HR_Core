@@ -28,7 +28,7 @@ namespace Dao
         //存储过程
         public static DataTable SelectProc(SqlParameter[] ps, string fileName)
         {
-            string str = @"Data Source=DESKTOP-UQF2PKO\MSSQLSERVER2012;Initial Catalog=HR_DB;Integrated Security=True";
+            string str = @"Data Source=LAPTOP-ADUMNM88\YJFMSSQLSERVER;Initial Catalog=HR_DB;Integrated Security=True";
             SqlConnection cn = new SqlConnection(str);
             string sql = "procDanHao";
             SqlDataAdapter ad = new SqlDataAdapter(sql, cn);

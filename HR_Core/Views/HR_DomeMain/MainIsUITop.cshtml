@@ -30,7 +30,10 @@
             </td>
             <td style="text-align: right;font-size:17px;width:35%;color:black;">
                 <br />
-                欢迎你：谢鹏(人事经理)&nbsp;
+                @{ 
+                    users user = Session["userClass"] as users;
+                }
+                欢迎你：@user.u_true_name (人事经理)&nbsp;
                 <input type="button" value="退出系统" class="BUTTON_STYLE1" @*onclick="parent.location.href='../login.html'"*@ />&nbsp;&nbsp;&nbsp;&nbsp;
             </td>
         </tr>

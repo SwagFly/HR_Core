@@ -1142,7 +1142,6 @@
     <Content Include="Views\client\third_delete_success.cshtml" />
     <Content Include="Views\client\third_kind_change.cshtml" />
     <Content Include="Views\client\third_kind_change_success.cshtml" />
-    <Content Include="Views\client\profession_design.cshtml" />
     <Content Include="Views\client\major_kind.cshtml" />
     <Content Include="Views\client\major_kind_add.cshtml" />
     <Content Include="Views\client\major.cshtml" />
@@ -1160,6 +1159,7 @@
     <Content Include="Views\register_locate\locate.cshtml" />
     <Content Include="Views\register_locate\list.cshtml" />
     <Content Include="Views\register_locate\detail.cshtml" />
+    <Content Include="Views\client\profession_design.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
