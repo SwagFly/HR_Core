@@ -1,0 +1,445 @@
+﻿@model engage_resume
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-trasitional.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet"
+          href="~/css/table.css" type="text/css">
+    <link rel="stylesheet"
+          href="~/css/cwcalendar.css" type="text/css">
+
+    <script src="~/javascript/jquery-1.7.2.js"></script>
+    <script type="text/javascript"
+            src="~/javascript/jquery.messager.js">
+    </script>
+    <script type="text/javascript"
+            src="~/javascript/comm/comm.js">
+    </script>
+    <script type="text/javascript"
+            src="~/javascript/comm/select.js">
+    </script>
+    <script type="text/javascript"
+            src="~/javascript/calendar-ch.js">
+    </script>
+    <script type="text/javascript"
+            src="~/javascript/time.js">
+    </script>
+    @*<script type="text/javascript"
+            src="~/javascript/human_register.js">
+    </script>*@
+    <script type="text/javascript"
+            src="~/javascript/human_input_check.js">
+    </script>
+    <script src="~/javascript/vue.js"></script>
+    <script type="text/javascript">
+        var listVue = null;
+        $(function () {
+            listVue = new Vue({
+                el: "#InsertClass",
+                data: {
+                    dataClass: null,//一级机构 
+                    tableClass: null,//二级机构 
+                    dataTable: null,//三级机构
+                    moenyTable: null,
+                },
+                methods: {
+                    load: function () {
+                        var my = this;
+                        $.ajax({
+                            url: "/HumanResources/GetOne",
+                            type: "get",
+                            success: function (msg) {
+                                my.dataClass = eval("(" + msg + ")");
+                            }
+                        })
+                    },
+                    secLoad: function (fatherId) {
+                        var my = this;
+                        $.ajax({
+                            url: "/HumanResources/GetTow",
+                            type: "post",
+                            data: "fatherId=" + fatherId,
+                            success: function (msg) {
+                                my.tableClass = eval("(" + msg + ")");
+                            }
+                        })
+                    },
+                    thiLoad: function (fatherId) {
+                        var my = this;
+                        $.ajax({
+                            url: "/HumanResources/GetThree",
+                            type: "post",
+                            data: "fatherId=" + fatherId,
+                            success: function (msg) {
+                                my.dataTable = eval("(" + msg + ")");
+                            }
+                        })
+                    },
+                    moenyload: function () {
+                        var my = this;
+                        $.ajax({
+                            url: "/HumanResources/GetMoeny",
+                            type: "post",
+                            success: function (msg) {
+                                my.moenyTable = eval("(" + msg + ")");
+                            }
+                        })
+                    }
+                }
+            });
+            listVue.load();
+            listVue.moenyload();
+            //
+            $("#firstKind").change(function () {
+                var thisId = $("#firstKind :selected").attr('zhi');
+                $("#firstKindIdVal").val(thisId);
+                listVue.secLoad(thisId);
+            })
+            $("#secondKind").change(function () {
+                var thisId = $("#secondKind :selected").attr("zhi");
+                $("#secondKindIdVal").val(thisId);
+                listVue.thiLoad(thisId);
+            })
+            $("#thirdKind").change(function () {
+                var thisId = $("#thirdKind :selected").attr("zhi");
+                $("#thirdKindVal").val(thisId);
+            })
+            $("#moenyList").change(function () {
+                var textMoeny = $("#moenyList :selected").text();
+                $("#salaryStandardName").val(textMoeny);
+            })
+        })
+
+    </script>
+</head>
+<body>
+    @*register_choose_picture.html*@
+    <form method="post" action="~/HumanResources/InsertFile">
+        <table width="100%">
+            <tr>
+                <td>
+                    <font color="black">您正在做的业务是：人力资源--人力资源档案管理--人力资源档案登记 </font>
+                </td>
+            </tr>
+            <tr>
+                <td align="right">
+                    <input type="submit" value="提交" class="BUTTON_STYLE1" />
+                    <input type="reset" value="清除" class="BUTTON_STYLE1" />
+                </td>
+            </tr>
+        </table>
+        <table width="100%" border="1" cellpadding=3 cellspacing=1
+               bordercolorlight=#848284 bordercolordark=#eeeeee
+               class="TABLE_STYLE1" id="InsertClass">
+            <tr>
+                <td class="TD_STYLE1" width="11%">
+                    I级机构
+                </td>
+                <td width="14%" class="TD_STYLE2">
+                    <input type="hidden" name="human_id" value="@Model.res_id"/>
+                    <select name="first_kind_name" class="SELECT_STYLE1" id="firstKind">
+                        <option value="0">请选择</option>
+                        <option v-for="item in dataClass" :zhi="item.first_kind_id" :value="item.first_kind_name">{{item.first_kind_name}}</option>
+                    </select>
+                    <input type="hidden" name="first_kind_id" id="firstKindIdVal"/>
+                </td>
+                <td width="11%" class="TD_STYLE1">
+                    II级机构
+                </td>
+                <td width="14%" class="TD_STYLE2">
+                    <select name="second_kind_name" class="SELECT_STYLE1" id="secondKind">
+                        <option value="0">请选择</option>
+                        <option v-for="item in tableClass" :zhi="item.second_kind_id" :value="item.second_kind_name">{{item.second_kind_name}}</option>
+                    </select>
+                    <input type="hidden" name="second_kind_id" id="secondKindIdVal"/>
+                </td>
+                <td width="11%" class="TD_STYLE1">
+                    III级机构
+                </td>
+                <td class="TD_STYLE2" colspan="2">
+                    <select name="third_kind_name" class="SELECT_STYLE1" id="thirdKind">
+                        <option value="0">请选择</option>
+                        <option v-for="item in dataTable" :zhi="item.third_kind_id" :value="item.third_kind_name">{{item.third_kind_name}}</option>
+                    </select>
+                    <input type="hidden" name="third_kind_id" id="thirdKindVal" />
+                </td>
+                <td rowspan="5" style="text-align: center;"></td>
+            </tr>
+            <tr>
+                <td class="TD_STYLE1">
+                    职位分类
+                </td>
+                <td class="TD_STYLE2">
+                    <input type="hidden" name="human_major_kind_id" value="@Model.human_major_kind_id"/>
+                    <input type="text" name="human_major_kind_name" readonly class="INPUT_STYLE2" value="@Model.human_major_kind_name"/>
+                    @*<select name="humanFile.humanMajorKindId" class="SELECT_STYLE1" id="majorKind">
+                        <option>销售</option>
+                        <option>软件开发</option>
+                    </select>
+                    <input type="hidden" name="humanFile.humanMajorKindName" />*@
+                </td>
+                <td class="TD_STYLE1">
+                    职位名称
+                </td>
+                <td class="TD_STYLE2">
+                    <input type="hidden" name="human_major_id" value="@Model.human_major_id"/>
+                    <input type="text" name="hunma_major_name" class="INPUT_STYLE2" value="@Model.human_major_name"/>
+                    @*<select name="humanFile.humanMajorId" class="SELECT_STYLE1" id="majorName">
+                        <option>区域经理</option>
+                        <option>总经理</option>
+                    </select>
+                    <input type="hidden" name="humanFile.hunmaMajorName" />*@
+                </td>
+                <td class="TD_STYLE1">
+                    职称
+                </td>
+                <td colspan="2" class="TD_STYLE2">
+                    <select name="human_pro_designation" class="SELECT_STYLE1">
+                        <option value="工程师">工程师</option>
+                        <option value="助理">助理</option>
+                        <option value="经理">经理</option>
+                        <option value="其他">其他</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td class="TD_STYLE1">
+                    姓名
+                </td>
+                <td class="TD_STYLE2">
+                    <input type="text" id="human_name" name="human_name" class="INPUT_STYLE2" value="@Model.human_name"/>
+                </td>
+                <td class="TD_STYLE1">
+                    性别
+                </td>
+                <td class="TD_STYLE2">
+                    <input type="text"  name="human_sex" class="INPUT_STYLE2" value="@Model.human_sex"/>
+                </td>
+                <td class="TD_STYLE1">
+                    EMAIL
+                </td>
+                <td colspan="2" class="TD_STYLE2">
+                    <input type="text" name="human_email" id="humanEmail"  class="INPUT_STYLE2" value="@Model.human_email">
+                </td>
+            </tr>
+            <tr>
+                <td class="TD_STYLE1">
+                    电话
+                </td>
+                <td class="TD_STYLE2">
+                    <input type="text" name="human_telephone" id="humanTelephone" class="INPUT_STYLE2" value="@Model.human_telephone">
+                </td>
+                <td class="TD_STYLE1">
+                    QQ
+                </td>
+                <td class="TD_STYLE2">
+                    <input type="text" name="human_qq" id="humanQq"
+                           class="INPUT_STYLE2">
+                </td>
+                <td class="TD_STYLE1">
+                    手机
+                </td>
+                <td colspan="2" class="TD_STYLE2">
+                    <input type="text" name="human_mobilephone" id="humanMobilephone" class="INPUT_STYLE2" value="@Model.human_mobilephone">
+                </td>
+            </tr>
+            <tr>
+                <td class="TD_STYLE1">
+                    住址
+                </td>
+                <td colspan="3" class="TD_STYLE2">
+                    <input type="text" name="human_address" class="INPUT_STYLE2" value="@Model.human_address">
+                </td>
+                <td class="TD_STYLE1">
+                    邮编
+                </td>
+                <td colspan="2" class="TD_STYLE2">
+                    <input type="text" name="human_postcode" class="INPUT_STYLE2" value="@Model.human_postcode">
+                </td>
+            </tr>
+            <tr>
+                <td class="TD_STYLE1">
+                    国籍
+                </td>
+                <td class="TD_STYLE2">
+                    <input type="text"  name="human_nationality"  class="INPUT_STYLE2" value="@Model.human_nationality"/>
+                </td>
+                <td class="TD_STYLE1">
+                    出生地
+                </td>
+                <td class="TD_STYLE2">
+                    <input type="text" name="human_birthplace" value="@Model.human_birthplace"
+                           class="INPUT_STYLE2">
+                </td>
+                <td class="TD_STYLE1">
+                    生日
+                </td>
+                <td width="13%" class="TD_STYLE2">
+                    <input type="text" name="human_birthday" readonly="readonly" value="@Model.human_birthday"
+                           class="INPUT_STYLE2">
+                </td>
+                <td width="11%" class="TD_STYLE1">
+                    民族
+                </td>
+                <td class="TD_STYLE2" width="14%">
+                    <input type="text" name="human_race" class="INPUT_STYLE2" value="@Model.human_race"/>
+                </td>
+            </tr>
+            <tr>
+                <td class="TD_STYLE1">
+                    宗教信仰
+                </td>
+                <td class="TD_STYLE2">
+                    <input type="text"name="human_religion"  class="INPUT_STYLE2" value="@Model.human_religion"/>
+                </td>
+                <td class="TD_STYLE1">
+                    政治面貌
+                </td>
+                <td class="TD_STYLE2">
+                    <input type="text" name="human_party" class="INPUT_STYLE2" value="@Model.human_party"/>
+                </td>
+                <td class="TD_STYLE1">
+                    身份证号码
+                </td>
+                <td class="TD_STYLE2">
+                    <input type="text" name="human_id_card" id="humanIdCard" value="@Model.human_idcard"
+                           class="INPUT_STYLE2">
+                </td>
+                <td class="TD_STYLE1">
+                    社会保障号码
+                </td>
+                <td class="TD_STYLE2">
+                    <input type="text" name="human_society_security_id" 
+                           class="INPUT_STYLE2">
+                </td>
+            </tr>
+            <tr>
+                <td class="TD_STYLE1">
+                    年龄
+                </td>
+                <td class="TD_STYLE2">
+                    <input type="text" name="human_age" id="humanAge" value="@Model.human_age"
+                           class="INPUT_STYLE2">
+                </td>
+                <td class="TD_STYLE1">
+                    学历
+                </td>
+                <td class="TD_STYLE2">
+                    <input type="text" name="human_educated_degree" value="@Model.human_educated_degree"
+                           class="INPUT_STYLE2">
+                </td>
+                <td class="TD_STYLE1">
+                    教育年限
+                </td>
+                <td class="TD_STYLE2">
+                    <input type="text" name="human_educated_years" value="@Model.human_educated_years"
+                           class="INPUT_STYLE2">
+                </td>
+                <td class="TD_STYLE1">
+                    学历专业
+                </td>
+                <td class="TD_STYLE2">
+                    <input type="text" name="human_educated_major" value="@Model.human_educated_major"
+                           class="INPUT_STYLE2">
+                </td>
+            </tr>
+            <tr>
+                <td class="TD_STYLE1">
+                    薪酬标准
+                </td>
+                <td class="TD_STYLE2">
+                    <input type="hidden" name="salary_standard_name" id="salaryStandardName"/>
+                    <select name="salary_standard_id" class="SELECT_STYLE1" id="moenyList">
+                        <option value="">请选择</option>
+                        <option v-for="item in moenyTable" :value="item.standard_id">{{item.standard_name}}</option>
+                    </select>
+                </td>
+                <td class="TD_STYLE1">
+                    开户行
+                </td>
+                <td class="TD_STYLE2">
+                    <input type="text" name="human_bank"
+                           class="INPUT_STYLE2">
+                </td>
+                <td class="TD_STYLE1">
+                    帐号
+                </td>
+                <td class="TD_STYLE2">
+                    <input type="text" name="human_account"
+                           class="INPUT_STYLE2">
+                </td>
+                <td class="TD_STYLE1">
+                    登记人
+                </td>
+                <td class="TD_STYLE2">
+                    @{ 
+                        users us = Session["userClass"] as users;
+                    }
+                    <input type="text" name="register" value="@us.u_true_name"
+                           readonly="readonly" class="INPUT_STYLE2">
+                </td>
+            </tr>
+            <tr>
+                <td class="TD_STYLE1">
+                    建档时间
+                </td>
+                <td class="TD_STYLE2">
+                    @{ 
+                        var time = DateTime.Now;
+                    }
+                    <input type="text" name="regist_time" id="create_time" readonly="readonly"
+                           class="INPUT_STYLE2" value="@time">
+                </td>
+                <td class="TD_STYLE1">
+                    特长
+                </td>
+                <td class="TD_STYLE2">
+                    <input type="text" name="human_speciality" readonly="readonly" value="@Model.human_specility"
+                           class="INPUT_STYLE2">
+                </td>
+                <td class="TD_STYLE1">
+                    爱好
+                </td>
+                <td class="TD_STYLE2">
+                    <input type="text" name="human_hobby" readonly="readonly" value="@Model.human_hobby"
+                           class="INPUT_STYLE2">
+                </td>
+                <td class="TD_STYLE1">
+                    &nbsp;
+                </td>
+                <td class="TD_STYLE2">
+                    &nbsp;
+                </td>
+            </tr>
+            <tr>
+                <td class="TD_STYLE1">
+                    个人履历
+                </td>
+                <td colspan="7" class="TD_STYLE2">
+                    <textarea name="human_histroy_records" rows="4"
+                              class="TEXTAREA_STYLE1"></textarea>
+                </td>
+            </tr>
+            <tr>
+                <td class="TD_STYLE1">
+                    家庭关系信息
+                </td>
+                <td colspan="7" class="TD_STYLE2">
+                    <textarea name="human_family_membership" rows="4"
+                              class="TEXTAREA_STYLE1"></textarea>
+                </td>
+            </tr>
+            <tr>
+                <td class="TD_STYLE1">
+                    备注
+                </td>
+                <td colspan="7" class="TD_STYLE2">
+                    <textarea name="remark" rows="4" class="TEXTAREA_STYLE1"></textarea>
+                </td>
+            </tr>
+        </table>
+    </form>
+</body>
+</html>
+
+

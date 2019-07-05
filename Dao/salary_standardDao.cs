@@ -106,7 +106,6 @@ namespace Dao
             rows = dt.Count();//行数
             return dt.Skip((IndexPage-1)* PageSize).Take(PageSize).ToList();
         }
-       
 
     }
 }

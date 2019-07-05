@@ -138,7 +138,7 @@
                     load: function () {
                         var my = this;
                         $.ajax({
-                            url: "SecondKind",
+                            url: "GetMajor",
                             type: "get",
                             success: function (msg) {
                                 my.table = eval("(" + msg + ")");
@@ -156,7 +156,7 @@
                     load: function (fatherId) {
                         var my = this;
                         $.ajax({
-                            url: "MajorSelect",
+                            url: "GetFatherId",
                             type: "get",
                             data: "fatherId=" + fatherId,
                             success: function (msg) {
@@ -214,19 +214,19 @@
                 </td>
                 <td class="TD_STYLE2">
                     @{
-                        var classNew = ViewData["releaseClass"] as engage_major_release;
-                        if (classNew != null)
+                        if (ViewBag.classNew != null)
                         {
-                            <input type="hidden" value="@classNew.major_kind_id" name="human_major_kind_id" />
-                            <select name="human_major_kind_name" class="SELECT_STYLE1" disabled>
-                                <option value="@classNew.major_kind_name">@classNew.major_kind_name</option>
-                            </select>
+                            <input type="hidden" value="@ViewBag.classNew.major_kind_id" name="human_major_kind_id" />
+                            <input type="text" readonly name="human_major_kind_name" value="@ViewBag.classNew.major_kind_name" class="SELECT_STYLE1"/>
+                            @*<select name="human_major_kind_name" class="SELECT_STYLE1" disabled>
+                                <option value="@ViewBag.classNew.major_kind_name">@ViewBag.classNew.major_kind_name</option>
+                            </select>*@
                         }
                         else {
-                            <input type="hidden" value="" id="human_major_kind_id" name="human_major_kind_id" />
+                            <input type="hidden" id="human_major_kind_id" name="human_major_kind_id" />
                             <select name="human_major_kind_name" class="SELECT_STYLE1" id="human_major_kind_name">
                                 <option value="00">请选择</option>
-                                <option v-for="item in table" :zhi="item.second_kind_id" :value="item.second_kind_name">{{item.second_kind_name}}</option>
+                                <option v-for="item in table" :zhi="item.major_kind_id" :value="item.major_kind_name">{{item.major_kind_name}}</option>
                             </select>
                         }
 
@@ -237,18 +237,19 @@
                 </td>
                 <td class="TD_STYLE2" width="20%">
                     @{
-                        if (classNew != null)
+                        if (ViewBag.classNew != null)
                         {
-                            <input type="hidden" value="@classNew.major_id" name="human_major_id" />
-                            <select name="human_major_name" class="SELECT_STYLE1" disabled>
-                                <option value="@classNew.major_name">@classNew.major_name</option>
-                            </select>
+                            <input type="hidden" value="@ViewBag.classNew.major_id" name="human_major_id" />
+                            <input type="text" value="@ViewBag.classNew.major_name" name="human_major_name"  readonly class="SELECT_STYLE1"/>
+                            @*<select name="human_major_name" class="SELECT_STYLE1" disabled>
+                                <option value="@ViewBag.classNew.major_name">@ViewBag.classNew.major_name</option>
+                            </select>*@
                         }
                         else {
-                            <input type="hidden" value="02" name="human_major_id" id="human_major_id"/>
+                            <input type="hidden" name="human_major_id" id="human_major_id"/>
                             <select name="human_major_name" class="SELECT_STYLE1" id="human_major_name">
                                 <option value="00">请选择</option>
-                                <option v-for="item in table" :zhi="item.third_kind_id" :value="item.third_kind_name">{{item.third_kind_name}}</option>
+                                <option v-for="item in table" :zhi="item.major_id" :value="item.major_name">{{item.major_name}}</option>
                             </select>
                         }
                     }
@@ -258,11 +259,12 @@
                 </td>
                 <td class="TD_STYLE2" colspan="2">
                     @{
-                        if (classNew != null)
+                        if (ViewBag.classNew != null)
                         {
-                            <select name="engage_type" class="SELECT_STYLE1" disabled>
-                                <option value="@classNew.engage_type">@classNew.engage_type</option>
-                            </select>
+                            <input name="engage_type" value="@ViewBag.classNew.engage_type" readonly class="SELECT_STYLE1"/>
+                            @*<select name="engage_type" class="SELECT_STYLE1" disabled>
+                                <option value="@ViewBag.classNew.engage_type">@ViewBag.classNew.engage_type</option>
+                            </select>*@
                         }
                         else {
                             <select name="engage_type" class="SELECT_STYLE1" id="engage_type">
@@ -310,13 +312,13 @@
                     家庭电话
                 </td>
                 <td class="TD_STYLE2">
-                    <input type="text" name="engageResume.humanHomephone" id="humanHomephone" class="INPUT_STYLE2">
+                    <input type="text" name="human_homephone" id="humanHomephone" class="INPUT_STYLE2">
                 </td>
                 <td class="TD_STYLE1">
                     手机
                 </td>
                 <td colspan="2" class="TD_STYLE2">
-                    <input type="text" name="human_homephone" id="humanMobilephone" class="INPUT_STYLE2">
+                    <input type="text" name="human_mobilephone" id="humanMobilephone" class="INPUT_STYLE2">
                 </td>
             </tr>
             <tr>
@@ -437,19 +439,17 @@
                     教育年限
                 </td>
                 <td class="TD_STYLE2">
-                    <select name="engageResume.humanEducatedYears" class="SELECT_STYLE1">
+                    <select name="human_educated_years" class="SELECT_STYLE1">
                         <option value="">--请选择--</option>
-                        <option value="12以下">12以下</option>
                         <option value="12">12</option>
                         <option value="16">16</option>
-                        <option value="16以上">16以上</option>
                     </select>
                 </td>
                 <td class="TD_STYLE1">
                     学历专业
                 </td>
                 <td class="TD_STYLE2">
-                    <select name="human_educated_years" class="SELECT_STYLE1">
+                    <select name="human_educated_major" class="SELECT_STYLE1">
                         <option value="">--请选择--</option>
                         <option value="金融">金融</option>
                         <option value="管理">管理</option>

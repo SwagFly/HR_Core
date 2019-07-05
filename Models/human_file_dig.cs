@@ -76,5 +76,10 @@ namespace Models
         public Nullable<System.DateTime> delete_time { get; set; }
         public Nullable<System.DateTime> recovery_time { get; set; }
         public Nullable<bool> human_file_status { get; set; }
+
+        public static explicit operator human_file_dig(human_file v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

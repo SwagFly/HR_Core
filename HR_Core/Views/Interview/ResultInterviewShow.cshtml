@@ -1,0 +1,422 @@
+﻿@model engage_interview
+@{
+    ViewBag.Title = "ResultInterviewShow";
+}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-trasitional.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>My JSP 'interview-register.jsp' starting page</title>
+    <link rel="stylesheet"
+          href="~/css/table.css" type="text/css">
+    <link rel="stylesheet"
+          href="~/css/cwcalendar.css"
+          type="text/css">
+    <script type="text/javascript"
+            src="~/javascript/comm/comm.js">
+    </script>
+    <script type="text/javascript"
+            src="~/javascript/comm/list.js">
+    </script>
+    <script type="text/javascript"
+            src="~/javascript/calendar-ch.js">
+    </script>
+    <script type="text/javascript"
+            src="~/javascript/jquery-1.7.2.js">
+    </script>
+    <script type="text/javascript"
+            src="~/javascript/locate.js">
+    </script>
+    <script type="text/javascript"
+            src="~/javascript/select.js">
+    </script>
+    <script type="text/javascript"
+            src="~/javascript/comm/time.js">
+    </script>
+    <script src="~/javascript/vue.js"></script>
+    <script type="text/javascript">
+        var information = null;
+        $(function () {
+            information = new Vue({
+                el: "#information",
+                data: {
+                    dataTable: {}
+                },
+                methods: {
+                    getResume: function (thisId) {
+                        var my = this;
+                        $.ajax({
+                            url: "/Interview/GetResume",
+                            type: "post",
+                            data: "thisId=" + thisId,
+                            success: function (table) {
+                                my.dataTable = eval("("+table+")");
+                            }
+                        })
+                    }
+                }
+            });
+            information.getResume("@Model.resume_id");
+        })
+    </script>
+</head>
+
+<body>
+    <form id="recruitAction!toList" name="interviewForm" action="/Interview/UpdateRuselt" method="post">
+        <input type="hidden" name="operate" value="doAdopt">
+        <!--	<input type="hidden" name="engageInterview.checkStatus" value=""/>
+            <input type="hidden" name="engageInterview.checkComment" value=""/>
+              -->
+        <input type="hidden" name="ein_id" value="@Model.ein_id" />
+        <input type="hidden" name="resume_id" value="@Model.resume_id" />
+        <input type="hidden" name="check_status" value="true" />
+        <table width="100%">
+            <tr>
+                <td>
+
+                    <font color="black">您正在做的业务是：人力资源--招聘管理--面试管理--面试筛选 </font>
+                </td>
+            </tr>
+            <tr>
+                <td align="right">
+                    <input type="radio" name="result" value="建议面试">建议面试
+                    <input type="radio" name="result" value="建议笔试">建议笔试
+                    <input type="radio" name="result" value="建议录用">建议录用
+                    <input type="radio" name="result" value="删除简历">删除简历
+                    <input type="submit" value="确认" class="BUTTON_STYLE1" >
+                    <input type="button" value="返回" class="BUTTON_STYLE1"
+                           onclick="history.back();">
+                </td>
+            </tr>
+        </table>
+        <table width="100%" border="1" cellpadding=0 cellspacing=1
+               bordercolorlight=#848284 bordercolordark=#eeeeee
+               class="TABLE_STYLE1" id="information">
+            <tr>
+                <td class="TD_STYLE1" width="10%">
+                    职位分类
+                </td>
+                <td width="10%" class="TD_STYLE2">
+                    <input type="hidden" name="human_major_kind_id" value="@Model.human_major_kind_id" />
+                    <input type="text" name="human_major_kind_name" value="@Model.human_major_kind_name" readonly="readonly" class="INPUT_STYLE2">
+                </td>
+                <td width="10%" class="TD_STYLE1">
+                    职位名称
+                </td>
+                <td width="15%" class="TD_STYLE2">
+                    <input type="hidden" name="human_major_id" value="@Model.human_major_id" />
+                    <input type="text" name="human_major_name" value="@Model.human_major_name" readonly="readonly" class="INPUT_STYLE2">
+                </td>
+                <td width="10%" class="TD_STYLE1">
+                    招聘类型
+                </td>
+                <td width="20%" class="TD_STYLE2" colspan="2">
+                    <input type="text" name="engageResume.engageType" :value="dataTable.engage_type" readonly="readonly" class="INPUT_STYLE2">
+                </td>
+
+                <td width="10%" rowspan="6" align="center"></td>
+
+            </tr>
+
+            <tr>
+                <td class="TD_STYLE1">
+                    姓名
+                </td>
+                <td class="TD_STYLE2">
+                    <input type="text" name="human_name" value="@Model.human_name" readonly="readonly" class="INPUT_STYLE2">
+
+                </td>
+                <td class="TD_STYLE1">
+                    性别
+                </td>
+                <td class="TD_STYLE2">
+                    <input type="text" name="engageResume.humanSex" :value="dataTable.human_sex" readonly="readonly" class="INPUT_STYLE2">
+                </td>
+                <td class="TD_STYLE1">
+                    EMAIL
+                </td>
+                <td colspan="2" class="TD_STYLE2">
+                    <input type="text" name="engageResume.humanEmail" :value="dataTable.human_email" readonly="readonly" class="INPUT_STYLE2">
+                </td>
+            </tr>
+
+            <tr>
+                <td class="TD_STYLE1">
+                    电话号码
+                </td>
+                <td class="TD_STYLE2">
+                    <input type="text" name="engageResume.humanTelephone" :value="dataTable.human_telephone" readonly="readonly" class="INPUT_STYLE2">
+                </td>
+                <td class="TD_STYLE1">
+                    家庭电话
+                </td>
+                <td class="TD_STYLE2">
+                    <input type="text" name="engageResume.humanHomephone" :value="dataTable.human_homephone" readonly="readonly" class="INPUT_STYLE2">
+                </td>
+                <td class="TD_STYLE1">
+                    手机
+                </td>
+                <td colspan="2" class="TD_STYLE2">
+                    <input type="text" name="engageResume.humanMobilephone" :value="dataTable.human_mobilephone" readonly="readonly" class="INPUT_STYLE2">
+                </td>
+            </tr>
+
+            <tr>
+                <td class="TD_STYLE1">
+                    住址
+                </td>
+                <td colspan="3" class="TD_STYLE2">
+                    <input type="text" name="engageResume.humanAddress" :value="dataTable.human_address" readonly="readonly" class="INPUT_STYLE2">
+                </td>
+                <td class="TD_STYLE1">
+                    邮编
+                </td>
+                <td colspan="2" class="TD_STYLE2">
+                    <input type="text" name="engageResume.humanPostcode" :value="dataTable.human_postcode" readonly="readonly" class="INPUT_STYLE2">
+                </td>
+            </tr>
+
+            <tr>
+                <td class="TD_STYLE1">
+                    国籍
+                </td>
+                <td class="TD_STYLE2">
+                    <input type="text" name="engageResume.humanNationality" :value="dataTable.human_nationality" readonly="readonly" class="INPUT_STYLE2">
+                </td>
+                <td class="TD_STYLE1">
+                    出生地
+                </td>
+                <td class="TD_STYLE2">
+                    <input type="text" name="engageResume.humanBirthplace" :value="dataTable.human_birthplace" readonly="readonly" class="INPUT_STYLE2">
+                </td>
+                <td class="TD_STYLE1">
+                    生日
+                </td>
+                <td class="TD_STYLE2" colspan="2">
+                    <input type="text" name="engageResume.humanBirthday" :value="dataTable.human_birthday" readonly="readonly" class="INPUT_STYLE2">
+                </td>
+            </tr>
+
+            <tr>
+                <td width="11%" class="TD_STYLE1">
+                    民族
+                </td>
+                <td class="TD_STYLE2" width="14%">
+                    <input type="text" name="engageResume.humanRace" :value="dataTable.human_race" readonly="readonly" class="INPUT_STYLE2">
+                </td>
+                <td class="TD_STYLE1">
+                    宗教信仰
+                </td>
+                <td class="TD_STYLE2">
+                    <input type="text" name="engageResume.humanReligion" :value="dataTable.human_religion" readonly="readonly" class="INPUT_STYLE2">
+                </td>
+                <td class="TD_STYLE1">
+                    政治面貌
+                </td>
+                <td class="TD_STYLE2" colspan="2">
+                    <input type="text" name="engageResume.humanParty" :value="dataTable.human_party" readonly="readonly" class="INPUT_STYLE2">
+                </td>
+            </tr>
+            <tr>
+
+                <td class="TD_STYLE1">
+                    身份证号码
+                </td>
+                <td class="TD_STYLE2">
+                    <input type="text" name="engageResume.humanIdcard" :value="dataTable.human_idcard" readonly="readonly" class="INPUT_STYLE2">
+                </td>
+                <td class="TD_STYLE1">
+                    年龄
+                </td>
+                <td class="TD_STYLE2">
+                    <input type="text" name="engageResume.humanAge" :value="dataTable.human_age" readonly="readonly" class="INPUT_STYLE2">
+                </td>
+                <td class="TD_STYLE1">
+                    毕业学校
+                </td>
+                <td class="TD_STYLE2">
+                    <input type="text" name="engageResume.humanCollege" :value="dataTable.human_college" readonly="readonly" class="INPUT_STYLE2">
+                </td>
+                <td class="TD_STYLE1" width="10%">
+                    学历
+                </td>
+                <td class="TD_STYLE2">
+                    <input type="text" name="engageResume.humanEducatedDegree" :value="dataTable.human_educated_degree" readonly="readonly" class="INPUT_STYLE2">
+                </td>
+            </tr>
+            <tr>
+                <td class="TD_STYLE1">
+                    教育年限
+                </td>
+                <td class="TD_STYLE2">
+                    <input type="text" name="engageResume.humanEducatedYears" :value="dataTable.human_educated_years" readonly="readonly" class="INPUT_STYLE2">
+                </td>
+                <td class="TD_STYLE1">
+                    学历专业
+                </td>
+                <td class="TD_STYLE2">
+                    <input type="text" name="engageResume.humanEducatedMajor" :value="dataTable.human_educated_major" readonly="readonly" class="INPUT_STYLE2">
+                </td>
+                <td class="TD_STYLE1">
+                    薪酬要求
+                </td>
+                <td class="TD_STYLE2">
+                    <input type="text" name="engageResume.demandSalaryStandard" :value="dataTable.demand_salary_standard" readonly="readonly" class="INPUT_STYLE2">
+                </td>
+                <td class="TD_STYLE1">
+                    注册时间
+                </td>
+                <td class="TD_STYLE2">
+                    <input type="text" name="engageResume.registTime" :value="dataTable.regist_time" readonly="readonly" class="INPUT_STYLE2">
+
+                </td>
+            </tr>
+            <tr>
+                <td class="TD_STYLE1">
+                    特长
+                </td>
+                <td class="TD_STYLE2">
+                    <input type="text" name="engageResume.humanSpecility" :value="dataTable.human_specility" readonly="readonly" class="INPUT_STYLE2">
+                </td>
+                <td class="TD_STYLE1">
+                    爱好
+                </td>
+                <td class="TD_STYLE2">
+                    <input type="text" name="engageResume.humanHobby" :value="dataTable.human_hobby" readonly="readonly" class="INPUT_STYLE2">
+                </td>
+                <td class="TD_STYLE1">
+                    <span style="font-size: 10.5pt; font-family: 宋体;"></span>
+                    推荐人
+                </td>
+                <td class="TD_STYLE2">
+                    <input type="text" name="checker" :value="dataTable.checker" readonly="readonly" class="INPUT_STYLE2">
+                </td>
+                <td class="TD_STYLE1">
+                    <span style="font-size: 10.5pt; font-family: 宋体;"></span>
+                    推荐时间
+                </td>
+                <td class="TD_STYLE2">
+                    <input type="text" name="check_time" :value="dataTable.check_time" readonly="readonly" class="INPUT_STYLE2">
+
+                </td>
+            </tr>
+            <tr>
+                <td class="TD_STYLE1">
+                    个人履历
+                </td>
+                <td colspan="7" class="TD_STYLE2">
+                    <textarea name="engageResume.humanHistoryRecords" rows="4"
+                              class="TEXTAREA_STYLE1" readonly="readonly">
+                        {{dataTable.human_history_records}}
+                    </textarea>
+                </td>
+            </tr>
+            <tr>
+                <td class="TD_STYLE1">
+                    备注
+                </td>
+                <td colspan="7" class="TD_STYLE2">
+                    <textarea name="engageResume.remark" rows="4" class="TEXTAREA_STYLE1" readonly="readonly">
+                        {{dataTable.remark}}
+                    </textarea>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="TD_STYLE1">
+                    筛选推荐意见
+                </td>
+                <td class="TD_STYLE2" colspan="7">
+                    <textarea name="interview_comment" rows="4" class="TEXTAREA_STYLE1" readonly="readonly">@Model.interview_comment</textarea>
+                </td>
+            </tr>
+            <tr>
+                <td class="TD_STYLE1">
+                    面试次数
+                </td>
+                <td class="TD_STYLE2">
+                    <input type="text" readonly value="@Model.interview_amount" name="interview_amount" />
+                </td>
+                <td class="TD_STYLE1">
+                    形象评价
+                </td>
+                <td class="TD_STYLE2">
+                    <input type="text" name="image_degree" readonly value="@Model.image_degree"/>
+                </td>
+                <td class="TD_STYLE1">
+                    口才评价
+                </td>
+                <td class="TD_STYLE2">
+                    <input type="text" name="native_language_degree" readonly value="@Model.native_language_degree"/>
+                </td>
+                <td class="TD_STYLE1">
+                    外语口语能力
+                </td>
+                <td class="TD_STYLE1">
+                    <input type="text" name="foreign_language_degree" readonly="readonly" value="@Model.foreign_language_degree"/>
+                </td>
+            </tr>
+            <tr>
+                <td class="TD_STYLE1">
+                    应变能力
+                </td>
+                <td class="TD_STYLE2">
+                    <input type="text" name="response_speed_degree" value="@Model.response_speed_degree" readonly/>
+                </td>
+                <td class="TD_STYLE1">
+                    EQ
+                </td>
+                <td class="TD_STYLE2">
+                    <input type="text" name="EQ_degree" readonly value="@Model.EQ_degree"/>
+                </td>
+                <td class="TD_STYLE1">
+                    IQ
+                </td>
+                <td class="TD_STYLE2">
+                    <input type="text" name="IQ_degree" readonly value="@Model.IQ_degree"/>
+                </td>
+                <td class="TD_STYLE1">
+                    综合素质
+                </td>
+                <td class="TD_STYLE1">
+                    <input type="text" name="multi_quality_degree" readonly value="@Model.multi_quality_degree"/>
+                </td>
+            </tr>
+            <tr>
+                <td class="TD_STYLE1">
+                    面试人
+                </td>
+                <td class="TD_STYLE2">
+                    <input type="text" name="register" value="@Model.register" class="INPUT_STYLE2" />
+                </td>
+                <td class="TD_STYLE1">
+                    面试时间
+                </td>
+                <td class="TD_STYLE2">
+                    <input type="text" readonly name="registe_time" value="@Model.registe_time"/>
+                </td>
+                <td class="TD_STYLE1">
+                    &nbsp;
+                </td>
+                <td class="TD_STYLE2">
+                    &nbsp;
+                </td>
+                <td class="TD_STYLE1">
+                    &nbsp;
+                </td>
+                <td class="TD_STYLE2">
+                    &nbsp;
+                </td>
+            </tr>
+            <tr>
+                <td class="TD_STYLE1">
+                    录用申请审核意见
+                </td>
+                <td class="TD_STYLE2" colspan="7">
+                    <textarea name="shenHeYiJian" class="TEXTAREA_STYLE1" rows="4"></textarea>
+                </td>
+            </tr>
+        </table>
+    </form>
+</body>
+</html>

@@ -64,12 +64,19 @@ namespace Dao
         /// <returns>返回过滤后的数据集合</returns>
         public List<T> PageData<K>(Expression<Func<T, K>> order, Expression<Func<T, bool>> where, PageModel page)
         {
-            var data = models.Set<T>().OrderBy(order).Where(where);//获取符合要求的所有数据
-            page.Rows = data.Count();//获取总数据条数
-            page.Pages = (page.Rows - 1) / page.PageSize + 1;//获取一共多少页
-            return data.Skip((page.CurrentPage - 1) * page.PageSize)
-                .Take(page.PageSize)
-                .ToList();//返回过滤后的数据集合
+            try
+            {
+                var data = models.Set<T>().OrderBy(order).Where(where);//获取符合要求的所有数据
+                page.Rows = data.Count();//获取总数据条数
+                page.Pages = (page.Rows - 1) / page.PageSize + 1;//获取一共多少页
+                return data.Skip((page.CurrentPage - 1) * page.PageSize)
+                    .Take(page.PageSize)
+                    .ToList();//返回过滤后的数据集合
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
 
         }
         /// <summary>
@@ -80,7 +87,14 @@ namespace Dao
         public int Insert(T t)
         {
             models.Entry<T>(t).State = System.Data.Entity.EntityState.Added;
-            return models.SaveChanges();
+            try {
+                return models.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                return 0;
+            }
+            
         }
         /// <summary>
         /// 修改
@@ -90,13 +104,19 @@ namespace Dao
         /// <returns>0：修改失败，1：修改成功</returns>
         public int Update(T t, object keyValue)
         {
+            int i = 0;
             var entity = models.Set<T>().Find(keyValue);
             if (entity != null)
             {
                 models.Entry<T>(entity).State = System.Data.Entity.EntityState.Detached;
             }
-            models.Entry<T>(t).State = System.Data.Entity.EntityState.Modified;
-            return models.SaveChanges();
+            try {
+                models.Entry<T>(t).State = System.Data.Entity.EntityState.Modified;
+                i+=models.SaveChanges();
+            } catch (Exception ex) {
+                return 0;
+            }
+            return i;
         }
         /// <summary>
         /// 删除

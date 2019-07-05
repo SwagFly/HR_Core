@@ -25,8 +25,7 @@ namespace Dao
         }
 
         /// <summary>
-        /// 查询二级机构
-        /// 按条件查询二级机构
+        /// 按父级查询二级
         /// </summary>
         /// <returns></returns>
         public List<config_file_second_kind> SelectSecond_kind(config_file_second_kind second) {

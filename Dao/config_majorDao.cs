@@ -14,7 +14,7 @@ namespace Dao
     public class config_majorDao:DaoBase<config_major>,config_majorIDao
     {
         /// <summary>
-        /// 查询所有职位名称
+        /// 按父级职业部门查询所有职位名称
         /// </summary>
         /// <param name="major"></param>
         /// <returns></returns>
