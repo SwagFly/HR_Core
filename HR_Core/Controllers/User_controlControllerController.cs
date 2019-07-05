@@ -116,7 +116,7 @@ namespace UI.Areas.Permission.Controllers
         //查询管理员表
         public ActionResult GetOption()
         {
-            List<Role> list = role.SelectAll();
+            List<Role> list = role.SelectWhere(e => e.ravailable == "是");
             return Content(JsonConvert.SerializeObject(list));
         }
     }

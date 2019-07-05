@@ -1160,6 +1160,7 @@
     <Content Include="Views\register_locate\list.cshtml" />
     <Content Include="Views\register_locate\detail.cshtml" />
     <Content Include="Views\client\profession_design.cshtml" />
+    <Content Include="Views\salaryGrant\register_GZXQ.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

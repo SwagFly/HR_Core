@@ -70,7 +70,7 @@
             });
             MajorKindIdVue.load();//加载职位部门
             $("#majorKindId").change(function () {
-                var fatherId = $("#majorKindId :selected").val();
+                var fatherId = $("#majorKindId :selected").attr("zhi");
                 MajorKindIdVue.KindLoad(fatherId);
             })
         })
@@ -105,7 +105,7 @@
             </tr>
             <tr>
                 <td align="right">
-                    <input type="button" value="开始" class="BUTTON_STYLE1" onclick=search();>
+                    <input type="submit" value="开始" class="BUTTON_STYLE1" onclick=search();>
                 </td>
             </tr>
         </table>
@@ -120,13 +120,13 @@
                 <td class="TD_STYLE2" width="30%">
                     <select name="buMen" multiple="multiple" style="width: 290px;height: 110px" id="majorKindId" class="SELECT_STYLE2">
                         <option value="" selected>--请选择--</option>
-                        <option v-for="item in majorTable" :value="item.major_kind_id">{{item.major_kind_name}}</option>
+                        <option v-for="item in majorTable" :zhi="item.major_kind_id" :value="item.major_kind_name">{{item.major_kind_name}}</option>
                     </select>
                     <select name="zhiWei" multiple="multiple" style="width: 290px;height: 110px"
                             id="majorId" size="5"
                             class="SELECT_STYLE2">
                         <option value="">--请选择--</option>
-                        <option v-for="item in KindTable" :value="item.major_id">{{item.major_name}}</option>
+                        <option v-for="item in KindTable" :value="item.major_name">{{item.major_name}}</option>
                     </select>
                 </td>
             </tr>

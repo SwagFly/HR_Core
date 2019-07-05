@@ -13,7 +13,8 @@ namespace HR_Core.Controllers
 {
     public class HR_DomeMainController : Controller
     {
-        private static RightsObjectIBLL rigBll = IocType.GetIocType<RightsObjectBLL>("RightsObjectBLL", "RightsObjectBLL");
+        private RightsObjectIBLL rigBll = IocType.GetIocType<RightsObjectBLL>("RightsObjectBLL", "RightsObjectBLL");
+        private UsersAndRoleIBll roleBll = IocType.GetIocType<UsersAndRoleBll>("UsersAndRoleBll", "UsersAndRoleBll");
         /// <summary>
         /// 总页面
         /// </summary>
@@ -30,7 +31,9 @@ namespace HR_Core.Controllers
         // GET: HR_DomeMain
         public ActionResult MainIsUITop()
         {
-            return View();
+            users admin = Session["userClass"] as users;
+            vw_usersAndRole roleAnd = roleBll.SelectWhere(e => e.rid == admin.rid).FirstOrDefault();
+            return View(roleAnd);
         }
         /// <summary>
         /// 权限的动态显示
@@ -55,5 +58,14 @@ namespace HR_Core.Controllers
         {
             return View();
         }
+        /// <summary>
+        /// 退出当前登录的
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult End() {
+            Session.RemoveAll();//清除本次登录的信息
+            return RedirectToAction("Login", "HR_DomeLogin");
+        }
+
     }
 }

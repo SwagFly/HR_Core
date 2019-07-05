@@ -61,6 +61,13 @@ namespace HR_Core.Controllers
         {
             return View();
         }
+        //工资详情
+        public ActionResult register_GZXQ(string id)
+        {
+            List<salary_standard_details> sd = sdbll.salary_standard_detailsselectWhere(id);
+            return View(sd);
+        }
+
         [HttpGet]
         public ActionResult register_commit()
         {

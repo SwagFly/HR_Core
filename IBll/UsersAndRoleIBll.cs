@@ -12,5 +12,11 @@ namespace IBll
     {
         //分页查询
         List<vw_usersAndRole> PageData<K>(Expression<Func<vw_usersAndRole, K>> order, Expression<Func<vw_usersAndRole, bool>> where, PageModel page);
+        /// <summary>
+        /// 按条件查询
+        /// </summary>
+        /// <param name="where"></param>
+        /// <returns></returns>
+        List<vw_usersAndRole> SelectWhere(Expression<Func<vw_usersAndRole, bool>> where);
     }
 }

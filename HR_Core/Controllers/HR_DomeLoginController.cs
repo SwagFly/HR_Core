@@ -35,7 +35,7 @@ namespace HR_Core.Controllers
             string userStr = Request["userClass"];//获取前端传过来的登录信息
             users user = new JavaScriptSerializer().Deserialize<users>(userStr);//转化成用户类
             user = userBll.Login(user);
-            if (user.u_id > 0)
+            if (user != null)
             {
                 Session["userClass"] = user;//使用session存储登录者信息
                 return Content("1");

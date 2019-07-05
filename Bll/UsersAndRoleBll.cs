@@ -19,5 +19,14 @@ namespace Bll
         {
             return ur.PageData(order, where, page);
         }
+        /// <summary>
+        /// 按条件查询
+        /// </summary>
+        /// <param name="where"></param>
+        /// <returns></returns>
+        public List<vw_usersAndRole> SelectWhere(Expression<Func<vw_usersAndRole, bool>> where)
+        {
+            return ur.SelectWhere(where);
+        }
     }
 }

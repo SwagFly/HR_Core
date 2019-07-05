@@ -129,20 +129,121 @@ namespace HR_Core.Controllers
         /// 简历筛选
         /// </summary>
         /// <returns></returns>
-        public ActionResult RecommendIndex() {
+        public ActionResult RecommendIndex()
+        {
             string buMen = Request["buMen"];
             string zhiWei = Request["zhiWei"];
             string guanJian = Request["guanJian"];
             string openDate = Request["openDate"];
             string endDate = Request["endDate"];
-            PageModel page = new PageModel() {
-                CurrentPage=1,
-                PageSize=100
+            PageModel page = new PageModel()
+            {
+                CurrentPage = 1,
+                PageSize = 100
             };
-            Expression<Func<engage_resume, bool>> where = (e=>e.check_status==0&&e.human_name.Contains(guanJian)||e.human_telephone.Contains(guanJian));
+            Expression<Func<engage_resume, bool>> where = NewMethod(0, buMen, zhiWei, guanJian, openDate, endDate);
             List<engage_resume> list = resume_bll.GetResume(e => e.res_id > 0, where, page);
             return View(list);
         }
+        /// <summary>
+        /// 高级查询
+        /// </summary>
+        /// <param name="buMen"></param>
+        /// <param name="zhiWei"></param>
+        /// <param name="guanJian"></param>
+        /// <param name="openDate"></param>
+        /// <param name="endDate"></param>
+        /// <returns></returns>
+        private static Expression<Func<engage_resume, bool>> NewMethod(int state,string buMen, string zhiWei, string guanJian, string openDate, string endDate)
+        {
+            Expression<Func<engage_resume, bool>> where = (e => e.check_status == state);
+            int i = 0;
+            if (buMen != "" && buMen != null)
+            {
+                i++;
+                where = (e => e.check_status == state && e.human_major_kind_name == buMen);
+                if (zhiWei != "" && zhiWei != null)
+                {
+                    i++;
+                    where = (e => e.check_status == state && e.human_major_kind_name == buMen && e.human_major_name == zhiWei);
+                }
+            }
+            if (guanJian != null && guanJian != "")
+            {
+                i++;
+                where = (e => e.check_status == state && e.human_name.Contains(guanJian));
+                if (i == 1)
+                {
+                    where = (e => e.check_status == state && e.human_major_kind_name == buMen && e.human_name.Contains(guanJian));
+                }
+                else if (i == 2)
+                {
+                    where = (e => e.check_status == state && e.human_major_kind_name == buMen && e.human_major_name == zhiWei && e.human_name.Contains(guanJian));
+                }
+            }
+            if (openDate != null && openDate != "")
+            {
+                DateTime time = Convert.ToDateTime(openDate);
+                where = (e => e.check_status == state && e.regist_time > time);
+                if (i == 1)
+                {
+                    where = (e => e.check_status == state && e.human_major_kind_name == buMen && e.regist_time > time);
+
+                }
+                else if (i == 2)
+                {
+                    where = (e => e.check_status == state && e.human_major_kind_name == buMen && e.human_major_name == zhiWei && e.regist_time > time);
+
+                }
+                else if (i == 3)
+                {
+                    where = (e => e.check_status == state && e.human_major_kind_name == buMen && e.human_major_name == zhiWei && e.human_name.Contains(guanJian) && e.regist_time > time);
+                }
+            }
+            if (endDate != null && endDate != "")
+            {
+                DateTime openTime = Convert.ToDateTime(openDate);
+                DateTime endTime = Convert.ToDateTime(endDate);
+                if (openDate != null && openDate != "")
+                {
+                    where = (e => e.check_status == state && e.regist_time > openTime && e.regist_time < endTime);
+                    if (i == 1)
+                    {
+                        where = (e => e.check_status == state && e.human_major_kind_name == buMen && e.regist_time > openTime && e.regist_time < endTime);
+
+                    }
+                    else if (i == 2)
+                    {
+                        where = (e => e.check_status == state && e.human_major_kind_name == buMen && e.human_major_name == zhiWei && e.regist_time > openTime && e.regist_time < endTime);
+
+                    }
+                    else if (i == 3)
+                    {
+                        where = (e => e.check_status == state && e.human_major_kind_name == buMen && e.human_major_name == zhiWei && e.human_name.Contains(guanJian) && e.regist_time > openTime && e.regist_time < endTime);
+                    }
+                }
+                else {
+                    where = (e => e.check_status == state && e.regist_time < endTime);
+                    if (i == 1)
+                    {
+                        where = (e => e.check_status == state && e.human_major_kind_name == buMen && e.regist_time < endTime);
+
+                    }
+                    else if (i == 2)
+                    {
+                        where = (e => e.check_status == state && e.human_major_kind_name == buMen && e.human_major_name == zhiWei && e.regist_time < endTime);
+
+                    }
+                    else if (i == 3)
+                    {
+                        where = (e => e.check_status == state && e.human_major_kind_name == buMen && e.human_major_name == zhiWei && e.human_name.Contains(guanJian) && e.regist_time < endTime);
+                    }
+                }
+            }
+
+            return where;
+        }
+
         /// <summary>
         /// 有效简历筛选
         /// </summary>
@@ -159,7 +260,7 @@ namespace HR_Core.Controllers
                 CurrentPage = 1,
                 PageSize = 100
             };
-            Expression<Func<engage_resume, bool>> where = (e => e.check_status == 1 && e.human_name.Contains(guanJian) || e.human_telephone.Contains(guanJian));
+            Expression<Func<engage_resume, bool>> where = NewMethod(1, buMen, zhiWei, guanJian, openDate, endDate);
             List<engage_resume> list = resume_bll.GetResume(e => e.res_id > 0, where, page);
             return View(list);
         }

@@ -83,28 +83,8 @@
                     <td class="TD_STYLE1">
                         <span>姓名</span>
                     </td>
-
                     <td class="TD_STYLE1">
-                        出差补助
-                    </td>
-
-                    <td class="TD_STYLE1">
-                        交通补贴
-                    </td>
-
-                    <td class="TD_STYLE1">
-                        住房补贴
-                    </td>
-
-                    <td class="TD_STYLE1">
-                        基本工资
-                    </td>
-
-                    <td class="TD_STYLE1">
-                        年终奖
-                    </td>
-                    <td class="TD_STYLE1">
-                        误餐补助
+                        工资详情
                     </td>
 
                     <td class="TD_STYLE1" width="7%">
@@ -136,12 +116,10 @@
                         <input type="hidden" name="sgd[@{ @(i)}].salary_grant_id" value="@item.salary_standard_id">
                         <input type="hidden" id="salaryStandardSum1" name="sgd[@{ @(i)}].salary_standard_sum" value="@item.paid_salary_sum" />
                     </td>
-                   @foreach (salary_standard_details sd in ViewBag.firstsd[i])
-                   {
                     <td>
-                        @sd.salary
+                        <input class="INPUT_STYLE2" style="color:aqua;text-align:center;" type="button" value="@fileList[0].salary_standard_id" onclick="parent.location.href = '/salaryGrant/register_GZXQ/@fileList[0].salary_standard_id'" />
                     </td>
-                   }
+
                     <td>@*奖励金额*@
                         <input type="text" name="sgd[@{ @(i)}].bouns_sum" id="bounsSum1" onkeyup="onKeyPress('1')" class="INPUT_STYLE2" />
                     </td>
@@ -225,30 +203,9 @@
                     <td class="TD_STYLE1">
                         <span>姓名</span>
                     </td>
-
                     <td class="TD_STYLE1">
-                        出差补助
+                        工资详情
                     </td>
-
-                    <td class="TD_STYLE1">
-                        交通补贴
-                    </td>
-
-                    <td class="TD_STYLE1">
-                        住房补贴
-                    </td>
-
-                    <td class="TD_STYLE1">
-                        基本工资
-                    </td>
-
-                    <td class="TD_STYLE1">
-                        年终奖
-                    </td>
-                    <td class="TD_STYLE1">
-                        误餐补助
-                    </td>
-
                     <td class="TD_STYLE1" width="7%">
                         奖励金额
                     </td>
@@ -278,12 +235,16 @@
                             <input type="hidden" name="sgd[@{ @(i)}].salary_grant_id" value="@item.salary_standard_id">
                             <input type="hidden" id="salaryStandardSum1" name="sgd[@{ @(i)}].salary_standard_sum" value="@item.paid_salary_sum" />
                         </td>
-                        @foreach (salary_standard_details sd in ViewBag.secondsd[i])
+                        @*@foreach (salary_standard_details sd in ViewBag.secondsd[i])
                         {
                             <td>
                                 @sd.salary
                             </td>
-                        }
+                        }*@
+                        <td>
+                            <input class="INPUT_STYLE2" style="color:aqua;text-align:center;" type="button" value="@fileList[0].salary_standard_id" onclick="parent.location.href = '/salaryGrant/register_GZXQ/@fileList[0].salary_standard_id'" />
+                        </td>
+
                         <td>
                             @*奖励金额*@
                         <input type="text" name="sgd[@{ @(i)}].bouns_sum" id="bounsSum1" onkeyup="onKeyPress('1')" class="INPUT_STYLE2" />
@@ -371,30 +332,9 @@
                     <td class="TD_STYLE1">
                         <span>姓名</span>
                     </td>
-
                     <td class="TD_STYLE1">
-                        出差补助
+                        工资详情
                     </td>
-
-                    <td class="TD_STYLE1">
-                        交通补贴
-                    </td>
-
-                    <td class="TD_STYLE1">
-                        住房补贴
-                    </td>
-
-                    <td class="TD_STYLE1">
-                        基本工资
-                    </td>
-
-                    <td class="TD_STYLE1">
-                        年终奖
-                    </td>
-                    <td class="TD_STYLE1">
-                        误餐补助
-                    </td>
-
                     <td class="TD_STYLE1" width="7%">
                         奖励金额
                     </td>
@@ -424,12 +364,10 @@
                             <input type="hidden" name="sgd[@{ @(i)}].salary_grant_id" value="@item.salary_standard_id">
                             <input type="hidden" id="salaryStandardSum1" name="sgd[@{ @(i)}].salary_standard_sum" value="@item.paid_salary_sum" />
                         </td>
-                        @foreach (salary_standard_details sd in ViewBag.thirdsd[i])
-                        {
-                            <td>
-                                @sd.salary
-                            </td>
-                        }
+                        <td>
+                            <input class="INPUT_STYLE2" style="color:aqua;text-align:center;" type="button" value="@fileList[0].salary_standard_id" onclick="parent.location.href = '/salaryGrant/register_GZXQ/@fileList[0].salary_standard_id'" />
+                        </td>
+
                         <td>
                             @*奖励金额*@
                             <input type="text" name="sgd[@{ @(i)}].bouns_sum" id="bounsSum1" onkeyup="onKeyPress('1')" class="INPUT_STYLE2" />

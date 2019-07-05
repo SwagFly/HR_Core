@@ -12,5 +12,7 @@ namespace IDao
     {
         //分页查询
         List<vw_usersAndRole> PageData<K>(Expression<Func<vw_usersAndRole, K>> order, Expression<Func<vw_usersAndRole, bool>> where, PageModel page);
+
+        List<vw_usersAndRole> SelectWhere(Expression<Func<vw_usersAndRole, bool>> where);
     }
 }
