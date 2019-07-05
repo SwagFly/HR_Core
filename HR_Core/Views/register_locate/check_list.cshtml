@@ -1,0 +1,175 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" href="../../css/table.css" type="text/css">
+    <script src="~/javascript/jquery-1.7.2.js"></script>
+    <script type="text/javascript">
+        var PageSize = 1;//每页显示记录数
+        var IndexPage = 1;//当前页
+        var pages = 0;//总页数
+        $(function () {
+            Select();
+        });
+        function Select() {
+            $.ajax({
+                url: "/register_locate/SelectFenYe2",
+                type: "get",
+                data: "PageSize=" + PageSize + "&IndexPage=" + IndexPage,
+                success: function (msg) {
+                    var data = eval("(" + msg + ")");
+                    var list = data["list"];
+                    IndexPage = data["IndexPage"];
+                    pages = data["pages"];
+                    //总数
+                    $(".count").html(data["rows"]);
+                    $(".size").html(PageSize);
+                    $(".index").html(IndexPage);
+                    $(".pages").html(pages);
+                    $("#tb tr:gt(0)").remove();
+                    for (var i = 0; i < list.length; i++) {
+                        var $tr = $("<tr></tr>");
+                        var $td1 = $("<td class='TD_STYLE2'>" + list[i]["first_kind_name"] + "</td>");
+                        var $td2 = $("<td class='TD_STYLE2'>" + list[i]["second_kind_name"] + "</td>");
+                        var $td3 = $("<td class='TD_STYLE2'>" + list[i]["third_kind_name"] + "</td>");
+                        var $td4 = $("<td class='TD_STYLE2'>" + list[i]["salary_standard_name"] + "</td>");
+                        var $td5 = $("<td class='TD_STYLE2'>" + list[i]["human_name"] + "</td>");
+                        var $td6 = $('<td class="TD_STYLE2"><a href="/register_locate/check/' + list[i]["mch_id"] + '">审核</a></td>');;
+                        $tr.append($td1, $td2, $td3, $td4, $td5, $td6);
+                        $("#tb").append($tr);
+                    }
+                }
+            });
+        };
+        $(function () {
+            //首页
+            $("#first").click(function () {
+                if(IndexPage==1){
+                    alert('抱歉，当前已是首页！');
+                }else{
+                    IndexPage=1;
+                }
+                Select();
+            });
+            //上一页
+            $("#back").click(function () {
+                if (IndexPage > 1) {
+                    IndexPage--;
+                } else {
+                    IndexPage = 1;
+                    alert('抱歉，当前已是第一页！');
+                }
+                Select();
+            })
+            //下一页
+            $("#next").click(function () {
+                if (IndexPage < pages) {
+                    IndexPage++;
+                } else {
+                    IndexPage = pages;
+                    alert('抱歉，当前已是最后一页！');
+                }
+                Select();
+            });
+            //末页
+            $("#last").click(function () {
+                if (IndexPage == pages) {
+                    alert('抱歉，当前已是末页！');
+                } else {
+                    IndexPage = pages;
+                }
+                Select();
+            });
+            //页面跳转
+            $("#go").click(function () {
+                var currentPage = $("#txtPage").val();
+                if (currentPage > 0 && currentPage <= pages) {
+                    IndexPage = currentPage;
+                    Fill();
+                } else {
+                    alert('您的输入有误！');
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+    <table width="100%">
+        <tr>
+            <td>
+                <font color="black">您正在做的业务是：人力资源--调动管理--调动审核列表</font>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                &nbsp;
+            </td>
+        </tr>
+        <tr>
+            <td>
+                当前待复核的调动人数:<font class="count"></font>
+                例
+            </td>
+        </tr>
+    </table>
+    <table width="100%" border="1" cellpadding=0 cellspacing=1
+           bordercolorlight=#848284 bordercolordark=#eeeeee
+           class="TABLE_STYLE1" id="tb">
+        <tr height="21">
+            <td width="19%" class="TD_STYLE1">
+                I级机构
+            </td>
+            <td width="19%" class="TD_STYLE1">
+                II级机构
+            </td>
+            <td width="19%" class="TD_STYLE1">
+                Ⅲ级机构
+            </td>
+            <td width="19%" class="TD_STYLE1">
+                薪酬标准
+            </td>
+            <td width="19%" class="TD_STYLE1">
+                名字
+            </td>
+            <td width="5%" class="TD_STYLE1">
+                审核
+            </td>
+        </tr>
+    </table>
+        <p>
+            <div align="center" style="font-size: 18px;color: gray">
+                &nbsp;&nbsp;总数：
+                <font style="color: maroon;font-weight: bold;" class="count"></font>
+                例
+                &nbsp;&nbsp;&nbsp;
+                每页显示 <font style="color: maroon;font-weight: bold;" class="size"></font>
+                条
+                &nbsp;&nbsp;&nbsp;
+                当前第 <font style="color: maroon;font-weight: bold;" class="index"></font>
+                页
+                &nbsp;&nbsp;&nbsp;共
+                <font style="color: maroon;font-weight: bold;" class="pages"></font>
+                页
+                <a style="color: navy;font-weight: bold" href="javascript:doPage(1)" id="first">首页</a>
+
+                <a style="color: navy;font-weight: bold"
+                   href="javascript:doPage(0)" id="back">上一页</a>
+
+                <a style="color: navy;font-weight: bold"
+                   href="javascript:doPage(2)" id="next">下一页</a>
+                <a style="color: navy;font-weight: bold"
+                   href="javascript:doPage(2)" id="last">末页</a>
+                &nbsp;&nbsp;&nbsp;跳到第
+                <input id="txtPage" type=text value="1" class=input1 size=1>
+                页&nbsp;&nbsp;
+                <input type="image" src="../../images/go.bmp" width=18 height=18 border=0 id="go">
+                <input type="hidden" name="page.startPage" id="startpage" value="1">
+            </div>
+    </body>
+</html>

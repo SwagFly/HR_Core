@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     Layout = null;
 }
 
@@ -8,161 +7,179 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>check_list</title>
-    <link rel="stylesheet" href="../../css/table.css" type="text/css" />
+    <link rel="stylesheet" href="../../css/table.css" type="text/css">
+    <script src="~/javascript/jquery-1.7.2.js"></script>
+    <script type="text/javascript">
+        var PageSize = 1;//每页显示记录数
+        var IndexPage = 1;//当前页
+        var pages = 0;//总页数
+        $(function () {
+            Select();
+        });
+        function Select() {
+            $.ajax({
+                url: "/salaryGrant/FenYe2",
+                type: "get",
+                data: "PageSize=" + PageSize + "&IndexPage=" + IndexPage,
+                success: function (msg) {
+                    var data = eval("(" + msg + ")");
+                    var list = data["list"];
+                    IndexPage = data["IndexPage"];
+                    pages = data["pages"];
+                    //总数
+                    $(".count").html(data["rows"]);
+                    $(".size").html(PageSize);
+                    $(".index").html(IndexPage);
+                    $(".pages").html(pages);
+                    $("#tb tr:gt(0)").remove();
+                    for (var i = 0; i < list.length; i++) {
+                        var $tr = $("<tr></tr>");
+                        var $td1 = $("<td class='TD_STYLE2'>" + list[i]["salary_grant_id"] + "</td>");
+                        var $td2 = $("<td class='TD_STYLE2'>" + list[i]["first_kind_name"] + "</td>");
+                        var $td3 = $("<td class='TD_STYLE2'>" + list[i]["second_kind_name"] + "</td>");
+                        var $td4 = $("<td class='TD_STYLE2'>" + list[i]["third_kind_name"] + "</td>");
+                        var $td5 = $("<td class='TD_STYLE2'>" + list[i]["human_amount"] + "</td>");
+                        var $td6 = $("<td class='TD_STYLE2'>" + list[i]["salary_paid_sum"] + "</td>");
+                        var $td7 = $('<td class="TD_STYLE2"><a href="/salaryGrant/check/' + list[i]["sgr_id"] + '">复核</a></td>');
+                        $tr.append($td1, $td2, $td3, $td4, $td5, $td6,$td7);
+                        $("#tb").append($tr);
+                    }
+                }
+            });
+        };
+        $(function () {
+            //首页
+            $("#first").click(function () {
+                if(IndexPage==1){
+                    alert('抱歉，当前已是首页！');
+                }else{
+                    IndexPage=1;
+                }
+                Select();
+            });
+            //上一页
+            $("#back").click(function () {
+                if (IndexPage > 1) {
+                    IndexPage--;
+                } else {
+                    IndexPage = 1;
+                    alert('抱歉，当前已是第一页！');
+                }
+                Select();
+            })
+            //下一页
+            $("#next").click(function () {
+                if (IndexPage < pages) {
+                    IndexPage++;
+                } else {
+                    IndexPage = pages;
+                    alert('抱歉，当前已是最后一页！');
+                }
+                Select();
+            });
+            //末页
+            $("#last").click(function () {
+                if (IndexPage == pages) {
+                    alert('抱歉，当前已是末页！');
+                } else {
+                    IndexPage = pages;
+                }
+                Select();
+            });
+            //页面跳转
+            $("#go").click(function () {
+                var currentPage = $("#txtPage").val();
+                if (currentPage > 0 && currentPage <= pages) {
+                    IndexPage = currentPage;
+                    Select();
+                } else {
+                    alert('您的输入有误！');
+                }
+            });
+        });
+    </script>
 </head>
 <body>
-    <div> 
-        <form method="post" action="/HR_Fist/salaryGrant/salaryGrantAction!toCheckList">
-            <table width="100%">
-                <tr>
-                    <td style="text-align:left;">
-                        <font color="black">您正在做的业务是:人力资源管理--薪酬发放管理--薪酬发放登记审核</font>
-                        <br /><br /><br />
-                    </td>
-                </tr>
-            </table>
+    <table width="100%">
+        <tr>
+            <td style="text-align:left;">
+                <font color="black">您正在做的业务是:人力资源管理--薪酬发放管理--薪酬发放登记审核</font>
+                <br /><br /><br />
+            </td>
+        </tr>
+    </table>
+    <table width="100%" border="1" cellpadding=0 cellspacing=1
+           bordercolorlight=#848284 bordercolordark=#eeeeee
+           class="TABLE_STYLE1" id="tb">
+        <tr>
+            <td width="10%" class="TD_STYLE1">
+                <span>薪酬发放编号</span>
+            </td>
+            <td width="20%" class="TD_STYLE1">
+                <span>I级机构名称</span>
+            </td>
+            <td width="20%" class="TD_STYLE1">
+                <span>II级机构名称</span>
+            </td>
+            <td width="20%" class="TD_STYLE1">
+                <span>III级机构名称</span>
+            </td>
+            <td width="10%" class="TD_STYLE1">
+                <span>人数</span>
+            </td>
+            <td width="10%" class="TD_STYLE1">
+                基本薪酬总额(元)
+            </td>
+            <td width="10%" class="TD_STYLE1">
+                复核
+            </td>
+        </tr>
+    </table>
+    <div align="center" style="font-size: 18px;color: gray">
+        &nbsp;&nbsp;总数：
+        <font style="color: maroon;font-weight: bold;" class="count"></font>
+        例
+        &nbsp;&nbsp;&nbsp;
+        每页显示 <font style="color: maroon;font-weight: bold;" class="size"></font>
+        条
+        &nbsp;&nbsp;&nbsp;
+        当前第 <font style="color: maroon;font-weight: bold;" class="index"></font>
+        页
+        &nbsp;&nbsp;&nbsp;共
+        <font style="color: maroon;font-weight: bold;" class="pages"></font>
+        页
+        <a style="color: navy;font-weight: bold" href="javascript:doPage(1)" id="first">首页</a>
 
-            <table width="100%" border="1" cellpadding=0 cellspacing=1
-                   bordercolorlight=#848284 bordercolordark=#eeeeee
-                   class="TABLE_STYLE1">
-                <tr>
-                    <td width="10%" class="TD_STYLE1">
-                        <span>薪酬发放编号</span>
-                    </td>
-                    <td width="20%" class="TD_STYLE1">
-                        <span>I级机构名称</span>
-                    </td>
-                    <td width="20%" class="TD_STYLE1">
-                        <span>II级机构名称</span>
-                    </td>
-                    <td width="20%" class="TD_STYLE1">
-                        <span>III级机构名称</span>
-                    </td>
-                    <td width="10%" class="TD_STYLE1">
-                        <span>人数</span>
-                    </td>
-                    <td width="10%" class="TD_STYLE1">
-                        基本薪酬总额(元)
-                    </td>
-                    <td width="10%" class="TD_STYLE1">
-                        复核
-                    </td>
-                </tr>
+        <a style="color: navy;font-weight: bold"
+           href="javascript:doPage(0)" id="back">上一页</a>
 
-                <tr class="TD_STYLE2">
-                    <td>
-                        HS1353753198460
-                    </td>
-                    <td>
-                        Ⅰ级结构
-                    </td>
-                    <td></td>
-                    <td></td>
-                    <td>
-                        5
-                    </td>
-                    <td>
-                        139823.0
-                    </td>
-                    <td>
-                        <a href="check.html">复核</a>
-                    </td>
-                </tr>
+        <a style="color: navy;font-weight: bold"
+           href="javascript:doPage(2)" id="next">下一页</a>
 
-                <tr class="TD_STYLE2">
-                    <td>
-                        HS1353322455169
-                    </td>
-                    <td>
-                        Ⅰ级结构
-                    </td>
-                    <td>
-                        Ⅱ级结构3
-                    </td>
-                    <td></td>
-                    <td>
-                        1
-                    </td>
-                    <td>
-                        1332.0
-                    </td>
-                    <td>
-                        <a href="check.html">复核</a>
-                    </td>
-                </tr>
-
-                <tr class="TD_STYLE2">
-                    <td>
-                        HS1353322419274
-                    </td>
-                    <td>
-                        Ⅰ级结构
-                    </td>
-                    <td></td>
-                    <td></td>
-                    <td>
-                        5
-                    </td>
-                    <td>
-                        139157.0
-                    </td>
-                    <td>
-                        <a href="check.html">复核</a>
-                    </td>
-                </tr>
-
-
-            </table>
-                <p>
-                    <div align="center" style="font-size: 18px;color: gray">
-                        &nbsp;&nbsp;总数：
-                        <font style="color: maroon;font-weight: bold;">3</font>
-                        例
-                        &nbsp;&nbsp;&nbsp;
-                        每页显示 <font style="color: maroon;font-weight: bold;">10</font>
-                        条
-                        &nbsp;&nbsp;&nbsp;
-                        当前第 <font style="color: maroon;font-weight: bold;">1</font>
-                        页
-                        &nbsp;&nbsp;&nbsp;共
-                        <font style="color: maroon;font-weight: bold;">1</font>
-                        页
-                        <a style="color: navy;font-weight: bold" href="javascript:doPage(1)">首页</a>
-
-                        <a style="color: navy;font-weight: bold"
-                           href="javascript:doPage(0)">上一页</a>
-
-                        <a style="color: navy;font-weight: bold"
-                           href="javascript:doPage(2)">下一页</a>
-
-                        <a style="color: navy;font-weight: bold"
-                           href="javascript:doPage(1)">末页</a>
-                        &nbsp;&nbsp;&nbsp;跳到第
-                        <input id=page type=text value="1" class=input1 size=1>
-                        页&nbsp;&nbsp;
-                        <input type="image" onclick="dopagebybutton()" src="../../images/go.bmp" width=18 height=18 border=0>
-                        <input type="hidden" name="page.startPage" id="startpage" value="1">
-                    </div>
-                    <script type="text/javascript">
-                    function dopagebybutton() {
-                    var reg = /^[0-9]*[1-9][0-9]*$/;
-                    if (reg.test(document.getElementById("page").value)) {
-                    document.getElementById("startpage").value= document.getElementById("page").value;
-                    } else {
-                    alert("您的输入有误");
-                    document.getElementById("page").value = document.getElementById("startpage").value;
-                    }
-                    document.forms[0].submit();
-
-                    }
-                    function doPage(startsize) {
-                    document.getElementById("startpage").value =startsize;
-                    document.forms[0].submit();
-
-                    }
-                    </script>
-    </form>
+        <a style="color: navy;font-weight: bold"
+           href="javascript:doPage(2)" id="last">末页</a>
+        &nbsp;&nbsp;&nbsp;跳到第
+        <input id="txtPage" type=text value="1" class=input1 size=1>
+        页&nbsp;&nbsp;
+        <input type="image" src="../../images/go.bmp" width=18 height=18 border=0 id="go">
+        <input type="hidden" name="page.startPage" id="startpage" value="1">
     </div>
+    <script type="text/javascript">
+function dopagebybutton() {
+	var reg = /^[0-9]*[1-9][0-9]*$/;
+	if (reg.test(document.getElementById("page").value)) {
+		document.getElementById("startpage").value= document.getElementById("page").value;
+	} else {
+		alert("您的输入有误");
+	}
+	document.forms[0].submit();
+
+}
+function doPage(startsize) {
+	document.getElementById("startpage").value =startsize;
+	document.forms[0].submit();
+
+}
+    </script>
 </body>
 </html>

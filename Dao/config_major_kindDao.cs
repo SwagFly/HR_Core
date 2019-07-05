@@ -13,6 +13,16 @@ namespace Dao
     /// </summary>
     public class config_major_kindDao : DaoBase<config_major_kind>, config_major_kindIDao
     {
+        public int config_major_kindDel(config_major_kind cmk, object keyValue)
+        {
+            return Delete(cmk,keyValue);
+        }
+
+        public int config_major_kindInsert(config_major_kind cmk)
+        {
+            return Insert(cmk);
+        }
+
         /// <summary>
         /// 查询全部部门分类
         /// </summary>

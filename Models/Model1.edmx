@@ -705,7 +705,8 @@
     FROM [dbo].[vw_usersAndRole] AS [vw_usersAndRole]</DefiningQuery>
           </EntitySet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="HR_DBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -1322,6 +1323,16 @@
           <Property Name="u_password" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="rid" Type="Int32" Nullable="false" />
         </EntityType>
+        <EntityType Name="vw_checked">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="checked" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="text" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="state" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="checked" Type="Int32" Nullable="false" />
+        </EntityType>
         <EntityType Name="vw_usersAndRole">
           <Key>
             <PropertyRef Name="u_id" />
@@ -1370,25 +1381,15 @@
           <EntitySet Name="salary_standard_details" EntityType="Self.salary_standard_details" />
           <EntitySet Name="training" EntityType="Self.training" />
           <EntitySet Name="users" EntityType="Self.users" />
+          <EntitySet Name="vw_checked" EntityType="Self.vw_checked" />
           <EntitySet Name="vw_usersAndRole" EntityType="Self.vw_usersAndRole" />
           <FunctionImport Name="procDanHao">
-          <Parameter Name="danhao" Mode="InOut" Type="String" />
+            <Parameter Name="danhao" Mode="InOut" Type="String" />
           </FunctionImport>
           <FunctionImport Name="procSalaryGrant">
-          <Parameter Name="danhao" Mode="InOut" Type="String" />
+            <Parameter Name="danhao" Mode="InOut" Type="String" />
           </FunctionImport>
-          <EntitySet Name="vw_checked" EntityType="HR_DBModel.vw_checked" />
         </EntityContainer>
-        <EntityType Name="vw_checked">
-          <Key>
-            <PropertyRef Name="id" />
-            <PropertyRef Name="checked" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" />
-          <Property Name="text" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="state" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="checked" Type="Int32" Nullable="false" />
-        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2040,6 +2041,16 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="vw_checked">
+            <EntityTypeMapping TypeName="HR_DBModel.vw_checked">
+              <MappingFragment StoreEntitySet="vw_checked">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="text" ColumnName="text" />
+                <ScalarProperty Name="state" ColumnName="state" />
+                <ScalarProperty Name="checked" ColumnName="checked" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="vw_usersAndRole">
             <EntityTypeMapping TypeName="HR_DBModel.vw_usersAndRole">
               <MappingFragment StoreEntitySet="vw_usersAndRole">
@@ -2054,16 +2065,6 @@
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="procDanHao" FunctionName="HR_DBModel.Store.procDanHao" />
           <FunctionImportMapping FunctionImportName="procSalaryGrant" FunctionName="HR_DBModel.Store.procSalaryGrant" />
-          <EntitySetMapping Name="vw_checked">
-            <EntityTypeMapping TypeName="HR_DBModel.vw_checked">
-              <MappingFragment StoreEntitySet="vw_checked">
-                <ScalarProperty Name="checked" ColumnName="checked" />
-                <ScalarProperty Name="state" ColumnName="state" />
-                <ScalarProperty Name="text" ColumnName="text" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

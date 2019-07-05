@@ -50,5 +50,25 @@ namespace Bll
         {
             return dao.SelectWhere(where);
         }
+
+        public int config_file_third_kindInsert(config_file_third_kind third)
+        {
+            return dao.config_file_third_kindInsert(third);
+        }
+
+        public List<config_file_third_kind> config_file_third_kindselectWhere(Expression<Func<config_file_third_kind, bool>> where)
+        {
+            return dao.config_file_third_kindselectWhere(where);
+        }
+
+        public int config_file_third_kindUpdate(config_file_third_kind third, object keyValue)
+        {
+            return dao.config_file_third_kindUpdate(third,keyValue);
+        }
+
+        public int config_file_third_kindDel(config_file_third_kind third, object keyValue)
+        {
+            return dao.config_file_third_kindDel(third,keyValue);
+        }
     }
 }

@@ -14,6 +14,17 @@ namespace Dao
     public class salary_projectDao : DaoBase<salary_project>, salary_projectIDao
     {
         HR_DBEntities hr = new HR_DBEntities();
+
+        public int salary_projectDel(salary_project sp, object keyValue)
+        {
+            return Delete(sp,keyValue);
+        }
+
+        public int salary_projectInsert(salary_project sp)
+        {
+            return Insert(sp);
+        }
+
         //薪酬报销分类查询
         public List<salary_project> selectsalary_project()
         {

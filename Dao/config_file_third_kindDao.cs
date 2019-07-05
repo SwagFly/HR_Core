@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using IDao;
@@ -13,6 +14,8 @@ namespace Dao
     /// </summary>
     public class config_file_third_kindDao:DaoBase<config_file_third_kind>,config_file_third_kindIDao
     {
+        
+
         /// <summary>
         /// 查询三级机构
         /// </summary>
@@ -30,6 +33,25 @@ namespace Dao
         public List<config_file_third_kind> third_kind()
         {
             return SelectAll();
+        }
+        public int config_file_third_kindDel(config_file_third_kind third, object keyValue)
+        {
+            return Delete(third,keyValue);
+        }
+
+        public int config_file_third_kindInsert(config_file_third_kind third)
+        {
+            return Insert(third);
+        }
+
+        public List<config_file_third_kind> config_file_third_kindselectWhere(Expression<Func<config_file_third_kind, bool>> where)
+        {
+            return SelectWhere(where);
+        }
+
+        public int config_file_third_kindUpdate(config_file_third_kind third, object keyValue)
+        {
+            return Update(third,keyValue);
         }
     }
 }

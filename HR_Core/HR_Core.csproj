@@ -204,6 +204,7 @@
     <Compile Include="Controllers\FileChickController.cs" />
     <Compile Include="Controllers\HumanResourcesController.cs" />
     <Compile Include="Controllers\InterviewController.cs" />
+    <Compile Include="Controllers\clientController.cs" />
     <Compile Include="Controllers\ERDomeController.cs" />
     <Compile Include="Controllers\HR_DomeLoginController.cs" />
     <Compile Include="Controllers\HR_DomeMainController.cs" />
@@ -1073,7 +1074,6 @@
     <Content Include="Views\salaryGrant\query_locate.cshtml" />
     <Content Include="Views\salaryGrant\query_list.cshtml" />
     <Content Include="Views\salaryGrant\query.cshtml" />
-    <Content Include="Views\salaryGrant\register_list.cshtml" />
     <Content Include="Views\Job_posting\classUpdate.cshtml" />
     <Content Include="Views\Job_posting\updateShow.cshtml" />
     <Content Include="Views\Job_posting\Position.cshtml" />
@@ -1125,6 +1125,41 @@
     <Content Include="Views\FileChick\UpdateShow.cshtml" />
     <Content Include="Views\HumanResources\Index.cshtml" />
     <Content Include="Views\HumanResources\InsertHuman_file.cshtml" />
+    <Content Include="Views\client\first_kind.cshtml" />
+    <Content Include="Views\client\first_kind_register_success.cshtml" />
+    <Content Include="Views\client\first_delete_success.cshtml" />
+    <Content Include="Views\client\first_kind_change.cshtml" />
+    <Content Include="Views\client\first_kind_change_success.cshtml" />
+    <Content Include="Views\client\second_kind.cshtml" />
+    <Content Include="Views\client\second_kind_register.cshtml" />
+    <Content Include="Views\client\second_kind_register_success.cshtml" />
+    <Content Include="Views\client\second_delete_success.cshtml" />
+    <Content Include="Views\client\second_kind_change.cshtml" />
+    <Content Include="Views\client\second_kind_change_success.cshtml" />
+    <Content Include="Views\client\third_kind.cshtml" />
+    <Content Include="Views\client\third_kind_register.cshtml" />
+    <Content Include="Views\client\third_kind_register_success.cshtml" />
+    <Content Include="Views\client\third_delete_success.cshtml" />
+    <Content Include="Views\client\third_kind_change.cshtml" />
+    <Content Include="Views\client\third_kind_change_success.cshtml" />
+    <Content Include="Views\client\profession_design.cshtml" />
+    <Content Include="Views\client\major_kind.cshtml" />
+    <Content Include="Views\client\major_kind_add.cshtml" />
+    <Content Include="Views\client\major.cshtml" />
+    <Content Include="Views\client\major_add.cshtml" />
+    <Content Include="Views\client\public_char.cshtml" />
+    <Content Include="Views\client\public_char_add.cshtml" />
+    <Content Include="Views\client\salary_item.cshtml" />
+    <Content Include="Views\client\salary_item_register.cshtml" />
+    <Content Include="Views\client\first_kind_register.cshtml" />
+    <Content Include="Views\salaryGrant\register_list.cshtml" />
+    <Content Include="Views\register_locate\register_success.cshtml" />
+    <Content Include="Views\register_locate\check_list.cshtml" />
+    <Content Include="Views\register_locate\check.cshtml" />
+    <Content Include="Views\register_locate\check_success.cshtml" />
+    <Content Include="Views\register_locate\locate.cshtml" />
+    <Content Include="Views\register_locate\list.cshtml" />
+    <Content Include="Views\register_locate\detail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

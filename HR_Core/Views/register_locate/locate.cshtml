@@ -1,0 +1,253 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" href="../../css/table.css" type="text/css">
+    <script src="~/DatePicker/WdatePicker.js"></script>
+    <script src="~/javascript/jquery-1.7.2.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $.ajax({
+                url: "/register_locate/SelectFirst",
+                type: "get",
+                success: function (msg) {
+                    var data = eval("(" + msg + ")");
+                    for (var i = 0; i < data.length; i++) {
+                        var $tr = $("<option id='bb'  value='" + data[i]["first_kind_name"] + "'>" + data[i]["first_kind_name"] + '</option>')
+                        $("#secondKindId").append($tr);
+                    }
+                }
+            });
+        });
+            //第一个下拉列表藏值
+        $(function () {
+            $(document).on("change", "#secondKindId", function () {
+                //藏vlaue
+                $("#ycid").val($(this).val());
+                $("#ycid3").val("");
+                $("#ycid2").val("");
+            });
+        });
+        //第二个下拉列表藏值
+        $(function () {
+            $(document).on("change", "#secondKindId2", function () {
+                //藏vlaue
+                $("#ycid2").val($(this).val());
+                $("#ycid3").val("");
+            });
+        })
+        //第三个下拉列表藏值
+        $(function () {
+            $(document).on("change", "#thirdKindId3", function () {
+                //藏vlaue
+                $("#ycid3").val($(this).val());
+            });
+        })
+        $(function () {
+            $(document).on("change", "#secondKindId2", function () {
+                //藏vlaue
+                if ($("#ycid2").val() == "全部") {
+                    $("#thirdKindId3").find("option").remove();
+                    $("#thirdKindId3").prepend("<option selected value='0'>全部</option>");
+                } else {
+                    $("#thirdKindId3").find("option").remove();
+                    $("#thirdKindId3").prepend("<option selected value='0'>全部</option>");
+                    $.ajax({
+                        url: "/register_locate/SelectThirdByWhere",
+                        data: "secondname=" + $("#ycid2").val(),
+                        type: "get",
+                        success: function (msg) {
+                            var data = eval("(" + msg + ")");
+                            for (var i = 0; i < data.length; i++) {
+                                var $tr = $("<option  value='" + data[i]["third_kind_name"] + "'>" + data[i]["third_kind_name"] + '</option>')
+                                $("#thirdKindId3").append($tr);
+                            }
+                        }
+                    });
+                }
+            });
+        })
+        //当第一个下拉列表选择值得时候 第二个下拉列表就能选东西了
+        $(function () {
+            $(document).on("change", "#secondKindId", function () {
+                if ($("#ycid").val() == "全部") {
+                    $("#secondKindId2").find("option").remove();
+                    $("#thirdKindId3").find("option").remove();
+                    $("#secondKindId2").prepend("<option selected value='0'>全部</option>");
+                    $("#thirdKindId3").prepend("<option selected value='0'>全部</option>");
+                } else {
+                    $("#secondKindId2").find("option").remove();
+                    $("#thirdKindId3").find("option").remove();
+                    $("#secondKindId2").prepend("<option selected value='0'>全部</option>");
+                    $("#thirdKindId3").prepend("<option selected value='0'>全部</option>");
+                    $.ajax({
+                        url: "/register_locate/SelectSecondByWhere",
+                        data: "firstname=" + $("#ycid").val(),
+                        type: "get",
+                        success: function (msg) {
+                            var data = eval("(" + msg + ")");
+                            for (var i = 0; i < data.length; i++) {
+                                var $tr = $("<option   value='" + data[i]["second_kind_name"] + "'>" + data[i]["second_kind_name"] + '</option>')
+                                $("#secondKindId2").append($tr);
+                            }
+                        }
+                    });
+                }
+            });
+        })
+        //自动生成新职位分类
+        $(function () {
+            $.ajax({
+                url: "/register_locate/SelectConfig_major_kind",
+                type: "get",
+                success: function (msg) {
+                    var data = eval("(" + msg + ")");
+                    for (var i = 0; i < data.length; i++) {
+                        var $tr = $("<option  zw='" + data[i]["major_kind_id"] + "'  value='" + data[i]["major_kind_name"] + "'>" + data[i]["major_kind_name"] + '</option>')
+                        $("#zhiwei").append($tr);
+                    }
+                }
+            });
+        });
+        //藏vlaue
+        $(function () {
+            $(document).on("change", "#zhiwei", function () {
+                //藏vlaue
+                $("#ycid4").val($(this).val());
+                $("#ycid5").val("");
+            });
+        });
+        //新职位名称发生改变就给隐藏得值给他
+        $(function () {
+            $(document).on("change", "#zhiweiname", function () {
+                //藏vlaue
+                $("#ycid5").val($(this).val());
+                $("#newzhiwei2").val($(this).find("option:selected").attr("zw2"));
+            });
+        });
+        //当你选了职位分类，再选职位名称
+        $(function () {
+            $(document).on("change", "#zhiwei", function () {
+                $("#newzhiwei").val($(this).find("option:selected").attr("zw"));
+                if ($("#ycid4").val() == "全部") {
+                    $("#zhiweiname").find("option").remove();
+                    $("#zhiweiname").prepend("<option selected zw2='0'>全部</option>");
+                } else {
+                    $("#zhiweiname").find("option").remove();
+                    $("#zhiweiname").prepend("<option selected zw2='0''>全部</option>");
+                    $.ajax({
+                        url: "/register_locate/Selectconfig_majorBymajor_kind_name",
+                        data: "MajorKindName=" + $("#ycid4").val(),
+                        type: "get",
+                        success: function (msg) {
+                            var data = eval("(" + msg + ")");
+                            for (var i = 0; i < data.length; i++) {
+                                var $tr = $("<option zw2='" + data[i]["major_id"] + "'  value='" + data[i]["major_name"] + "'>" + data[i]["major_name"] + '</option>')
+                                $("#zhiweiname").append($tr);
+                            }
+                        }
+                    });
+                }
+            });
+        })
+        //日期事件
+        $(".INPUT_STYLE2").click(function () {
+            WdatePicker();
+        });
+    </script>
+</head>
+<body>
+    <form method="post" action="/register_locate/SelectMajorWheres">
+        <input type="hidden" name="page.startPage" value="0">
+        <table width="100%">
+            <tr>
+                <td>
+                    <font color="black">您正在做的业务是：人力资源--调动管理--调动查询 </font>
+                </td>
+            </tr>
+            <tr>
+                <td align="right">
+                    <input type="submit" value="查询"
+                           class="BUTTON_STYLE1" id="Chax">
+                </td>
+            </tr>
+        </table>
+        <table width="100%" border="1" cellpadding=0 cellspacing=1
+               bordercolorlight=#848284 bordercolordark=#eeeeee
+               class="TABLE_STYLE1">
+            <tr class="TR_STYLE1">
+                <td width="16%" class="TD_STYLE1">
+                    请选择员工所在I级机构
+                </td>
+                <td width="84%" class="TD_STYLE2">
+                    <select name="yiji" id="secondKindId" size="5" class="SELECT_STYLE2">
+                        <option selected value="0">全部</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td class="TD_STYLE1">
+                    请选择员工所在II级机构
+                </td>
+                <td width="84%" class="TD_STYLE2">
+                    <select name="erji" id="secondKindId2" size="5" class="SELECT_STYLE2">
+                        <option selected value="0">全部</option>
+                    </select>
+                </td>
+            </tr>
+            <tr class="TR_STYLE1">
+                <td width="16%" class="TD_STYLE1">
+                    请选择员工所在III级机构
+                </td>
+                <td width="84%" class="TD_STYLE2">
+                    <select name="sanji" id="thirdKindId3" size="5" class="SELECT_STYLE2">
+                        <option selected value="0">全部</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td class="TD_STYLE1">
+                    请选择职位分类
+                </td>
+                <td width="84%" class="TD_STYLE2">
+                    <select name="fenlei" id="zhiwei" size="5" class="SELECT_STYLE2">
+                        <option selected zw="0" value="0">全部</option>
+                    </select>
+
+                </td>
+            </tr>
+            <tr class="TR_STYLE1">
+                <td width="16%" class="TD_STYLE1">
+                    请选择职位名称
+                </td>
+                <td width="84%" class="TD_STYLE2">
+                    <select name="mingcheng" size=5 id="zhiweiname" class="SELECT_STYLE2">
+                        <option selected value="0">全部</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td class="TD_STYLE1">
+                    请输入建档时间
+                </td>
+                <td width="84%" class="TD_STYLE2">
+                    <input name="utilbean.startDate" onclick="WdatePicker();" type="text" class="INPUT_STYLE2" id="date_start" style="width:24% " value="" size="30">
+                    至<input type="text" name="utilbean.endDate" onclick="WdatePicker();" value="" style="width:24% " class="INPUT_STYLE2" id="date_end">
+                    （YYYY-MM-DD）
+                </td>
+            </tr>
+        </table>
+    </form>
+    <input id="ycid" type="hidden" value="" />
+    <input id="ycid2" type="hidden" value="" />
+    <input id="ycid3" type="hidden" value="" />
+    <input id="ycid4" type="hidden" value="" />
+    <input id="ycid5" type="hidden" value="" />
+</body>
+</html>

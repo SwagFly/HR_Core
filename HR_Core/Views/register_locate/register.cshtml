@@ -1,4 +1,4 @@
-﻿@model Models.major_change
+﻿@model Models.human_file
 @{
     Layout = null;
 }
@@ -149,7 +149,6 @@
                     $("#zhiweiname").prepend("<option zw2='0'>-----请选择-----</option>");
                 } else {
                     $("#zhiweiname").find("option").remove();
-
                     $("#zhiweiname").prepend("<option zw2='0''>-----请选择-----</option>");
                     $.ajax({
                         url: "/register_locate/Selectconfig_majorBymajor_kind_name",
@@ -204,7 +203,7 @@
 
             <tr>
                 <td align="right">
-                    <input type="button" value="提交" class="BUTTON_STYLE1" onclick="mySubmit()">
+                    <input type="submit" value="提交" class="BUTTON_STYLE1">
                     <input type="button" class="BUTTON_STYLE1"
                            onclick="javascript:window.history.back();" value="返回">
                 </td>
@@ -219,7 +218,8 @@
                 </td>
                 <td class="TD_STYLE2" width="10%">
                     @Html.EditorFor(model => model.human_id, new { htmlAttributes = new { @class = "INPUT_STYLE2", @readonly = "readonly" } })
-                    <input type="hidden" name="mch_id" value="@Model.mch_id">
+                    @*<input type="hidden" name="mch_id" value="@Model.mch_id">*@
+                    <input type="hidden" name="mch_id" value="@Model.huf_id">
                 </td>
                 <td class="TD_STYLE1" width="8%">
                     姓名
@@ -262,15 +262,21 @@
                     原职位分类
                 </td>
                 <td class="TD_STYLE2">
-                    @Html.EditorFor(model => model.major_kind_name, new { htmlAttributes = new { @class = "INPUT_STYLE2", @readonly = "readonly" } })
-                    <input type="hidden" name="major_kind_id" value="@Model.major_kind_id">
+                    @*@Html.EditorFor(model => model.major_kind_name, new { htmlAttributes = new { @class = "INPUT_STYLE2", @readonly = "readonly" } })
+                    <input type="hidden" name="major_kind_id" value="@Model.major_kind_id">*@
+                    @*@Html.EditorFor(model => model.human_major_kind_name, new { htmlAttributes = new { @class = "INPUT_STYLE2", @readonly = "readonly" } })*@
+                    <input type="text" name="major_kind_name" value="@Model.human_major_kind_name">
+                    <input type="hidden" name="major_kind_id" value="@Model.human_major_kind_id">
                 </td>
                 <td class="TD_STYLE1" width="12%">
                     原职位名称
                 </td>
                 <td class="TD_STYLE2">
-                    @Html.EditorFor(model => model.major_name, new { htmlAttributes = new { @class = "INPUT_STYLE2", @readonly = "readonly", @id = "zhiwei_1" } })
-                    <input type="hidden" name="major_id" value="@Model.major_id">
+                    @*@Html.EditorFor(model => model.major_name, new { htmlAttributes = new { @class = "INPUT_STYLE2", @readonly = "readonly", @id = "zhiwei_1" } })
+                    <input type="hidden" name="major_id" value="@Model.major_id">*@
+                    @*@Html.EditorFor(model => model.hunma_major_name, new { htmlAttributes = new { @class = "INPUT_STYLE2", @readonly = "readonly", @id = "zhiwei_1" } })*@
+                    <input type="text" name="major_name" value="@Model.hunma_major_name">
+                    <input type="hidden" name="major_id" value="@Model.human_major_id">
                 </td>
                 <td class="TD_STYLE1">
                     原薪酬标准
@@ -396,49 +402,49 @@
                 </td>
                 <td class="TD_STYLE2">
                     <input type="text" name="regist_time" readonly="readonly"
-                           id="Tdate" class="INPUT_STYLE2" value="@Model.regist_time">
-                    <SCRIPT type="text/javascript">
-					function time(){
- 					var tdate=document.getElementById("Tdate");
- 					var d=new Date();
- 					var y=d.getFullYear();
- 					var moth=d.getMonth()+1;
- 					var date=d.getDate();
- 					var h=d.getHours();
- 					var m=d.getMinutes();
- 					var s=d.getSeconds();
-					var hh=20-1-h;
-					var mm=60-1-m;
-					var ss=60-s;
-					if(hh>0){
-							mm=mm+60*hh;
-					}
- 					if(moth<10){
- 							moth="0"+moth;
- 					}
- 					if(date<10){
- 							date="0"+date;
- 					}
- 					if(h<10){
- 							h="0"+h;
- 					}
- 					if(m<10){
- 							m="0"+m;
- 					}
- 					if(s<10){
- 							s="0"+s;
- 					}
- 					if(mm<10){
- 							mm="0"+mm;
- 					}
- 					if(ss<10){
- 							ss="0"+ss;
- 					}
- 					tdate.value = h + ":" + m + ":" + s;
- 				}
-				window.onload=time;
- 				var out=window.setInterval(time, 1000);
-                    </SCRIPT>
+                           id="Tdate" class="INPUT_STYLE2">
+                    <script type="text/javascript">
+                        function time() {
+                            var d = new Date();
+                            var y = d.getFullYear();
+                            var moth = d.getMonth() + 1;
+                            var date = d.getDate();
+                            var h = d.getHours();
+                            var m = d.getMinutes();
+                            var s = d.getSeconds();
+                            var hh = 20 - 1 - h;
+                            var mm = 60 - 1 - m;
+                            var ss = 60 - s;
+                            if (hh > 0) {
+                                mm = mm + 60 * hh;
+                            }
+                            if (moth < 10) {
+                                moth = "0" + moth;
+                            }
+                            if (date < 10) {
+                                date = "0" + date;
+                            }
+                            if (h < 10) {
+                                h = "0" + h;
+                            }
+                            if (m < 10) {
+                                m = "0" + m;
+                            }
+                            if (s < 10) {
+                                s = "0" + s;
+                            }
+                            if (mm < 10) {
+                                mm = "0" + mm;
+                            }
+                            if (ss < 10) {
+                                ss = "0" + ss;
+                            }
+                            var t = y + "-" + moth + "-" + date + h + ":" + m + ":" + s;
+                            document.getElementById("Tdate").value = t;
+                            //tdate.value = h + ":" + m + ":" + s;
+                        }
+                        window.setInterval(time, 1000);
+                    </script>
                 </td>
                 <td class="TD_STYLE1"></td>
                 <td class="TD_STYLE2"></td>

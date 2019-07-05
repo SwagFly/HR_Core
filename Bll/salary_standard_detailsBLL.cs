@@ -34,5 +34,10 @@ namespace Bll
         {
             return dao.salary_standard_detailsUpdate(sd);
         }
+        //薪酬发放查询
+        public List<salary_standard_details> Selectsalary_standard_details()
+        {
+            return dao.Selectsalary_standard_details();
+        }
     }
 }

@@ -32,5 +32,10 @@ namespace Dao
             hr.Entry(sd).State = System.Data.Entity.EntityState.Modified;
             return hr.SaveChanges();
         }
+        //薪酬发放查询
+        public List<salary_standard_details> Selectsalary_standard_details()
+        {
+            return SelectAll();
+        }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using IDao;
@@ -45,6 +46,26 @@ namespace Dao
         public List<config_file_second_kind> Second_kind()
         {
             return SelectAll();
+        }
+
+        public int config_file_second_kindInsert(config_file_second_kind second)
+        {
+            return Insert(second);
+        }
+
+        public int config_file_second_kindDel(config_file_second_kind second, object keyValue)
+        {
+            return Delete(second,keyValue);
+        }
+
+        public List<config_file_second_kind> config_file_second_kindselectWhere(Expression<Func<config_file_second_kind, bool>> where)
+        {
+            return SelectWhere(where);
+        }
+
+        public int config_file_second_kindUpdate(config_file_second_kind second, object keyValue)
+        {
+            return Update(second,keyValue);
         }
     }
 }

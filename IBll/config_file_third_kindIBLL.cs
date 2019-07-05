@@ -32,5 +32,13 @@ namespace IBll
         List<config_file_third_kind> SelectWhere(Expression<Func<config_file_third_kind, bool>> where);
         //薪酬调用三级机构
         List<config_file_third_kind> third_kind();
+        //三级机构新增
+        int config_file_third_kindInsert(config_file_third_kind third);
+        //三级机构删除
+        int config_file_third_kindDel(config_file_third_kind third, object keyValue);
+        //三级机构按id查询
+        List<config_file_third_kind> config_file_third_kindselectWhere(Expression<Func<config_file_third_kind, bool>> where);
+        //三级机构修改
+        int config_file_third_kindUpdate(config_file_third_kind third, object keyValue);
     }
 }

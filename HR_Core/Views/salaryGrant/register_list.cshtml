@@ -9,24 +9,17 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>register_list</title>
-    <link rel="stylesheet" href="../../css/table.css" type="text/css" />
-    <script type="text/javascript" src="../../javascript/comm/comm.js"></script>    
-    <script type="text/javascript"src="../../javascript/jquery-1.7.2.js"></script>
+    <link href="~/css/table.css" rel="stylesheet" />
+    <script src="~/javascript/comm/comm.js"></script>
+    <script src="~/javascript/jquery-1.7.2.js"></script>
     <script type="text/css">
         td {
-            text-align: center;
+        text-align: center;
         }
     </script>
 </head>
 <body>
-    <div> 
-
-
-
-
-
-
-
+    <div>
         <table width="100%">
             <tr>
                 <td colspan="2" style="text-align: left">
@@ -37,46 +30,222 @@
             </tr>
         </table>
         <br>
-        薪酬总数:3，
-        总人数:8，基本薪酬总数:141821.0，实发总额:1998.0
+        @{
+            int count = 0;
+            int kindcount = 0;
+            decimal salary_sum = 0;
+            decimal paid_salary_sum = 0;
+            if (ViewBag.submitType == 1)
+            {
+                kindcount = (ViewBag.first as List<config_file_first_kind>).Count;
+                foreach (config_file_first_kind item in ViewBag.first)
+                {
+                    foreach (human_file item2 in ViewBag.human_file)
+                    {
+                        if (item.first_kind_id == item2.first_kind_id)
+                        {
+                            count++;
+                            salary_sum += Convert.ToDecimal(item2.salary_sum);
+                            paid_salary_sum = Convert.ToDecimal(item2.paid_salary_sum);
+                        }
+                    }
+                }
+            }
+            else if (ViewBag.submitType == 2)
+            {
+                kindcount = (ViewBag.second as List<config_file_second_kind>).Count;
+                foreach (config_file_second_kind item in ViewBag.second)
+                {
+                    foreach (human_file item2 in ViewBag.human_file)
+                    {
+                        if (item.second_kind_id == item2.second_kind_id)
+                        {
+                            count++;
+                            salary_sum += Convert.ToDecimal(item2.salary_sum);
+                            paid_salary_sum = Convert.ToDecimal(item2.paid_salary_sum);
+                        }
+                    }
+                }
+            }
+            else if (ViewBag.submitType == 3)
+            {
+                kindcount = (ViewBag.third as List<config_file_third_kind>).Count;
+                foreach (config_file_third_kind item in ViewBag.third)
+                {
+                    foreach (human_file item2 in ViewBag.human_file)
+                    {
+                        if (item.third_kind_id == item2.third_kind_id)
+                        {
+                            count++;
+                            salary_sum += Convert.ToDecimal(item2.salary_sum);
+                            paid_salary_sum = Convert.ToDecimal(item2.paid_salary_sum);
+                        }
+                    }
+                }
+            }
+        }
+
+
+
+
+        薪酬总数: @count，
+        总人数: @kindcount，基本薪酬总数: @salary_sum，实发总额:
+        @paid_salary_sum
         <table width="100%" border="1" cellpadding=0 cellspacing=1
                bordercolorlight=#848284 bordercolordark=#eeeeee
                class="TABLE_STYLE1">
-
-            <tr>
-                <td width="10%" class="TD_STYLE1">
-                    <span>序号</span>
-                </td>
-                <td width="40%" class="TD_STYLE1">
-                    <span>I级机构名称</span>
-                </td>
-                <td width="10%" class="TD_STYLE1">
-                    <span>人数</span>
-                </td>
-                <td width="10%" class="TD_STYLE1">
-                    基本薪酬总额(元)
-                </td>
-                <td width="10%" class="TD_STYLE1">
-                    登记
-                </td>
-            </tr>
-
-            <tr class="TD_STYLE2">
-                <td>
-                    1
-                </td>
-                <td> @*&#8544;&#32423;&#32467;&#26500;*@ aaaaaa </td>
-                <td>
-                    5
-                </td>
-                <td>
-                    139823.0
-                </td>
-                <td>
-                    <a href="register_commit.html">登 记</a>
-                </td>
-            </tr>
-            
+            @{
+                if (ViewBag.submitType == 1)
+                {
+                    <tr>
+                        <td width="10%" class="TD_STYLE1">
+                            <span>序号</span>
+                        </td>
+                        <td width="40%" class="TD_STYLE1">
+                            <span>I级机构名称</span>
+                        </td>
+                        <td width="10%" class="TD_STYLE1">
+                            <span>人数</span>
+                        </td>
+                        <td width="10%" class="TD_STYLE1">
+                            基本薪酬总额(元)
+                        </td>
+                        <td width="10%" class="TD_STYLE1">
+                            登记
+                        </td>
+                    </tr>
+                    int i = 0;
+                    foreach (config_file_first_kind item in ViewBag.first)
+                    {
+                        decimal humsum = 0;
+                        decimal listcount = 0;
+                        foreach (human_file item2 in ViewBag.human_file)
+                        {
+                            if (item.first_kind_id == item2.first_kind_id)
+                            {
+                                humsum += Convert.ToDecimal(item2.salary_sum);
+                                listcount++;
+                            }
+                        }
+                        i++;
+                        <tr class="TD_STYLE2">
+                            <td>
+                                @i
+                            </td>
+                            <td>@item.first_kind_name</td>
+                            <td>
+                                @listcount
+                            </td>
+                            <td>
+                                @humsum
+                            </td>
+                            <td>
+                                <a href="register_commit?submitType=1&id=@item.first_kind_id">登 记</a>
+                            </td>
+                        </tr>
+                    }
+                }
+                else if (ViewBag.submitType == 2)
+                {
+                    <tr>
+                        <td width="10%" class="TD_STYLE1">
+                            <span>序号</span>
+                        </td>
+                        <td width="40%" class="TD_STYLE1">
+                            <span>II级机构名称</span>
+                        </td>
+                        <td width="10%" class="TD_STYLE1">
+                            <span>人数</span>
+                        </td>
+                        <td width="10%" class="TD_STYLE1">
+                            基本薪酬总额(元)
+                        </td>
+                        <td width="10%" class="TD_STYLE1">
+                            登记
+                        </td>
+                    </tr>
+                    int i = 0;
+                    foreach (config_file_second_kind item in ViewBag.second)
+                    {
+                        decimal humsum = 0;
+                        decimal listcount = 0;
+                        foreach (human_file item2 in ViewBag.human_file)
+                        {
+                            if (item.second_kind_id == item2.second_kind_id)
+                            {
+                                humsum += Convert.ToDecimal(item2.salary_sum);
+                                listcount++;
+                            }
+                        }
+                        i++;
+                        <tr class="TD_STYLE2">
+                            <td>
+                                @i
+                            </td>
+                            <td>@item.second_kind_name</td>
+                            <td>
+                                @listcount
+                            </td>
+                            <td>
+                                @humsum
+                            </td>
+                            <td>
+                                <a href="register_commit?submitType=2&id=@item.second_kind_id">登 记</a>
+                            </td>
+                        </tr>
+                    }
+                }
+                else if (ViewBag.submitType == 3)
+                {
+                    <tr>
+                        <td width="10%" class="TD_STYLE1">
+                            <span>序号</span>
+                        </td>
+                        <td width="40%" class="TD_STYLE1">
+                            <span>III级机构名称</span>
+                        </td>
+                        <td width="10%" class="TD_STYLE1">
+                            <span>人数</span>
+                        </td>
+                        <td width="10%" class="TD_STYLE1">
+                            基本薪酬总额(元)
+                        </td>
+                        <td width="10%" class="TD_STYLE1">
+                            登记
+                        </td>
+                    </tr>
+                    int i = 0;
+                    foreach (config_file_third_kind item in ViewBag.third)
+                    {
+                        decimal humsum = 0;
+                        decimal listcount = 0;
+                        foreach (human_file item2 in ViewBag.human_file)
+                        {
+                            if (item.third_kind_id == item2.third_kind_id)
+                            {
+                                humsum += Convert.ToDecimal(item2.salary_sum);
+                                listcount++;
+                            }
+                        }
+                        i++;
+                        <tr class="TD_STYLE2">
+                            <td>
+                                @i
+                            </td>
+                            <td>@item.third_kind_name</td>
+                            <td>
+                                @listcount
+                            </td>
+                            <td>
+                                @humsum
+                            </td>
+                            <td>
+                                <a href="register_commit?submitType=3&id=@item.third_kind_id">登 记</a>
+                            </td>
+                        </tr>
+                    }
+                }
+            }
         </table>
         <p>
             &nbsp;
